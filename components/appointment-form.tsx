@@ -109,8 +109,7 @@ export default function AppointmentForm() {
       })
 
       // Add logo at the top
-    pdf.addImage("https://yourwebsite.com/logo.png", "PNG", 20, 10, 50, 20);
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/MC%20LOGO-XowG6Q2hKUlDImWUZUx6UDaRQp4r2h.png",
+    pdf.addImage("https://hebbkx1anhila5yf.public.blob.vercel-storage.com/MC%20LOGO-XowG6Q2hKUlDImWUZUx6UDaRQp4r2h.png",
         "PNG",
         10,
         10,
@@ -128,8 +127,7 @@ export default function AppointmentForm() {
 
       // Add logo in the middle (watermark)
       pdf.setGState(new pdf.GState({ opacity: 0.1 }))
-    pdf.addImage("https://yourwebsite.com/logo.png", "PNG", 20, 10, 50, 20);
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/MC%20LOGO-XowG6Q2hKUlDImWUZUx6UDaRQp4r2h.png",
+    pdf.addImage("https://hebbkx1anhila5yf.public.blob.vercel-storage.com/MC%20LOGO-XowG6Q2hKUlDImWUZUx6UDaRQp4r2h.png",
         "PNG",
         55,
         100,
