@@ -143,12 +143,12 @@ export default function AppointmentForm() {
     pdf.setTextColor(50, 50, 50);
     pdf.text("Appointment Details", 20, 55);
     pdf.setFontSize(12);
-    pdf.text(`📍 Location: ${formData.location}`, 20, 65);
-    pdf.text(`📅 Date: ${formatDate(formData.date)}`, 20, 75);
-    pdf.text(`⏰ Time: ${formData.time}`, 20, 85);
-    pdf.text(`📱 Device: ${formData.brand} ${formData.model}`, 20, 95);
-    pdf.text(`🔧 Service: ${formData.damageType}`, 20, 105);
-    pdf.text(`👤 Name: ${formData.fullName}`, 20, 115);
+    pdf.text(`Location: ${formData.location}`, 20, 65);
+    pdf.text(`Date: ${formatDate(formData.date)}`, 20, 75);
+    pdf.text(`Time: ${formData.time}`, 20, 85);
+    pdf.text(`Device: ${formData.brand} ${formData.model}`, 20, 95);
+    pdf.text(`Service: ${formData.damageType}`, 20, 105);
+    pdf.text(`Name: ${formData.fullName}`, 20, 115);
     pdf.text(` Phone: ${formData.phoneNumber}`, 20, 125);
       pdf.text(`Time: ${formData.time}`, 20, 80)
       pdf.text(`Device: ${formData.brand} ${formData.model}`, 20, 90)
@@ -164,7 +164,7 @@ export default function AppointmentForm() {
     pdf.setTextColor(100, 100, 100);
     pdf.text(" Support: (762) 444-9461", 105, 275, { align: "center" });
     pdf.text(" Website: www.mobilecareusa.com", 105, 285, { align: "center" });
-    pdf.text(`🕒 Generated on ${new Date().toLocaleString()}`, 105, 295, { align: "center" });
+    pdf.text(`Generated on ${new Date().toLocaleString()}`, 105, 295, { align: "center" });
 
       pdf.save("Mobile_Care_Appointment_Confirmation.pdf")
 
