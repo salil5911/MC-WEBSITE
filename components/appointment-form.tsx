@@ -149,7 +149,7 @@ export default function AppointmentForm() {
     pdf.text(`📱 Device: ${formData.brand} ${formData.model}`, 20, 95);
     pdf.text(`🔧 Service: ${formData.damageType}`, 20, 105);
     pdf.text(`👤 Name: ${formData.fullName}`, 20, 115);
-    pdf.text(`📞 Phone: ${formData.phoneNumber}`, 20, 125);
+    pdf.text(` Phone: ${formData.phoneNumber}`, 20, 125);
       pdf.text(`Time: ${formData.time}`, 20, 80)
       pdf.text(`Device: ${formData.brand} ${formData.model}`, 20, 90)
       pdf.text(`Service: ${formData.damageType}`, 20, 100)
@@ -162,8 +162,8 @@ export default function AppointmentForm() {
       pdf.text("Thank you for choosing Mobile Care. We look forward to serving you!", 105, 280, { align: "center" })
     pdf.setFontSize(10);
     pdf.setTextColor(100, 100, 100);
-    pdf.text("📞 Support: (762) 444-9461", 105, 275, { align: "center" });
-    pdf.text("🌐 Website: www.mobilecareusa.com", 105, 285, { align: "center" });
+    pdf.text(" Support: (762) 444-9461", 105, 275, { align: "center" });
+    pdf.text(" Website: www.mobilecareusa.com", 105, 285, { align: "center" });
     pdf.text(`🕒 Generated on ${new Date().toLocaleString()}`, 105, 295, { align: "center" });
 
       pdf.save("Mobile_Care_Appointment_Confirmation.pdf")
