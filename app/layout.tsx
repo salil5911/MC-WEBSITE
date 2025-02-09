@@ -2,24 +2,24 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Mobile Care USA - Professional Smartphone Repairs',
-  description: 'Expert care for all your tech needs. From pocket-sized to professional-grade repairs, we service all major smartphone brands.',
+  title: 'Mobile Care - Professional Phone Repairs',
+  description: 'Expert care for all your tech needs. From pocket-sized to professional-grade repairs, we service all major phone brands.',
   icons: {
     icon: '/favicon.ico',
     shortcut: '/favicon.ico',
     apple: '/favicon.png',
   },
   openGraph: {
-    title: 'Mobile Care USA - Expert Smartphone Repairs',
-    description: 'Professional smartphone repair services you can trust. We repair and upgrade all major brands from iPhones to Androids.',
+    title: 'Mobile Care - Expert Phone Repairs',
+    description: 'Professional phone repair services you can trust. We repair and upgrade all major brands from iPhones to Androids.',
     url: 'https://mobilecareusa.com',
-    siteName: 'Mobile Care USA',
+    siteName: 'Mobile Care',
     images: [
       {
         url: '/og-image.png', // Add an Open Graph image in /public/
         width: 1200,
         height: 630,
-        alt: 'Mobile Care USA',
+        alt: 'Mobile Care',
       },
     ],
     type: 'website',
