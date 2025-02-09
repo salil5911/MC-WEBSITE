@@ -34,7 +34,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <meta name="title" content="Mobile Care USA - Professional Smartphone Repairs" />
+        <meta name="title" content="Mobile Care - Professional Smartphone Repairs" />
         <meta name="description" content="Expert care for all your tech needs. From pocket-sized to professional-grade repairs, we service all major smartphone brands." />
         <meta property="og:title" content="Mobile Care USA - Expert Smartphone Repairs" />
         <meta property="og:description" content="Professional smartphone repair services you can trust. We repair and upgrade all major brands from iPhones to Androids." />
