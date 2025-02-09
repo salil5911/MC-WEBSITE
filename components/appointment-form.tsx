@@ -109,7 +109,7 @@ export default function AppointmentForm() {
       })
 
       // Add logo at the top
-      pdf.addImage(
+    pdf.addImage("https://yourwebsite.com/logo.png", "PNG", 20, 10, 50, 20);
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/MC%20LOGO-XowG6Q2hKUlDImWUZUx6UDaRQp4r2h.png",
         "PNG",
         10,
@@ -119,13 +119,16 @@ export default function AppointmentForm() {
       )
 
       // Add title
-      pdf.setFontSize(22)
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(24);
+    pdf.setTextColor(0, 102, 204);
+    pdf.text("Appointment Confirmation", 105, 40, { align: "center" });
       pdf.setTextColor(80, 213, 183) // brand-mint color
       pdf.text("Appointment Confirmation", 105, 40, { align: "center" })
 
       // Add logo in the middle (watermark)
       pdf.setGState(new pdf.GState({ opacity: 0.1 }))
-      pdf.addImage(
+    pdf.addImage("https://yourwebsite.com/logo.png", "PNG", 20, 10, 50, 20);
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/MC%20LOGO-XowG6Q2hKUlDImWUZUx6UDaRQp4r2h.png",
         "PNG",
         55,
@@ -138,8 +141,17 @@ export default function AppointmentForm() {
       // Add appointment details
       pdf.setFontSize(12)
       pdf.setTextColor(0, 0, 0)
-      pdf.text(`Location: ${formData.location}`, 20, 60)
-      pdf.text(`Date: ${formatDate(formData.date)}`, 20, 70)
+    pdf.setFontSize(14);
+    pdf.setTextColor(50, 50, 50);
+    pdf.text("Appointment Details", 20, 55);
+    pdf.setFontSize(12);
+    pdf.text(`📍 Location: ${formData.location}`, 20, 65);
+    pdf.text(`📅 Date: ${formatDate(formData.date)}`, 20, 75);
+    pdf.text(`⏰ Time: ${formData.time}`, 20, 85);
+    pdf.text(`📱 Device: ${formData.brand} ${formData.model}`, 20, 95);
+    pdf.text(`🔧 Service: ${formData.damageType}`, 20, 105);
+    pdf.text(`👤 Name: ${formData.fullName}`, 20, 115);
+    pdf.text(`📞 Phone: ${formData.phoneNumber}`, 20, 125);
       pdf.text(`Time: ${formData.time}`, 20, 80)
       pdf.text(`Device: ${formData.brand} ${formData.model}`, 20, 90)
       pdf.text(`Service: ${formData.damageType}`, 20, 100)
@@ -150,7 +162,11 @@ export default function AppointmentForm() {
       pdf.setFontSize(10)
       pdf.setTextColor(128, 128, 128)
       pdf.text("Thank you for choosing Mobile Care. We look forward to serving you!", 105, 280, { align: "center" })
-      pdf.text(`Generated on ${new Date().toLocaleString()}`, 105, 285, { align: "center" })
+    pdf.setFontSize(10);
+    pdf.setTextColor(100, 100, 100);
+    pdf.text("📞 Support: (762) 444-9461", 105, 275, { align: "center" });
+    pdf.text("🌐 Website: www.mobilecareusa.com", 105, 285, { align: "center" });
+    pdf.text(`🕒 Generated on ${new Date().toLocaleString()}`, 105, 295, { align: "center" });
 
       pdf.save("Mobile_Care_Appointment_Confirmation.pdf")
 
