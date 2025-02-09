@@ -59,12 +59,14 @@ export function Hero() {
                 <span className="text-white">30-day warranty</span>
               </div>
             </div>
-            {/* ✅ Replaced button with "Schedule Appointment" like the nav bar */}
+            {/* ✅ Fixed button - Now fully clickable & properly styled */}
             <div className="flex justify-start">
               <Link href="/schedule-appointment" passHref>
-                <Button className="bg-brand-mint text-brand-dark hover:bg-brand-mintLight text-lg px-6 py-3 rounded-lg">
-                  Schedule Appointment
-                </Button>
+                <a className="relative z-10">
+                  <Button className="bg-brand-mint text-brand-dark hover:bg-brand-mintLight text-lg px-6 py-3 rounded-lg">
+                    Schedule Appointment
+                  </Button>
+                </a>
               </Link>
             </div>
           </div>
