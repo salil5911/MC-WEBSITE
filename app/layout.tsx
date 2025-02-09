@@ -5,8 +5,9 @@ export const metadata: Metadata = {
   title: 'Mobile Care USA',
   description: 'Expert smartphone repair services you can trust.',
   icons: {
-    icon: '/favicon.ico',
-}
+    icon: '/favicon.ico', // Correct syntax for the icon
+  },
+};
 
 export default function RootLayout({
   children,
@@ -17,5 +18,5 @@ export default function RootLayout({
     <html lang="en">
       <body>{children}</body>
     </html>
-  )
+  );
 }
