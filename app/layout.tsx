@@ -4,6 +4,8 @@ import './globals.css'
 export const metadata: Metadata = {
   title: 'Mobile Care USA',
   description: 'Expert smartphone repair services you can trust.',
+  icons: {
+    icon: '/favicon.ico',
 }
 
 export default function RootLayout({
