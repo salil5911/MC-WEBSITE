@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Smartphone, Shield, MapPin } from "lucide-react";
+import { Smartphone, Shield, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export function Hero() {
@@ -59,18 +59,12 @@ export function Hero() {
                 <span className="text-white">30-day warranty</span>
               </div>
             </div>
-            {/* ✅ Fixed Button - Now Fully Clickable */}
+            {/* ✅ Replaced button with "Schedule Appointment" like the nav bar */}
             <div className="flex justify-start">
               <Link href="/schedule-appointment" passHref>
-                <a>
-                  <Button
-                    size="lg"
-                    className="bg-brand-mint text-brand-dark hover:bg-brand-mintLight text-lg px-8 py-6"
-                  >
-                    Start Device Repair Now
-                    <ArrowRight className="ml-2 h-5 w-5" />
-                  </Button>
-                </a>
+                <Button className="bg-brand-mint text-brand-dark hover:bg-brand-mintLight text-lg px-6 py-3 rounded-lg">
+                  Schedule Appointment
+                </Button>
               </Link>
             </div>
           </div>
