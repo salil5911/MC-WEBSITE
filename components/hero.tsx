@@ -31,13 +31,18 @@ export function Hero() {
     }, 5000);
     return () => clearInterval(timer);
   }, []);
-
+  
   return (
     <div className="relative bg-brand-dark pt-24">
       <div className="absolute inset-0 bg-circuit-pattern opacity-20" />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
           <div>
+            <noscript>
+  Phone screen repair Atlanta, iPhone repair near me, Samsung screen repair Atlanta, 
+  Fast phone repair in Atlanta, Cell phone battery replacement Atlanta, 
+  Best phone repair shop in Georgia
+</noscript>
             <h1 className="text-4xl sm:text-5xl font-bold text-white mb-6">
               Fast & Affordable Phone Repair <span className="text-brand-mint">in Atlanta, Georgia</span>
             </h1>
