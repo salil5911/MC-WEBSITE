@@ -39,11 +39,10 @@ export function Hero() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
           <div>
             <h1 className="text-4xl sm:text-5xl font-bold text-white mb-6">
-              Fast & Affordable Phone Repair <span className="text-brand-mint">in Georgia Atlanta</span>
+              Fast & Affordable Phone Repair <span className="text-brand-mint">in Atlanta, Georgia</span>
             </h1>
             <p className="text-xl text-gray-300 mb-8">
-              Professional repair services for all your devices. From iPhones to Samsung, we fix it all with certified
-              expertise and genuine parts.
+              Atlanta’s go-to phone repair experts! Whether it's a shattered screen or a weak battery, we’ll fix it fast. Affordable pricing & top-rated service!
             </p>
             <div className="grid grid-cols-2 gap-4 mb-8">
               <div className="flex items-center space-x-2">
