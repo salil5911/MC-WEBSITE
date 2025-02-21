@@ -3,9 +3,37 @@
 import { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { Menu, Home } from "lucide-react"
+import { Menu, Home, ChevronDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+
+const locations = [
+  {
+    name: "Augusta Mall",
+    path: "/locations/augusta-mall",
+  },
+  {
+    name: "Perimeter Mall",
+    path: "/locations/perimeter-mall",
+  },
+  {
+    name: "Cumberland Mall",
+    path: "/locations/cumberland-mall",
+  },
+  {
+    name: "Southlake Mall",
+    path: "/locations/southlake-mall",
+  },
+  {
+    name: "Lynnhaven Mall",
+    path: "/locations/lynnhaven-mall",
+  },
+  {
+    name: "Carolina Place Mall",
+    path: "/locations/carolina-place-mall",
+  },
+]
 
 export function Nav() {
   const [isOpen, setIsOpen] = useState(false)
@@ -42,12 +70,26 @@ export function Nav() {
             >
               Services
             </Link>
-            <Link
-              href="/locations"
-              className="text-brand-dark hover:text-brand-mint transition-colors text-xl font-semibold px-4 py-2"
-            >
-              Locations
-            </Link>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="ghost"
+                  className="text-brand-dark hover:text-brand-mint transition-colors text-xl font-semibold px-4 py-2 flex items-center"
+                >
+                  Locations
+                  <ChevronDown className="ml-2 h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56">
+                {locations.map((location) => (
+                  <DropdownMenuItem key={location.path} asChild>
+                    <Link href={location.path} className="w-full cursor-pointer">
+                      {location.name}
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
             <Link href="/schedule-appointment">
               <Button className="bg-brand-mint text-brand-dark hover:bg-brand-mint/90 text-lg px-4 py-2">
                 Schedule Appointment
@@ -70,9 +112,20 @@ export function Nav() {
                 <Link href="/services" className="flex w-full items-center py-3 text-xl font-semibold">
                   Services
                 </Link>
-                <Link href="/locations" className="flex w-full items-center py-3 text-xl font-semibold">
-                  Locations
-                </Link>
+                <div className="py-3">
+                  <p className="text-xl font-semibold mb-2">Locations</p>
+                  <div className="space-y-2 pl-4">
+                    {locations.map((location) => (
+                      <Link
+                        key={location.path}
+                        href={location.path}
+                        className="block text-lg text-gray-600 hover:text-brand-mint"
+                      >
+                        {location.name}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
                 <Link href="/schedule-appointment" className="w-full">
                   <Button className="w-full bg-brand-mint text-brand-dark hover:bg-brand-mint/90">
                     Schedule Appointment
