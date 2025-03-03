@@ -5,6 +5,23 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { CheckCircle, Clock, ClipboardCheck, Bell } from "lucide-react"
 
 export default function ScheduleAppointmentPage() {
+  return (
+    <>
+      <Head>
+        <title>Schedule a Repair | Mobile Care USA</title>
+        <meta name="description" content="Book an appointment online for fast and reliable phone repairs. Choose a time that works for you and get your device fixed today!" />
+        <meta name="robots" content="index, follow" />
+      </Head>
+
+      <main>
+        <h1>Schedule Your Repair Appointment</h1>
+        <p>Choose your repair service and book a time that fits your schedule.</p>
+      </main>
+    </>
+  );
+}
+
+{
   const steps = [
     {
       icon: CheckCircle,
