@@ -1,5 +1,3 @@
-"use client";
-
 import { Nav } from "@/components/nav"
 import { Footer } from "@/components/footer"
 import { Shield, PenToolIcon as Tool, ArrowRight, Star, Smartphone, Battery, Wifi, Wrench } from "lucide-react"
@@ -8,17 +6,6 @@ import Image from "next/image"
 import Link from "next/link"
 import { Card, CardContent } from "@/components/ui/card"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-
-import { useEffect } from "react";
-
-useEffect(() => {
-  const script = document.createElement("script");
-  script.src = "https://static.elfsight.com/platform/platform.js";
-  script.async = true;
-  script.defer = true;
-  document.body.appendChild(script);
-}, []);
-
 
 const trustFactors = [
   {
@@ -313,17 +300,32 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* Google Reviews Widget (Replacing Testimonials) */}
-<section className="py-16 bg-white">
-  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div className="text-center mb-12">
-      <h2 className="text-3xl font-bold text-brand-dark mb-4">What Our Customers Say</h2>
-    </div>
-    {/* Google Reviews Widget (Elfsight) */}
-    <div className="elfsight-app-d3c7508c-be91-4856-8b11-894c2c0e7d75" data-elfsight-app-lazy></div>
-  </div>
-</section>
-
+      {/* Testimonials Section */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-brand-dark mb-4">What Our Customers Say</h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {testimonials.map((testimonial, index) => (
+              <Card key={index} className="border-2 border-brand-mint/10 hover:border-brand-mint transition-colors">
+                <CardContent className="p-6">
+                  <div className="flex gap-1 mb-4">
+                    {[...Array(testimonial.rating)].map((_, i) => (
+                      <Star key={i} className="h-5 w-5 fill-brand-mint text-brand-mint" />
+                    ))}
+                  </div>
+                  <p className="text-gray-600 mb-4">{testimonial.text}</p>
+                  <p className="font-semibold text-brand-dark">{testimonial.name}</p>
+                  <p className="text-sm text-gray-500">
+                    {testimonial.location} - {testimonial.date}
+                  </p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* FAQs Section */}
       <section className="py-16 bg-gray-50">
