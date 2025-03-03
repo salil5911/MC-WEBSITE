@@ -19,6 +19,14 @@ export default function ServicesPage() {
     document.body.appendChild(script);
   }, []);
 
+  const trustFactors = [
+    { title: "Certified Technicians", description: "Our team consists of highly skilled and certified technicians with years of experience in mobile device repair." },
+    { title: "High-Quality Parts", description: "We use only premium quality parts that meet or exceed OEM specifications, ensuring long-lasting repairs." },
+    { title: "30-Day Warranty", description: "All our repairs are backed by a 30-day warranty, giving you peace of mind and protection." },
+    { title: "Fast Turnaround Time", description: "We strive to complete most repairs quickly and efficiently, minimizing your downtime." },
+    { title: "Affordable Pricing", description: "We offer competitive pricing and transparent quotes, ensuring you get the best value for your money." }
+  ];
+
   return (
     <main className="min-h-screen">
       <Nav />
@@ -41,7 +49,7 @@ export default function ServicesPage() {
               Expert Mobile Repair Services – Fast & Affordable
             </h1>
             <p className="text-xl md:text-2xl text-gray-200">
-              Professional repair services for all your devices, backed by our 30-day warranty
+              Professional repair services for all your devices, backed by our 30-day warranty.
             </p>
           </div>
         </div>
@@ -57,13 +65,50 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* Google Reviews Widget */}
+      {/* Trust Factors Section */}
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-brand-dark mb-4">Why Trust Our Mobile Repair Services?</h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {trustFactors.map((factor, index) => (
+              <div key={index} className="flex items-start gap-4">
+                <div className="rounded-full bg-brand-mint/10 p-3">
+                  <Shield className="h-6 w-6 text-brand-mint" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold text-brand-dark mb-2">{factor.title}</h3>
+                  <p className="text-gray-600">{factor.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Google Reviews Widget (Replacing Testimonials) */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-brand-dark mb-4">What Our Customers Say</h2>
           </div>
           <div className="elfsight-app-d3c7508c-be91-4856-8b11-894c2c0e7d75" data-elfsight-app-lazy></div>
+        </div>
+      </section>
+
+      {/* FAQs Section */}
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold text-center text-brand-dark mb-8">Frequently Asked Questions</h2>
+          <Accordion type="single" collapsible className="space-y-4">
+            <AccordionItem value="item-1" className="bg-white border rounded-lg">
+              <AccordionTrigger className="px-4 hover:no-underline">How long does a typical repair take?</AccordionTrigger>
+              <AccordionContent className="px-4 pb-4 text-gray-600">
+                Most common repairs like screen replacements and battery changes are completed within 30-45 minutes.
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
         </div>
       </section>
 
