@@ -6,9 +6,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { CheckCircle, Clock, ClipboardCheck, Bell } from "lucide-react"
 
 export default function ScheduleAppointmentPage() {
-
-   return (
-    <>
       <Head>
         <title>Schedule a Repair | Mobile Care USA</title>
         <meta name="description" content="Book an appointment online for fast and reliable phone repairs. Choose a time that works for you and get your device fixed today!" />
