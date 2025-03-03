@@ -7,6 +7,17 @@ import Link from "next/link"
 import { Card, CardContent } from "@/components/ui/card"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 
+import { useEffect } from "react";
+
+useEffect(() => {
+  const script = document.createElement("script");
+  script.src = "https://static.elfsight.com/platform/platform.js";
+  script.async = true;
+  script.defer = true;
+  document.body.appendChild(script);
+}, []);
+
+
 const trustFactors = [
   {
     title: "Certified Technicians",
