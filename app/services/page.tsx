@@ -1,3 +1,4 @@
+"use client";
 import { Nav } from "@/components/nav"
 import { Footer } from "@/components/footer"
 import { Shield, PenToolIcon as Tool, ArrowRight, Star, Smartphone, Battery, Wifi, Wrench } from "lucide-react"
