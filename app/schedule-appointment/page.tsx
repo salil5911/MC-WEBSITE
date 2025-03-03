@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { Nav } from "@/components/nav"
 import AppointmentForm from "@/components/appointment-form"
 import { Footer } from "@/components/footer"
