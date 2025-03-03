@@ -5,7 +5,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { CheckCircle, Clock, ClipboardCheck, Bell } from "lucide-react"
 
 export default function ScheduleAppointmentPage() {
-  return (
+
+   return (
     <>
       <Head>
         <title>Schedule a Repair | Mobile Care USA</title>
@@ -19,9 +20,7 @@ export default function ScheduleAppointmentPage() {
       </main>
     </>
   );
-}
-
-{
+  
   const steps = [
     {
       icon: CheckCircle,
