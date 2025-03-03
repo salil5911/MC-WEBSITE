@@ -19,48 +19,6 @@ export default function ServicesPage() {
     document.body.appendChild(script);
   }, []);
 
-  const features = [
-    {
-      title: "Screen Repair",
-      description:
-        "Expert screen replacement with premium quality parts, including OLED and LCD displays. Our certified technicians use manufacturer-approved components to ensure perfect color accuracy, touch sensitivity, and brightness. We handle everything from minor crack repairs to complete screen assembly replacements.",
-      icon: Smartphone,
-      details: [
-        "Original quality display panels",
-        "Full touch & Face ID functionality",
-        "Color calibration included",
-        "Anti-scratch protection applied",
-        "30-minute average repair time",
-      ],
-    },
-    {
-      title: "Battery Replacement",
-      description:
-        "Restore your device's power with genuine batteries that meet or exceed OEM specifications. We perform complete power diagnostics, replace batteries with high-capacity alternatives, and ensure proper calibration for optimal performance.",
-      icon: Battery,
-      details: [
-        "Genuine high-capacity batteries",
-        "Full power diagnostics",
-        "Battery health optimization",
-        "Charging cycle calibration",
-        "Environmentally safe disposal",
-      ],
-    },
-    {
-      title: "Software Issues",
-      description:
-        "Resolve system crashes and software problems through advanced diagnostics and repair. We handle operating system repairs, data recovery, and performance optimization.",
-      icon: Wrench,
-      details: [
-        "System diagnostics",
-        "OS repair & update",
-        "Data backup & recovery",
-        "Performance optimization",
-        "Security check",
-      ],
-    },
-  ];
-
   return (
     <main className="min-h-screen">
       <Nav />
@@ -96,35 +54,27 @@ export default function ServicesPage() {
             <h2 className="text-3xl font-bold text-brand-dark mb-4">Our Mobile Repair Services</h2>
             <p className="text-xl text-gray-600 mb-8">Professional repairs for all your device needs</p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {features.map((feature, index) => (
-              <Card key={index} className="border-2 border-brand-mint/20 hover:border-brand-mint transition-colors">
-                <CardContent className="p-6">
-                  <feature.icon className="h-12 w-12 text-brand-mint mb-4" />
-                  <h3 className="text-xl font-semibold text-brand-dark mb-2">{feature.title}</h3>
-                  <p className="text-gray-600">{feature.description}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
         </div>
       </section>
 
-      {/* Testimonials Section - Google Reviews Widget */}
+      {/* Google Reviews Widget */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-brand-dark mb-4">What Our Customers Say</h2>
           </div>
-          {/* Elfsight Google Reviews Widget */}
           <div className="elfsight-app-d3c7508c-be91-4856-8b11-894c2c0e7d75" data-elfsight-app-lazy></div>
         </div>
       </section>
 
       {/* Final CTA Section */}
       <section className="py-16 bg-brand-dark">
+        <div className="absolute inset-0 bg-circuit-pattern opacity-10" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-bold text-white mb-4">Need a Repair? Get in Touch Now!</h2>
+          <p className="text-xl text-gray-300 mb-8">
+            Most repairs completed in 30-45 minutes. Schedule your repair today!
+          </p>
           <Link href="/schedule-appointment">
             <Button size="lg" className="bg-brand-mint text-brand-dark hover:bg-brand-mintLight px-8 py-6 text-lg">
               Schedule an Appointment
