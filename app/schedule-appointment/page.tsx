@@ -6,6 +6,86 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CheckCircle, Clock, ClipboardCheck, Bell } from "lucide-react";
 
 export default function ScheduleAppointmentPage() {
+  // 🚀 Define `steps`, `expectations`, and `schedulingFaqs` inside the function
+  const steps = [
+    {
+      icon: CheckCircle,
+      title: "Select Your Service",
+      description: "Choose the type of repair or service you need from our comprehensive list of options.",
+    },
+    {
+      icon: Clock,
+      title: "Pick a Time",
+      description: "Select a convenient date and time slot. Most repairs can be completed within 30-45 minutes.",
+    },
+    {
+      icon: ClipboardCheck,
+      title: "Provide Details",
+      description: "Tell us about your device and the issues you're experiencing to help us prepare for your repair.",
+    },
+    {
+      icon: Bell,
+      title: "Confirmation",
+      description: "Receive instant confirmation and reminder notifications for your appointment.",
+    },
+  ];
+
+  const expectations = [
+    {
+      title: "Before Your Appointment",
+      items: [
+        "Back up your device if possible",
+        "Remove any screen protectors or cases",
+        "Note down your device passcode",
+        "Bring valid ID for check-in",
+        "Arrive 5-10 minutes early",
+      ],
+    },
+    {
+      title: "During Your Appointment",
+      items: [
+        "Quick initial device assessment",
+        "Detailed cost breakdown provided",
+        "Repair process explanation",
+        "Real-time update notifications",
+        "Payment processing",
+      ],
+    },
+    {
+      title: "After Your Appointment",
+      items: [
+        "Quality assurance testing",
+        "Repair warranty explanation",
+        "Care instructions provided",
+        "Follow-up satisfaction check",
+        "Feedback request",
+      ],
+    },
+  ];
+
+  const schedulingFaqs = [
+    {
+      question: "Can I reschedule my appointment?",
+      answer:
+        "Yes, you can reschedule up to 2 hours before your appointment time through our online portal or by calling your selected location.",
+    },
+    {
+      question: "What if I'm running late?",
+      answer:
+        "Please contact us if you're running late. We'll hold your slot for 15 minutes and try to accommodate you, or help reschedule if needed.",
+    },
+    {
+      question: "Do you offer same-day appointments?",
+      answer:
+        "Yes, we often have same-day appointments available. Earlier booking is recommended for specific time slots or complex repairs.",
+    },
+    {
+      question: "What payment methods do you accept?",
+      answer:
+        "We accept all major credit cards, debit cards, cash, and digital payments including Apple Pay and Google Pay.",
+    },
+  ];
+
   return (
     <>
       <Head>
