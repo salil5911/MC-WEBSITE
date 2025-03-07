@@ -80,7 +80,7 @@ export default function ServicesPage() {
           objectFit="cover"
           className="absolute inset-0"
           priority
-        />
+        />}
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-end pb-24">
           <div className="max-w-2xl">
             <h1 className="text-4xl md:text-6xl font-bold text-white mb-8">
