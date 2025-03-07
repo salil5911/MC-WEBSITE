@@ -1,7 +1,7 @@
 export const metadata = {
   title: "Our Repair Services | Mobile Care USA",
   description:
-    "Explore our mobile repair services including screen replacement, battery replacement, and water damage repair.",
+    "Explore our expert mobile repair services, including screen replacement, battery fixes, and water damage repair.",
   keywords: [
     "mobile repair",
     "phone screen replacement",
@@ -24,7 +24,7 @@ export const metadata = {
   openGraph: {
     title: "Our Repair Services | Mobile Care USA",
     description:
-      "Explore our mobile repair services including screen replacement, battery replacement, and water damage repair.",
+      "Explore our expert mobile repair services, including screen replacement, battery fixes, and water damage repair.",
     url: "https://mobilecareusa.com/services",
     type: "website",
   },
