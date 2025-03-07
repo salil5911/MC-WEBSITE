@@ -1,7 +1,7 @@
 export const metadata = {
-  title: "Mobile Repair Services | Fast & Affordable Repairs Near You",
+  title: "Our Repair Services | Mobile Care USA",
   description:
-    "Get expert mobile repair services for all brands. Screen replacement, battery issues, water damage repair & more. Visit us or book a doorstep repair today!",
+    "Explore our mobile repair services including screen replacement, battery replacement, and water damage repair.",
   keywords: [
     "mobile repair",
     "phone screen replacement",
@@ -23,9 +23,9 @@ export const metadata = {
     "phone repair atlanta",
   ],
   openGraph: {
-    title: "Mobile Repair Services | Fast & Affordable Repairs Near You",
+    title: "Our Repair Services | Mobile Care USA",
     description:
-      "Get expert mobile repair services for all brands. Screen replacement, battery issues, water damage repair & more. Visit us or book a doorstep repair today!",
+      "Explore our mobile repair services including screen replacement, battery replacement, and water damage repair.",
     url: "https://mobilecareusa.com/services",
     type: "website",
   },
