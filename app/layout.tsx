@@ -69,13 +69,14 @@ export default function RootLayout({
           "url": "https://mobilecareusa.com"
         })}} />
 
-        <meta name="title" content="Mobile Care - Professional Phone Repairs" />
-        <meta name="description" content="Expert care for all your tech needs. From pocket-sized to professional-grade repairs, we service all major smartphone brands." />
+        {/* Open Graph Meta Tags */}
         <meta property="og:title" content="Mobile Care - Expert Phone Repairs" />
-        <meta property="og:description" content="Professional smartphone repair services you can trust. We repair and upgrade all major brands from iPhones to Androids." />
+        <meta property="og:description" content="Professional phone repair services you can trust. We repair and upgrade all major brands from iPhones to Androids." />
         <meta property="og:url" content="https://mobilecareusa.com" />
         <meta property="og:image" content="/og-image.png" />
         <meta property="og:type" content="website" />
+
+        <title>Mobile Care - Professional Phone Repairs</title>
       </head>
       <body>{children}</body>
     </html>
