@@ -53,6 +53,34 @@ const trustFactors = [
   },
 ];
 
+const expandedFaqs = [
+  {
+    question: "How long does a typical repair take?",
+    answer:
+      "Most common repairs like screen replacements and battery changes are completed within 30-45 minutes. More complex repairs such as water damage restoration may take 2-24 hours depending on severity.",
+  },
+  {
+    question: "Do you offer a warranty on repairs?",
+    answer:
+      "Yes, all our repairs come with a 30-day warranty covering both parts and labor. If you experience any issues related to our repair work within this period, we'll fix it at no additional cost.",
+  },
+  {
+    question: "What brands do you repair?",
+    answer:
+      "We repair all major brands including Apple, Samsung, Google, Motorola, and more. Our technicians are certified to work on the latest models and receive regular training.",
+  },
+  {
+    question: "Do you use original parts for repairs?",
+    answer:
+      "We use high-quality parts that meet or exceed OEM specifications. For certain repairs, we offer both original manufacturer parts and premium aftermarket alternatives.",
+  },
+  {
+    question: "Can you recover data from a damaged device?",
+    answer:
+      "Yes, we offer data recovery services for most types of device damage. Our success rate is high for physical damage, though water damage recovery may vary depending on severity.",
+  },
+];
+
 export default function ServicesPage() {
   useEffect(() => {
     const script = document.createElement("script");
@@ -130,30 +158,21 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* Features List Section */}
+      {/* Features Section */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-brand-dark mb-4">Our Mobile Repair Services</h2>
-            <p className="text-xl text-gray-600 mb-8">Professional repairs for all your device needs</p>
-          </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {features.map((feature, index) => (
-              <Card key={index} className="border-2 border-brand-mint/20 hover:border-brand-mint transition-colors">
-                <CardContent className="p-6">
-                  <div className="flex items-center gap-4 mb-6">
-                    <div className="p-3 rounded-lg bg-brand-mint/10">
-                      <feature.icon className="h-8 w-8 text-brand-mint" />
-                    </div>
-                    <h3 className="text-2xl font-semibold text-brand-dark">{feature.title}</h3>
+              <Card key={index}>
+                <CardContent>
+                  <div className="flex gap-4">
+                    <feature.icon className="h-8 w-8 text-brand-mint" />
+                    <h3>{feature.title}</h3>
                   </div>
-                  <p className="text-gray-600 mb-6 leading-relaxed">{feature.description}</p>
-                  <ul className="grid gap-2">
+                  <p>{feature.description}</p>
+                  <ul>
                     {feature.details.map((detail, i) => (
-                      <li key={i} className="flex items-center gap-2 text-gray-600">
-                        <div className="h-1.5 w-1.5 rounded-full bg-brand-mint flex-shrink-0" />
-                        <span className="text-sm">{detail}</span>
-                      </li>
+                      <li key={i}>- {detail}</li>
                     ))}
                   </ul>
                 </CardContent>
@@ -163,19 +182,16 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* Trust Factors Section */}
+      {/* FAQ Section */}
       <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-brand-dark mb-4">Why Trust Our Mobile Repair Services?</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {trustFactors.map((factor, index) => (
-              <div key={index}>
-                <h3 className="text-xl font-semibold text-brand-dark">{factor.title}</h3>
-                <p className="text-gray-600">{factor.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
+        <Accordion type="single" collapsible>
+          {expandedFaqs.map((faq, index) => (
+            <AccordionItem key={index} value={`item-${index}`}>
+              <AccordionTrigger>{faq.question}</AccordionTrigger>
+              <AccordionContent>{faq.answer}</AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
       </section>
 
       <Footer />
