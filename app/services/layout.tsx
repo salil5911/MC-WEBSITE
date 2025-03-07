@@ -14,13 +14,12 @@ export const metadata = {
     "phone repair southlake",
     "phone repair cumberland mall",
     "phone repair perimeter mall",
-    "phone repair virgina beach",
+    "phone repair virginia beach",
     "phone repair lynnhaven",
     "phone repair north carolina",
     "phone repair carolina place mall",
     "phone repair augusta mall",
     "phone repair ga",
-    "phone repair atlanta",
   ],
   openGraph: {
     title: "Our Repair Services | Mobile Care USA",
@@ -31,7 +30,6 @@ export const metadata = {
   },
 };
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default function ServicesLayout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
-
