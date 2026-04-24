@@ -2,16 +2,16 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Mobile Care - Professional Phone Repairs',
-  description: 'Expert care for all your tech needs. From pocket-sized to professional-grade repairs, we service all major phone brands.',
+  title: 'Mobile Phone Repair in Atlanta, Georgia, Laptop & Tablet Repair Service in Augusta Mall | Mobile Care USA',
+  description: 'Get fast, reliable mobile phone repair in Atlanta, Georgia with Mobile Care USA. We also specialize in expert laptop and tablet repair services at Augusta Mall, offering screen replacements, battery upgrades, and full diagnostics for iPhone, Samsung, MacBook, and more. Trusted technicians, affordable pricing, and same-day service to keep you connected.',
   icons: {
     icon: '/favicon.ico',
     shortcut: '/favicon.ico',
     apple: '/favicon.png',
   },
   openGraph: {
-    title: 'Mobile Care - Expert Phone Repairs',
-    description: 'Professional phone repair services you can trust. We repair and upgrade all major brands from iPhones to Androids.',
+    title: 'Mobile Phone Repair in Atlanta, Georgia, Laptop & Tablet Repair Service in Augusta Mall | Mobile Care USA',
+    description: 'Mobile Phone Repair in Atlanta, Georgia, iPhone repair service in Atlanta, Georgia, Android phone repair in Atlanta, Georgia, phone repair shop in Augusta Mall, phone repair shop in Perimeter Mall, phone repair shop in Cumberland Mall, phone repair shop in Southlake Mall, phone repair shop in Lynnhaven Mall, phone repair shop in Carolina Place Mall',
     url: 'https://mobilecareusa.com',
     siteName: 'Mobile Care',
     images: [
