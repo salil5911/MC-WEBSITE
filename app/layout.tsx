@@ -3,7 +3,7 @@ import './globals.css';
 
 export const metadata: Metadata = {
   title: 'Mobile Phone Repair in Atlanta, Georgia, Laptop & Tablet Repair Service in Augusta Mall | Mobile Care USA',
-  description: 'Get fast, reliable mobile phone repair in Atlanta, Georgia with Mobile Care USA. We also specialize in expert laptop and tablet repair services at Augusta Mall, offering screen replacements, battery upgrades, and full diagnostics for iPhone, Samsung, MacBook, and more. Trusted technicians, affordable pricing, and same-day service to keep you connected.',
+  description: 'Get fast, reliable mobile phone repair in atlanta, Georgia with Mobile Care USA. We also specialize in expert laptop and tablet repair services at Augusta Mall, offering screen replacements, battery upgrades, and full diagnostics for iPhone, Samsung, MacBook, and more. Trusted technicians, affordable pricing, and same-day service to keep you connected.',
   icons: {
     icon: '/favicon.ico',
     shortcut: '/favicon.ico',
