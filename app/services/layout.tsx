@@ -1,15 +1,15 @@
 export const metadata = {
-  title: "Our Repair Services | Mobile Care USA",
+  title: "Mobile, Tablet & Laptop Repair Services in Atlanta, Georgia | Mobile Care USA",
   description:
-    "Explore our expert mobile repair services, including screen replacement, battery fixes, and water damage repair.",
+    "Get expert mobile, tablet, and laptop repair services in Atlanta, Georgia with Mobile Care USA. From cracked screens and battery replacements to software fixes and diagnostics, our certified technicians deliver fast, affordable, and reliable repairs for iPhone, Samsung, MacBook, iPad, and more. Same-day service and trusted support to keep your devices running smoothly.",
   keywords: [
-    "mobile repair",
-    "phone screen replacement",
-    "battery repair",
-    "water damage fix",
-    "phone repair near you",
-    "phone repair augusta",
-    "phone repair atlanta",
+    "Mobile Phone Repair in Atlanta, Georgia",
+    "iPhone repair in Atlanta, Georgia",
+    "iPad repair in Atlanta, Georgia",
+    "Tablet repair service in Atlanta, Georgia",
+    "laptop repair service in Atlanta, Georgia",
+    "smartwatch repair in Atlanta, Georgia",
+    "screen repair service in Atlanta, Georgia",
     "phone repair dunwoody",
     "phone repair southlake",
     "phone repair cumberland mall",
@@ -22,9 +22,9 @@ export const metadata = {
     "phone repair ga",
   ],
   openGraph: {
-    title: "Our Repair Services | Mobile Care USA",
+    title: "Mobile, Tablet & Laptop Repair Services in Atlanta, Georgia | Mobile Care USA",
     description:
-      "Explore our expert mobile repair services, including screen replacement, battery fixes, and water damage repair.",
+      "Get expert mobile, tablet, and laptop repair services in Atlanta, Georgia with Mobile Care USA. From cracked screens and battery replacements to software fixes and diagnostics, our certified technicians deliver fast, affordable, and reliable repairs for iPhone, Samsung, MacBook, iPad, and more. Same-day service and trusted support to keep your devices running smoothly.",
     url: "https://mobilecareusa.com/services",
     type: "website",
   },
