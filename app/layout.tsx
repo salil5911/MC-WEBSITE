@@ -76,7 +76,7 @@ export default function RootLayout({
         <meta property="og:image" content="/og-image.png" />
         <meta property="og:type" content="website" />
 
-        <title>Mobile Care - Professional Phone Repairs</title>
+        <title>Mobile Phone Repair in Atlanta, Georgia, Laptop & Tablet Repair Service in Augusta Mall | Mobile Care USA</title>
       </head>
       <body>{children}</body>
     </html>
