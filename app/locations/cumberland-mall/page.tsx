@@ -9,7 +9,7 @@ import Image from "next/image"
 export default function CumberlandMallPage() {
   const location = {
     name: "Cumberland Mall",
-    address: "2860 Cumberland Mall Suite # 208",
+    address: "2860 Cumberland Mall SE #208",
     city: "Atlanta",
     state: "GA",
     zip: "30339",
