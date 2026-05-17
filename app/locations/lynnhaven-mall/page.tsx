@@ -9,7 +9,7 @@ import Image from "next/image"
 export default function LynnhavenMallPage() {
   const location = {
     name: "Lynnhaven Mall",
-    address: "701 Lynnhaven Pkwy",
+    address: "701 Lynnhaven Pkwy #B11A",
     city: "Virginia Beach",
     state: "VA",
     zip: "23452",
