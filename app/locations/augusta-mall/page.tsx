@@ -10,7 +10,7 @@ import Image from "next/image"
 export default function AugustaMallPage() {
   const location = {
     name: "Augusta Mall",
-    address: "Lower Level Next to Bath and Body Works, 3450 Wrightsboro Rd #1125",
+    address: "3450 Wrightsboro Rd #1125",
     city: "Augusta",
     state: "GA",
     zip: "30909",
