@@ -9,7 +9,7 @@ import Image from "next/image"
 export default function PerimeterMallPage() {
   const location = {
     name: "Perimeter Mall",
-    address: "4400 Ashford Dunwoody Rd Space #2085",
+    address: "4400 Ashford Dunwoody Road #2085",
     city: "Dunwoody",
     state: "GA",
     zip: "30346",
