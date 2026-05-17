@@ -9,7 +9,7 @@ import Image from "next/image"
 export default function SouthlakeMallPage() {
   const location = {
     name: "Southlake Mall",
-    address: "Located Next to Status Jewels, 1000 Southlake Cir #1123",
+    address: "1000 Southlake Circle #1123",
     city: "Morrow",
     state: "GA",
     zip: "30260",
