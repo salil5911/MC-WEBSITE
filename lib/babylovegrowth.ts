@@ -38,6 +38,32 @@ function headers(key: string) {
 }
 
 /**
+ * Fetch that retries on 429 (rate limit) with exponential backoff, honoring
+ * a Retry-After header when present. BabyLoveGrowth rate-limits bursts, which
+ * otherwise causes on-demand page builds to fail intermittently.
+ */
+async function fetchWithRetry(
+  url: string,
+  init: RequestInit & { next?: { revalidate?: number } },
+  attempts = 4,
+): Promise<Response> {
+  let lastRes: Response | null = null
+  for (let i = 0; i < attempts; i++) {
+    const res = await fetch(url, init)
+    if (res.status !== 429) return res
+    lastRes = res
+    const retryAfter = Number(res.headers.get("retry-after"))
+    const delayMs = Number.isFinite(retryAfter) && retryAfter > 0
+      ? retryAfter * 1000
+      : 500 * 2 ** i
+    if (i < attempts - 1) {
+      await new Promise((resolve) => setTimeout(resolve, delayMs))
+    }
+  }
+  return lastRes as Response
+}
+
+/**
  * Returns whether the BabyLoveGrowth integration is configured.
  * Used to render a helpful empty state instead of crashing when the
  * API key has not been added yet.
@@ -51,7 +77,7 @@ export async function getArticles(): Promise<ArticleSummary[]> {
   if (!key) return []
 
   try {
-    const res = await fetch(`${BASE_URL}/v1/articles`, {
+    const res = await fetchWithRetry(`${BASE_URL}/v1/articles`, {
       headers: headers(key),
       next: { revalidate: REVALIDATE_SECONDS },
     })
@@ -79,7 +105,7 @@ export async function getArticleBySlug(slug: string): Promise<Article | null> {
   if (!match) return null
 
   try {
-    const res = await fetch(`${BASE_URL}/v1/articles/${match.id}`, {
+    const res = await fetchWithRetry(`${BASE_URL}/v1/articles/${match.id}`, {
       headers: headers(key),
       next: { revalidate: REVALIDATE_SECONDS },
     })

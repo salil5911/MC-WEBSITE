@@ -8,10 +8,13 @@ import { Button } from "@/components/ui/button"
 import { getArticles, getArticleBySlug, formatDate, stripLeadingTitleAndHero } from "@/lib/babylovegrowth"
 
 export const revalidate = 600
+// Generate post pages on demand (ISR) rather than all at build time. This
+// avoids bursting the BabyLoveGrowth API during the build, and new posts are
+// served + cached on their first request.
+export const dynamicParams = true
 
 export async function generateStaticParams() {
-  const articles = await getArticles()
-  return articles.map((article) => ({ slug: article.slug }))
+  return []
 }
 
 export async function generateMetadata({
@@ -114,10 +117,10 @@ export default async function BlogPostPage({
               Visit any Mobile Care location for fast, expert device repair — walk-ins always
               welcome.
             </p>
-            <Link href="/schedule-appointment" className="mt-6 inline-block">
+            <Link href="/locations" className="mt-6 inline-block">
               <Button className="bg-brand-mint text-brand-dark hover:bg-brand-mint/90">
                 <MapPin className="mr-2 h-4 w-4" />
-                Schedule a Repair
+                Find a Location
               </Button>
             </Link>
           </div>
