@@ -75,3 +75,117 @@
   }
 }
 
+/* Typography for BabyLoveGrowth article HTML */
+.article-content {
+  color: #374151;
+  font-size: 1.075rem;
+  line-height: 1.75;
+}
+.article-content > *:first-child {
+  margin-top: 0;
+}
+.article-content h2 {
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: #1a1a1a;
+}
+.article-content h3 {
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  font-size: 1.3rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: #1a1a1a;
+}
+.article-content h4 {
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+.article-content p {
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+.article-content ul,
+.article-content ol {
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+  padding-left: 1.5rem;
+}
+.article-content ul {
+  list-style-type: disc;
+}
+.article-content ol {
+  list-style-type: decimal;
+}
+.article-content li {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.article-content a {
+  color: #2a9d8f;
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.article-content a:hover {
+  color: #1a1a1a;
+}
+.article-content img {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  border-radius: 0.75rem;
+}
+.article-content blockquote {
+  margin: 2rem 0;
+  border-left: 4px solid #50d5b7;
+  padding-left: 1.25rem;
+  font-style: italic;
+  color: #4b5563;
+}
+.article-content pre {
+  margin: 1.5rem 0;
+  overflow-x: auto;
+  border-radius: 0.75rem;
+  background: #1a1a1a;
+  padding: 1rem 1.25rem;
+  color: #f4f4f5;
+  font-size: 0.9rem;
+}
+.article-content code {
+  border-radius: 0.25rem;
+  background: #f3f4f6;
+  padding: 0.15rem 0.35rem;
+  font-size: 0.9em;
+}
+.article-content pre code {
+  background: transparent;
+  padding: 0;
+}
+.article-content table {
+  margin: 1.5rem 0;
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+.article-content th,
+.article-content td {
+  border: 1px solid #e5e7eb;
+  padding: 0.6rem 0.9rem;
+  text-align: left;
+}
+.article-content th {
+  background: #f9fafb;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+.article-content hr {
+  margin: 2.5rem 0;
+  border-color: #e5e7eb;
+}
+

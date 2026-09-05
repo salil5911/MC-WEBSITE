@@ -70,6 +70,12 @@ export function Nav() {
             >
               Services
             </Link>
+            <Link
+              href="/blog"
+              className="text-brand-dark hover:text-brand-mint transition-colors text-xl font-semibold px-4 py-2"
+            >
+              Blog
+            </Link>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
@@ -111,6 +117,9 @@ export function Nav() {
                 </Link>
                 <Link href="/services" className="flex w-full items-center py-3 text-xl font-semibold">
                   Services
+                </Link>
+                <Link href="/blog" className="flex w-full items-center py-3 text-xl font-semibold">
+                  Blog
                 </Link>
                 <div className="py-3">
                   <p className="text-xl font-semibold mb-2">Locations</p>
