@@ -5,7 +5,7 @@ import { ArrowLeft, MapPin } from "lucide-react"
 import { Nav } from "@/components/nav"
 import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
-import { getArticles, getArticleBySlug, formatDate } from "@/lib/babylovegrowth"
+import { getArticles, getArticleBySlug, formatDate, stripLeadingTitleAndHero } from "@/lib/babylovegrowth"
 
 export const revalidate = 600
 
@@ -102,7 +102,7 @@ export default async function BlogPostPage({
 
           <div
             className="article-content"
-            dangerouslySetInnerHTML={{ __html: article.content_html }}
+            dangerouslySetInnerHTML={{ __html: stripLeadingTitleAndHero(article.content_html) }}
           />
 
           {/* CTA */}

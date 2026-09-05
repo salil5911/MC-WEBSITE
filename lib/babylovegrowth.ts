@@ -94,6 +94,20 @@ export async function getArticleBySlug(slug: string): Promise<Article | null> {
   }
 }
 
+/**
+ * BabyLoveGrowth's content_html begins with its own <h1> title and, usually,
+ * the hero image as the first <img>. The post page renders its own styled
+ * title and hero, so strip those leading elements to avoid duplicates.
+ */
+export function stripLeadingTitleAndHero(html: string): string {
+  if (!html) return ""
+  let out = html.replace(/^\s*<h1[^>]*>[\s\S]*?<\/h1>/i, "")
+  // Remove a leading paragraph that only wraps the hero image, or a bare hero image.
+  out = out.replace(/^\s*<p[^>]*>\s*<img[^>]*>\s*<\/p>/i, "")
+  out = out.replace(/^\s*<img[^>]*>/i, "")
+  return out.trim()
+}
+
 export function formatDate(dateString: string): string {
   try {
     return new Intl.DateTimeFormat("en-US", {
