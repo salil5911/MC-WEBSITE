@@ -14,7 +14,8 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
-    unoptimized: true,
+    formats: ['image/avif', 'image/webp'],
+    minimumCacheTTL: 2678400,
   },
   poweredByHeader: false,
   async headers() {

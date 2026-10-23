@@ -2,6 +2,8 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { ArrowRight, Check, Smartphone, BatteryCharging, Headphones, ShieldCheck, Package } from "lucide-react"
 import { Nav } from "@/components/nav"
+import { JsonLd } from "@/components/json-ld"
+import { breadcrumbSchema } from "@/lib/seo"
 import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
 import { Reveal } from "@/components/reveal"
@@ -41,6 +43,7 @@ const categories = [
 export default function AccessoriesPage() {
   return (
     <main className="min-h-screen">
+      <JsonLd data={breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Accessories", path: "/accessories" }])} />
       <Nav />
 
       {/* Hero */}

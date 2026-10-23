@@ -4,7 +4,7 @@ import { getLocation, locations, type StoreLocation } from "@/lib/locations"
 export const SITE_URL = "https://mobilecareusa.com"
 export const SITE_NAME = "Mobile Care USA"
 export const DEFAULT_OG_IMAGE = {
-  url: "/store-interior.png",
+  url: "/store-interior.webp",
   width: 1536,
   height: 1024,
   alt: "Inside a Mobile Care USA phone repair store",

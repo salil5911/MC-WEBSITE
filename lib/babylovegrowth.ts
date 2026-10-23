@@ -96,28 +96,36 @@ export async function getArticles(): Promise<ArticleSummary[]> {
   }
 }
 
+/**
+ * Like getArticles, but throws on API failure instead of returning [].
+ * A thrown error keeps ISR serving the last good page; returning "no
+ * articles" would cache a 404 that Googlebot could crawl and deindex.
+ */
+async function getArticlesStrict(key: string): Promise<ArticleSummary[]> {
+  const res = await fetchWithRetry(`${BASE_URL}/v1/articles`, {
+    headers: headers(key),
+    next: { revalidate: REVALIDATE_SECONDS },
+  })
+  if (!res.ok) throw new Error(`BabyLoveGrowth list request failed: ${res.status}`)
+  const data = (await res.json()) as ArticleSummary[]
+  return Array.isArray(data) ? data : []
+}
+
 export async function getArticleBySlug(slug: string): Promise<Article | null> {
   const key = getApiKey()
   if (!key) return null
 
-  const summaries = await getArticles()
+  const summaries = await getArticlesStrict(key)
   const match = summaries.find((a) => a.slug === slug)
   if (!match) return null
 
-  try {
-    const res = await fetchWithRetry(`${BASE_URL}/v1/articles/${match.id}`, {
-      headers: headers(key),
-      next: { revalidate: REVALIDATE_SECONDS },
-    })
-    if (!res.ok) {
-      console.log("[v0] BabyLoveGrowth article request failed:", res.status)
-      return null
-    }
-    return (await res.json()) as Article
-  } catch (error) {
-    console.log("[v0] BabyLoveGrowth article request error:", error)
-    return null
-  }
+  const res = await fetchWithRetry(`${BASE_URL}/v1/articles/${match.id}`, {
+    headers: headers(key),
+    next: { revalidate: REVALIDATE_SECONDS },
+  })
+  if (res.status === 404) return null
+  if (!res.ok) throw new Error(`BabyLoveGrowth article request failed: ${res.status}`)
+  return (await res.json()) as Article
 }
 
 /**

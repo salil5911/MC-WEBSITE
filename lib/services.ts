@@ -42,7 +42,7 @@ export const services: Service[] = [
     name: "Screen Replacement",
     shortName: "Screen Replacement",
     icon: Smartphone,
-    image: "/services/screen-replacement.png",
+    image: "/services/screen-replacement.webp",
     tagline: "Full display assembly replacement, calibrated to factory spec",
     summary:
       "Cracked glass, dead pixels, or a digitizer that won't register touch? We replace the complete display assembly with a premium OLED or LCD panel matched to your device's original color, brightness, and refresh rate.",
@@ -125,7 +125,7 @@ export const services: Service[] = [
     name: "Back Glass Repair",
     shortName: "Back Glass Repair",
     icon: Layers,
-    image: "/services/back-glass-repair.png",
+    image: "/services/back-glass-repair.webp",
     tagline: "Laser-separated rear glass, without a full housing swap",
     summary:
       "Shattered rear glass exposes internals to dust and moisture. Our laser-separation process replaces only the glass, keeping your original housing and wireless charging coil intact.",
@@ -207,7 +207,7 @@ export const services: Service[] = [
     name: "Charging Port Replacement",
     shortName: "Charging Port Repair",
     icon: Plug,
-    image: "/services/charging-port-replacement.png",
+    image: "/services/charging-port-replacement.webp",
     tagline: "Restore fast charging and data transfer, with a current-draw test",
     summary:
       "Charging only at an angle or not at all? We diagnose the port with a USB ammeter, then clean, micro-solder, or replace the charging port assembly to restore full fast-charge speeds.",
@@ -289,7 +289,7 @@ export const services: Service[] = [
     name: "Battery Replacement",
     shortName: "Battery Replacement",
     icon: BatteryCharging,
-    image: "/services/battery-replacement.png",
+    image: "/services/battery-replacement.webp",
     tagline: "High-capacity lithium-ion cells with full power diagnostics",
     summary:
       "Low maximum capacity, a high cycle count, or unexpected shutdowns? We replace worn lithium-ion batteries with high-capacity cells that meet or exceed OEM mAh ratings.",
@@ -372,7 +372,7 @@ export const services: Service[] = [
     name: "Camera Replacement",
     shortName: "Camera Replacement",
     icon: Camera,
-    image: "/services/camera-replacement.png",
+    image: "/services/camera-replacement.webp",
     tagline: "Camera module and lens repair, with OIS and autofocus testing",
     summary:
       "Blurry shots, a cracked lens cover, or a camera that buzzes or won't focus? We replace front and rear camera modules — wide, ultra-wide, and telephoto — and test autofocus and optical image stabilization.",
@@ -454,7 +454,7 @@ export const services: Service[] = [
     name: "Water Damage Repair",
     shortName: "Water Damage Repair",
     icon: Droplets,
-    image: "/services/water-damage-repair.png",
+    image: "/services/water-damage-repair.webp",
     tagline: "Board-level liquid damage repair and data recovery",
     summary:
       "Dropped your device in water? Corrosion starts within hours. Our ultrasonic cleaning and board-level diagnostics give your phone and your data the best chance of recovery.",

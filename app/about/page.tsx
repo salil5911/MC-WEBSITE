@@ -2,6 +2,8 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { ArrowRight, Users, ShieldCheck, Clock, Wrench, HeartHandshake, Target, Sparkles, MapPin } from "lucide-react"
 import { Nav } from "@/components/nav"
+import { JsonLd } from "@/components/json-ld"
+import { breadcrumbSchema } from "@/lib/seo"
 import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
 import { Reveal } from "@/components/reveal"
@@ -78,6 +80,7 @@ const process = [
 export default function AboutPage() {
   return (
     <main className="min-h-screen">
+      <JsonLd data={breadcrumbSchema([{ name: "Home", path: "/" }, { name: "About", path: "/about" }])} />
       <Nav />
 
       {/* Hero */}

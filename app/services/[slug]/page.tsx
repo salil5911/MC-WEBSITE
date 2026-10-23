@@ -4,6 +4,8 @@ import Image from "next/image"
 import Link from "next/link"
 import { ArrowRight, ArrowLeft, Check, Clock, ShieldCheck, Tag } from "lucide-react"
 import { Nav } from "@/components/nav"
+import { JsonLd } from "@/components/json-ld"
+import { breadcrumbSchema } from "@/lib/seo"
 import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
 import { Reveal } from "@/components/reveal"
@@ -77,6 +79,13 @@ export default async function ServiceDetailPage({
 
   return (
     <main className="min-h-screen">
+      <JsonLd
+        data={breadcrumbSchema([
+          { name: "Home", path: "/" },
+          { name: "Repair Services", path: "/services" },
+          { name: service.name, path: `/services/${service.slug}` },
+        ])}
+      />
       <Nav />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />

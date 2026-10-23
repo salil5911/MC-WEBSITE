@@ -80,7 +80,7 @@ export function Hero({ className = "" }: { className?: string }) {
           <div className="relative">
             <div className="relative aspect-[4/3] w-full overflow-hidden rounded-3xl shadow-2xl ring-1 ring-white/10">
               <Image
-                src="/hero-repair.png"
+                src="/hero-repair.webp"
                 alt="Certified technician repairing a smartphone with precision tools"
                 fill
                 className="object-cover"

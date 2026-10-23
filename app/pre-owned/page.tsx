@@ -3,6 +3,8 @@ import Link from "next/link"
 import Image from "next/image"
 import { ArrowRight, Check, ShieldCheck, Unlock, BadgeCheck, Sparkles } from "lucide-react"
 import { Nav } from "@/components/nav"
+import { JsonLd } from "@/components/json-ld"
+import { breadcrumbSchema } from "@/lib/seo"
 import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
 import { Reveal } from "@/components/reveal"
@@ -42,6 +44,7 @@ const guarantees = [
 export default function PreOwnedPage() {
   return (
     <main className="min-h-screen">
+      <JsonLd data={breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Pre-Owned Phones", path: "/pre-owned" }])} />
       <Nav />
 
       {/* Hero */}
