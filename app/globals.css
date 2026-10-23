@@ -78,41 +78,139 @@
   }
 }
 
-/* Scroll-reveal animation system (used by the <Reveal /> component) */
-[data-reveal] {
-  opacity: 0;
-  transition:
-    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: opacity, transform;
+/* Scroll reveal (used by <Reveal />). Visible by default; animated only where
+   scroll-driven animations are supported and motion is welcome. */
+@keyframes reveal-fade-up {
+  from { opacity: 0; transform: translateY(28px); }
+  to { opacity: 1; transform: none; }
 }
-[data-reveal="fade-up"] {
-  transform: translateY(32px);
+@keyframes reveal-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
-[data-reveal="fade-left"] {
-  transform: translateX(-32px);
+@keyframes reveal-fade-left {
+  from { opacity: 0; transform: translateX(-28px); }
+  to { opacity: 1; transform: none; }
 }
-[data-reveal="fade-right"] {
-  transform: translateX(32px);
+@keyframes reveal-fade-right {
+  from { opacity: 0; transform: translateX(28px); }
+  to { opacity: 1; transform: none; }
 }
-[data-reveal="scale"] {
-  transform: scale(0.94);
+@keyframes reveal-scale {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: none; }
 }
-[data-reveal][data-visible="true"] {
-  opacity: 1;
-  transform: none;
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    [data-reveal] {
+      animation: reveal-fade-up linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 55%;
+    }
+    [data-reveal="fade"] { animation-name: reveal-fade; }
+    [data-reveal="fade-left"] { animation-name: reveal-fade-left; }
+    [data-reveal="fade-right"] { animation-name: reveal-fade-right; }
+    [data-reveal="scale"] { animation-name: reveal-scale; }
+  }
 }
 @media (prefers-reduced-motion: reduce) {
-  [data-reveal] {
-    opacity: 1 !important;
-    transform: none !important;
-    transition: none !important;
-  }
   html {
     scroll-behavior: auto;
   }
 }
 
+
+/* Hero backdrop: fine engineering grid that fades out toward the edges. */
+.hero-grid {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 70% 60% at 65% 45%, black 20%, transparent 75%);
+}
+
+/* Repair search: slow light sweep along the border while idle. */
+.search-glow::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(from var(--sweep, 0deg), transparent 0 80%, rgba(80, 213, 183, 0.9) 90%, transparent 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  animation: search-sweep 5s linear infinite;
+}
+.search-glow:focus-within::after {
+  opacity: 0;
+}
+@property --sweep {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+@keyframes search-sweep {
+  to { --sweep: 360deg; }
+}
+
+/* Repair orbit */
+.orbit {
+  --orbit: min(520px, 64vw);
+}
+@media (min-width: 1024px) {
+  .orbit {
+    --orbit: min(520px, 38vw);
+  }
+}
+@keyframes orbit-spin {
+  to { transform: rotate(360deg); }
+}
+.orbit-ring,
+.orbit-counter {
+  animation: orbit-spin 50s linear infinite;
+}
+.orbit:hover .orbit-ring,
+.orbit:hover .orbit-counter,
+.orbit:focus-within .orbit-ring,
+.orbit:focus-within .orbit-counter {
+  animation-play-state: paused;
+}
+@keyframes orbit-scan {
+  from { top: -35%; }
+  to { top: 100%; }
+}
+.orbit-scan {
+  animation: orbit-scan 3.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+}
+
+/* Testimonial stack */
+.review-card {
+  transition:
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orbit-ring,
+  .orbit-counter,
+  .orbit-scan,
+  .search-glow::after,
+  .type-marquee-track {
+    animation: none;
+  }
+  .review-card {
+    transition: none;
+  }
+}
+
+/* Typographic device marquee */
+.type-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: brand-marquee 45s linear infinite;
+}
 
 /* Brand logo marquee (right-to-left infinite scroll) */
 @keyframes brand-marquee {

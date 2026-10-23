@@ -1,15 +1,14 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowRight, Check, ShieldCheck, Clock, BadgeCheck, Wallet, Wrench } from "lucide-react"
+import { ArrowRight } from "@/components/icons"
 import { Nav } from "@/components/nav"
-import { JsonLd } from "@/components/json-ld"
-import { breadcrumbSchema } from "@/lib/seo"
 import { Footer } from "@/components/footer"
-import { Button } from "@/components/ui/button"
+import { ButtonLink } from "@/components/button-link"
+import { PageHeader, Spec } from "@/components/page-header"
 import { Reveal } from "@/components/reveal"
 import { SectionHeading } from "@/components/section-heading"
-import { ServicesReviews } from "@/components/services-reviews"
+import { ReviewsSection, ClosingCta } from "@/components/home/sections"
 import { services } from "@/lib/services"
 
 export const revalidate = 43200
@@ -28,178 +27,127 @@ export const metadata: Metadata = {
   },
 }
 
-const trustFactors = [
+const commitments = [
   {
-    icon: BadgeCheck,
-    title: "Certified Technicians",
-    description: "Highly skilled, certified experts with years of hands-on mobile device repair experience.",
+    title: "Certified technicians",
+    description: "Every repair is done in store by a trained technician, not shipped out to a third party.",
   },
   {
-    icon: ShieldCheck,
-    title: "30-Day Warranty",
-    description: "Every repair is backed by our 30-day warranty covering both parts and labor.",
+    title: "A quote before we start",
+    description: "Diagnostics are free. You get a fixed price and approve it before any work begins.",
   },
   {
-    icon: Clock,
-    title: "Fast Turnaround",
-    description: "Most repairs are completed in under an hour, minimizing your downtime.",
+    title: "Most repairs in under an hour",
+    description: "We stock parts for the most common models, so screens and batteries are usually same day.",
   },
   {
-    icon: Wallet,
-    title: "Affordable Pricing",
-    description: "Transparent, competitive quotes with no hidden fees — and free diagnostics.",
+    title: "30-day warranty",
+    description: "Parts and labor are covered. If the repair fails, bring it back and we make it right.",
   },
 ]
 
 export default function ServicesPage() {
+  const cheapest = services.reduce((min, s) => (Number(s.priceFrom.replace(/\D/g, "")) < Number(min.priceFrom.replace(/\D/g, "")) ? s : min))
+
   return (
-    <main className="min-h-screen">
-      <JsonLd data={breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Repair Services", path: "/services" }])} />
+    <>
       <Nav />
+      <main>
+        <PageHeader
+          breadcrumbs={[{ name: "Repairs", path: "/services" }]}
+          eyebrow="Repair services"
+          title="Fast, honest repairs for the devices you rely on."
+          intro="From cracked screens to failing batteries, our technicians repair every major brand. Most repairs take less than an hour and every one is backed by a 30-day warranty."
+          actions={
+            <>
+              <ButtonLink href="/locations">Find a store</ButtonLink>
+              <ButtonLink href="#repairs" variant="outline-light" arrow={false}>
+                Compare repairs
+              </ButtonLink>
+            </>
+          }
+          aside={
+            <dl className="grid grid-cols-2 gap-x-8 gap-y-6">
+              <Spec label="Repairs from" value={cheapest.priceFrom} />
+              <Spec label="Typical time" value="30-60 min" />
+              <Spec label="Warranty" value="30 days" />
+              <Spec label="Diagnostics" value="Free" />
+            </dl>
+          }
+        />
 
-      {/* Hero */}
-      <section className="relative overflow-hidden bg-brand-dark pt-24">
-        <div className="absolute inset-0 bg-circuit-pattern opacity-20" aria-hidden="true" />
-        <div className="absolute -top-24 -right-24 h-96 w-96 rounded-full bg-brand-mint/20 blur-3xl" aria-hidden="true" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
-          <div className="max-w-3xl">
-            <span className="inline-flex items-center gap-2 rounded-full border border-brand-mint/30 bg-brand-mint/10 px-4 py-1.5 text-sm font-medium text-brand-mint">
-              <Wrench className="h-4 w-4" />
-              Expert Repair Services
-            </span>
-            <h1 className="mt-5 font-display text-4xl font-bold leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl text-balance">
-              Fast, affordable device repair
-            </h1>
-            <p className="mt-5 text-lg leading-relaxed text-gray-300 sm:text-xl text-pretty">
-              From cracked screens to failing batteries, our certified technicians repair all major brands — most in
-              under an hour, every repair backed by a 30-day warranty.
-            </p>
-            <div className="mt-8">
-              <Link href="/locations">
-                <Button className="group bg-brand-mint text-brand-dark hover:bg-brand-mintLight text-lg px-7 py-6 rounded-xl font-semibold">
-                  Find a Location
-                  <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Service grid */}
-      <section className="bg-white py-16 sm:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Reveal>
-            <SectionHeading
-              eyebrow="What We Fix"
-              title="Our most-requested repairs"
-              subtitle="Tap any service to see what's included, how the process works, and what it costs."
-            />
-          </Reveal>
-          <div className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {services.map((service, index) => {
-              const Icon = service.icon
-              return (
-                <Reveal key={service.slug} variant="fade-up" delay={(index % 3) * 100}>
+        <section id="repairs" className="scroll-mt-20 bg-paper py-20 sm:py-28">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <Reveal>
+              <SectionHeading
+                index="01"
+                eyebrow="What we fix"
+                title="Six repairs, each with a clear process and price."
+                subtitle="Open any repair to see what is included, how we do it, and what it costs."
+              />
+            </Reveal>
+            <ol className="mt-14 border-t border-ink/15">
+              {services.map((service, i) => (
+                <li key={service.slug} className="border-b border-ink/15">
                   <Link
                     href={`/services/${service.slug}`}
-                    className="group flex h-full flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm transition-all hover:-translate-y-1 hover:border-brand-mint/40 hover:shadow-xl"
+                    className="group grid gap-6 py-8 sm:grid-cols-[12rem_1fr] lg:grid-cols-[3rem_14rem_1fr_10rem_1.5rem] lg:items-center"
                   >
-                    <div className="relative h-44 w-full overflow-hidden">
+                    <span className="hidden font-mono text-xs text-ink-faint lg:block">{String(i + 1).padStart(2, "0")}</span>
+                    <span className="relative block aspect-[4/3] overflow-hidden rounded-md bg-paper-deep">
                       <Image
                         src={service.image}
-                        alt={service.name}
+                        alt={`${service.name} at Mobile Care USA`}
                         fill
-                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        sizes="(max-width: 640px) 100vw, 14rem"
+                        className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/60 to-transparent" />
-                      <span className="absolute left-4 top-4 flex h-11 w-11 items-center justify-center rounded-xl bg-white/95 text-brand-mintDark shadow-sm">
-                        <Icon className="h-5 w-5" />
+                    </span>
+                    <span>
+                      <span className="block font-display text-2xl font-medium tracking-tight text-ink transition-colors group-hover:text-brand-mintDark">
+                        {service.name}
                       </span>
-                      <span className="absolute bottom-3 right-4 rounded-full bg-white/95 px-3 py-1 text-xs font-semibold text-brand-dark">
-                        From {service.priceFrom}
+                      <span className="mt-2 block max-w-xl leading-relaxed text-ink-soft">{service.summary}</span>
+                    </span>
+                    <span className="flex gap-8 font-mono text-sm text-ink sm:col-start-2 lg:col-start-auto lg:block lg:space-y-3">
+                      <span className="block">
+                        <span className="block text-[0.65rem] uppercase tracking-[0.12em] text-ink-faint">From</span>
+                        {service.priceFrom}
                       </span>
-                    </div>
-                    <div className="flex flex-1 flex-col p-6">
-                      <h3 className="font-display text-xl font-bold text-brand-dark">{service.name}</h3>
-                      <p className="mt-2 flex-1 text-sm leading-relaxed text-gray-600">{service.summary}</p>
-                      <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-brand-mintDark">
-                        Learn more
-                        <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                      <span className="block">
+                        <span className="block text-[0.65rem] uppercase tracking-[0.12em] text-ink-faint">Time</span>
+                        {service.turnaround.replace("–", "-")}
                       </span>
-                    </div>
+                    </span>
+                    <ArrowRight className="hidden h-5 w-5 text-ink-faint transition-transform group-hover:translate-x-1 group-hover:text-ink lg:block" />
                   </Link>
-                </Reveal>
-              )
-            })}
+                </li>
+              ))}
+            </ol>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Trust factors */}
-      <section className="bg-gray-50 py-16 sm:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Reveal>
-            <SectionHeading
-              eyebrow="Why Mobile Care"
-              title="Repairs you can rely on"
-              subtitle="We combine expertise, quality parts, and honest pricing on every single repair."
-            />
-          </Reveal>
-          <div className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {trustFactors.map((factor, index) => (
-              <Reveal key={factor.title} variant="fade-up" delay={index * 100}>
-                <div className="h-full rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-brand-mint/15 text-brand-mintDark">
-                    <factor.icon className="h-6 w-6" />
-                  </div>
-                  <h3 className="mt-5 font-display text-lg font-bold text-brand-dark">{factor.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-gray-600">{factor.description}</p>
-                </div>
-              </Reveal>
-            ))}
+        <section className="bg-white py-20 sm:py-28">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <Reveal>
+              <SectionHeading index="02" eyebrow="Our standard" title="What every repair includes." />
+            </Reveal>
+            <ol className="mt-12 grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+              {commitments.map((item, i) => (
+                <li key={item.title} className="border-t border-ink/15 pt-5">
+                  <span className="font-mono text-xs text-brand-mintDark">{String(i + 1).padStart(2, "0")}</span>
+                  <h3 className="mt-3 font-display text-xl font-medium text-ink">{item.title}</h3>
+                  <p className="mt-2 leading-relaxed text-ink-soft">{item.description}</p>
+                </li>
+              ))}
+            </ol>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Reviews */}
-      <ServicesReviews className="bg-white py-16 sm:py-24" />
-
-      {/* CTA */}
-      <section className="relative overflow-hidden bg-brand-dark py-16 sm:py-20">
-        <div className="absolute inset-0 bg-circuit-pattern opacity-10" aria-hidden="true" />
-        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <Reveal>
-            <h2 className="font-display text-3xl font-bold text-white sm:text-4xl text-balance">
-              Need a repair? Get in touch now
-            </h2>
-            <p className="mt-4 text-lg text-gray-300">
-              Most repairs completed in under an hour. Walk in to your nearest location today.
-            </p>
-            <div className="mt-8 flex flex-wrap justify-center gap-4">
-              <Link href="/locations">
-                <Button className="group bg-brand-mint text-brand-dark hover:bg-brand-mintLight text-lg px-8 py-6 rounded-xl font-semibold">
-                  Find a Location
-                  <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-                </Button>
-              </Link>
-            </div>
-            <ul className="mt-8 flex flex-wrap justify-center gap-x-8 gap-y-2 text-sm text-gray-300">
-              <li className="flex items-center gap-2">
-                <Check className="h-4 w-4 text-brand-mint" /> No appointment needed
-              </li>
-              <li className="flex items-center gap-2">
-                <Check className="h-4 w-4 text-brand-mint" /> Free diagnostics
-              </li>
-              <li className="flex items-center gap-2">
-                <Check className="h-4 w-4 text-brand-mint" /> 30-day warranty
-              </li>
-            </ul>
-          </Reveal>
-        </div>
-      </section>
-
+        <ReviewsSection index="03" />
+        <ClosingCta />
+      </main>
       <Footer />
-    </main>
+    </>
   )
 }

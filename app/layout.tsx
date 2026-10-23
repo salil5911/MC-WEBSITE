@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter, Poppins } from 'next/font/google';
+import { Inter, Inter_Tight, JetBrains_Mono } from 'next/font/google';
 import Script from 'next/script';
 import { JsonLd } from '@/components/json-ld';
 import { DEFAULT_OG_IMAGE, SITE_NAME, SITE_URL, organizationSchema } from '@/lib/seo';
@@ -11,10 +11,17 @@ const inter = Inter({
   display: 'swap',
 });
 
-const poppins = Poppins({
+const interTight = Inter_Tight({
   subsets: ['latin'],
-  weight: ['500', '600', '700', '800'],
-  variable: '--font-poppins',
+  weight: ['500', '600', '700'],
+  variable: '--font-display',
+  display: 'swap',
+});
+
+const mono = JetBrains_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500'],
+  variable: '--font-mono',
   display: 'swap',
 });
 
@@ -72,13 +79,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${poppins.variable} bg-background`}>
+    <html lang="en" className={`${inter.variable} ${interTight.variable} ${mono.variable} bg-background`}>
       <head>
         {/* Structured Data (Schema.org) */}
         <JsonLd data={organizationSchema()} />
 
       </head>
-      <body className="font-sans antialiased">
+      <body className="bg-paper font-sans text-ink antialiased">
         {children}
         {/* Google Tag (gtag.js), loaded after the page is interactive so it doesn't compete with first paint */}
         <Script src="https://www.googletagmanager.com/gtag/js?id=G-P17FFSKJVN" strategy="afterInteractive" />

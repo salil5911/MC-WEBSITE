@@ -1,19 +1,16 @@
 import type { Metadata } from "next"
-import Link from "next/link"
-import { ArrowRight, HelpCircle, Phone, MapPin } from "lucide-react"
 import { Nav } from "@/components/nav"
 import { JsonLd } from "@/components/json-ld"
-import { breadcrumbSchema } from "@/lib/seo"
+import { faqPageSchema } from "@/lib/seo"
 import { Footer } from "@/components/footer"
-import { Button } from "@/components/ui/button"
-import { Reveal } from "@/components/reveal"
-import { SectionHeading } from "@/components/section-heading"
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+import { ButtonLink } from "@/components/button-link"
+import { PageHeader } from "@/components/page-header"
+import { ChevronDown } from "@/components/icons"
 
 export const metadata: Metadata = {
   title: "Frequently Asked Questions | Mobile Care USA",
   description:
-    "Answers to common questions about Mobile Care device repair — turnaround times, warranty, pricing, walk-ins, data safety, and the brands and devices we service.",
+    "Answers to common questions about Mobile Care device repair: turnaround times, warranty, pricing, walk-ins, data safety, and the brands and devices we service.",
   alternates: { canonical: "https://mobilecareusa.com/faqs" },
 }
 
@@ -24,12 +21,12 @@ const faqCategories = [
       {
         question: "How long does a typical repair take?",
         answer:
-          "Most common repairs — screen replacements, battery swaps, charging port fixes — are completed in 30 to 45 minutes while you wait. More complex repairs, such as water damage or board-level work, may take longer, and our technician will give you a clear time estimate before starting.",
+          "Most common repairs, such as screen replacements, battery swaps, and charging port fixes, are completed in 30 to 45 minutes while you wait. More complex repairs, such as water damage or board-level work, may take longer, and our technician will give you a clear time estimate before starting.",
       },
       {
         question: "Do I need an appointment, or can I walk in?",
         answer:
-          "Walk-ins are always welcome at every location — no appointment needed. If you'd like to make sure the right part is in stock for your specific device, feel free to call the store ahead of your visit.",
+          "Walk-ins are always welcome at every location, and no appointment is needed. If you'd like to make sure the right part is in stock for your specific device, feel free to call the store ahead of your visit.",
       },
       {
         question: "What devices and brands do you repair?",
@@ -74,7 +71,7 @@ const faqCategories = [
       {
         question: "Do you offer free diagnostics?",
         answer:
-          "Yes — diagnostics are completely free at all of our locations. Bring your device in and we'll assess the issue and give you a clear quote at no charge.",
+          "Yes. Diagnostics are completely free at all of our locations. Bring your device in and we'll assess the issue and give you a clear quote at no charge.",
       },
       {
         question: "What payment methods do you accept?",
@@ -85,121 +82,80 @@ const faqCategories = [
   },
 ]
 
+function slugify(text: string) {
+  return text.toLowerCase().replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "")
+}
+
 export default function FaqsPage() {
-  const faqJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: faqCategories.flatMap((category) =>
-      category.faqs.map((faq) => ({
-        "@type": "Question",
-        name: faq.question,
-        acceptedAnswer: { "@type": "Answer", text: faq.answer },
-      })),
-    ),
-  }
-
   return (
-    <main className="min-h-screen">
-      <JsonLd data={breadcrumbSchema([{ name: "Home", path: "/" }, { name: "FAQs", path: "/faqs" }])} />
+    <>
       <Nav />
+      <JsonLd data={faqPageSchema(faqCategories.flatMap((category) => category.faqs))} />
+      <main>
+        <PageHeader
+          breadcrumbs={[{ name: "FAQs", path: "/faqs" }]}
+          eyebrow="Help center"
+          title="Frequently asked questions"
+          intro="Repairs, warranty, pricing, and what to expect when you visit. Can't find your answer? Call your nearest store."
+        />
 
-      {/* Hero */}
-      <section className="relative overflow-hidden bg-brand-dark pt-24">
-        <div className="absolute inset-0 circuit-pattern opacity-[0.06]" aria-hidden="true" />
-        <div className="absolute -top-24 -right-24 h-96 w-96 rounded-full bg-brand-mint/20 blur-3xl" aria-hidden="true" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
-          <div className="max-w-3xl">
-            <Reveal>
-              <span className="inline-flex items-center gap-2 rounded-full border border-brand-mint/30 bg-brand-mint/10 px-4 py-1.5 text-sm font-medium text-brand-mint">
-                <HelpCircle className="h-4 w-4" />
-                Help Center
-              </span>
-            </Reveal>
-            <Reveal delay={80}>
-              <h1 className="mt-5 font-display text-4xl font-bold leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl text-balance">
-                Frequently asked questions
-              </h1>
-            </Reveal>
-            <Reveal delay={140}>
-              <p className="mt-5 text-lg leading-relaxed text-gray-300 sm:text-xl text-pretty">
-                Everything you need to know about our repairs, warranty, pricing, and what to expect when you visit.
-                Can't find your answer? Give your nearest store a call.
+        <section className="bg-paper py-20 sm:py-28">
+          <div className="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-[16rem_1fr] lg:gap-20 lg:px-8">
+            <nav aria-label="FAQ topics" className="lg:sticky lg:top-24 lg:self-start">
+              <p className="border-t border-ink/15 pt-4 font-mono text-xs uppercase tracking-[0.14em] text-ink-faint">
+                Topics
               </p>
-            </Reveal>
-          </div>
-        </div>
-      </section>
+              <ul className="mt-4 space-y-2">
+                {faqCategories.map((category) => (
+                  <li key={category.category}>
+                    <a href={`#${slugify(category.category)}`} className="text-ink-soft hover:text-ink">
+                      {category.category}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
 
-      {/* FAQ sections */}
-      <section className="bg-white py-16 sm:py-24">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="space-y-14">
-            {faqCategories.map((category, catIndex) => (
-              <Reveal key={category.category} variant="fade-up" delay={catIndex * 80}>
-                <div>
-                  <h2 className="font-display text-2xl font-bold text-brand-dark">{category.category}</h2>
-                  <Accordion type="single" collapsible className="mt-6 w-full">
-                    {category.faqs.map((faq, index) => (
-                      <AccordionItem
-                        key={faq.question}
-                        value={`${catIndex}-${index}`}
-                        className="border-b border-gray-100"
-                      >
-                        <AccordionTrigger className="text-left text-base font-semibold text-brand-dark hover:text-brand-mintDark hover:no-underline">
+            <div className="space-y-16">
+              {faqCategories.map((category, i) => (
+                <div key={category.category} id={slugify(category.category)} className="scroll-mt-24">
+                  <h2 className="flex items-baseline gap-3 font-display text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
+                    <span className="font-mono text-xs font-normal text-brand-mintDark">{String(i + 1).padStart(2, "0")}</span>
+                    {category.category}
+                  </h2>
+                  <div className="mt-6 border-t border-ink/15">
+                    {category.faqs.map((faq) => (
+                      <details key={faq.question} className="group border-b border-ink/15">
+                        <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-5 font-display text-lg font-medium text-ink [&::-webkit-details-marker]:hidden">
                           {faq.question}
-                        </AccordionTrigger>
-                        <AccordionContent className="text-base leading-relaxed text-gray-600">
-                          {faq.answer}
-                        </AccordionContent>
-                      </AccordionItem>
+                          <ChevronDown className="h-5 w-5 shrink-0 text-ink-faint transition-transform group-open:rotate-180" />
+                        </summary>
+                        <p className="max-w-3xl pb-6 leading-relaxed text-ink-soft">{faq.answer}</p>
+                      </details>
                     ))}
-                  </Accordion>
+                  </div>
                 </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
+              ))}
 
-      {/* CTA */}
-      <section className="bg-gray-50 py-16 sm:py-24">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Reveal>
-            <div className="relative overflow-hidden rounded-3xl bg-brand-dark px-6 py-12 text-center sm:px-12">
-              <div className="absolute inset-0 circuit-pattern opacity-10" aria-hidden="true" />
-              <div className="relative">
-                <SectionHeading
-                  light
-                  eyebrow="Still have questions?"
-                  title="Our team is happy to help"
-                  subtitle="Reach out to your nearest Mobile Care store or stop by in person — no appointment needed."
-                />
-                <div className="mt-8 flex flex-wrap justify-center gap-4">
-                  <Link href="/locations">
-                    <Button className="group bg-brand-mint text-brand-dark hover:bg-brand-mintLight text-lg px-8 py-6 rounded-xl font-semibold">
-                      <MapPin className="mr-2 h-5 w-5" />
-                      Find a Location
-                    </Button>
-                  </Link>
-                  <Link href="/services">
-                    <Button
-                      variant="outline"
-                      className="border-white/20 bg-transparent text-white hover:bg-white/10 hover:text-white text-lg px-8 py-6 rounded-xl font-semibold"
-                    >
-                      Explore services
-                      <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-                    </Button>
-                  </Link>
+              <div className="border-t border-ink/15 pt-8">
+                <h2 className="font-display text-2xl font-semibold tracking-tight text-ink">Still have a question?</h2>
+                <p className="mt-2 max-w-xl text-ink-soft">
+                  Call your nearest Mobile Care store or stop by. No appointment needed.
+                </p>
+                <div className="mt-6 flex flex-wrap gap-3">
+                  <ButtonLink href="/locations" variant="dark">
+                    Find a store
+                  </ButtonLink>
+                  <ButtonLink href="/services" variant="outline" arrow={false}>
+                    See repair prices
+                  </ButtonLink>
                 </div>
               </div>
             </div>
-          </Reveal>
-        </div>
-      </section>
-
+          </div>
+        </section>
+      </main>
       <Footer />
-
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
-    </main>
+    </>
   )
 }
