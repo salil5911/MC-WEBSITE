@@ -3,9 +3,10 @@ import Image from "next/image"
 import { Nav } from "@/components/nav"
 import { Footer } from "@/components/footer"
 import { ButtonLink } from "@/components/button-link"
-import { PageHeader, Spec } from "@/components/page-header"
-import { Reveal } from "@/components/reveal"
+import { PageHeader, Fact } from "@/components/page-header"
+import { HeaderPhoto } from "@/components/header-photo"
 import { SectionHeading } from "@/components/section-heading"
+import { FadeIn, Parallax, Stagger, StaggerItem } from "@/components/motion/primitives"
 import { ClosingCta } from "@/components/home/sections"
 
 export const metadata: Metadata = {
@@ -79,85 +80,79 @@ export default function AboutPage() {
           eyebrow="About Mobile Care"
           title="Repair experts your neighborhood can trust."
           intro="Mobile Care began with a simple idea: device repair should be fast, honest, and done by people who care. A decade later, that idea runs eight stores across four states."
+          actions={<ButtonLink href="/locations">Visit a store</ButtonLink>}
+          media={<HeaderPhoto src="/hero-repair.webp" alt="A Mobile Care technician at work on a phone" />}
         >
-          <dl className="mt-14 grid grid-cols-2 gap-x-8 gap-y-6 sm:grid-cols-4">
-            {stats.map((stat) => (
-              <Spec key={stat.label} label={stat.label} value={stat.value} />
-            ))}
-          </dl>
+          {stats.map((stat) => (
+            <Fact key={stat.label} label={stat.label} value={stat.value} />
+          ))}
         </PageHeader>
 
-        <section className="bg-paper py-20 sm:py-28">
-          <div className="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:items-center lg:gap-20 lg:px-8">
-            <Reveal>
+        <section className="bg-paper py-24 sm:py-32">
+          <div className="mx-auto grid max-w-7xl gap-14 px-5 sm:px-6 lg:grid-cols-2 lg:items-center lg:gap-24 lg:px-8">
+            <div>
               <SectionHeading
-                index="01"
                 eyebrow="Mission"
                 title="Getting your device back to like-new, the right way."
                 subtitle="We want expert repair to feel accessible, transparent, and reassuring. No jargon and no pressure, just skilled technicians who treat your device like their own."
               />
-              <div className="mt-8 space-y-5 border-t border-ink/15 pt-6 text-ink-soft">
+              <FadeIn className="mt-10 space-y-6 text-lg leading-relaxed text-ink-soft">
                 <p>
-                  <span className="font-medium text-ink">Quality parts, every time.</span> We never cut corners on
+                  <span className="font-semibold text-ink">Quality parts, every time.</span> We never cut corners on
                   components, because a cheap fix that fails isn&apos;t a fix at all.
                 </p>
                 <p>
-                  <span className="font-medium text-ink">A team you&apos;ll remember.</span> Friendly, trained, and happy
-                  to explain exactly what your device needs.
+                  <span className="font-semibold text-ink">A team you&apos;ll remember.</span> Friendly, trained, and
+                  happy to explain exactly what your device needs.
                 </p>
-              </div>
-              <ButtonLink href="/locations" variant="dark" className="mt-8">
-                Visit a store
-              </ButtonLink>
-            </Reveal>
-            <div className="relative aspect-[4/3] overflow-hidden rounded-md">
-              <Image
-                src="/store-interior.webp"
-                alt="Technicians helping customers inside a Mobile Care USA store"
-                fill
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                className="object-cover"
-              />
+              </FadeIn>
             </div>
+            <FadeIn className="relative aspect-[4/5] overflow-hidden rounded-[2rem]">
+              <Parallax strength={10}>
+                <Image
+                  src="/store-interior.webp"
+                  alt="Technicians helping customers inside a Mobile Care USA store"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="object-cover"
+                />
+              </Parallax>
+            </FadeIn>
           </div>
         </section>
 
-        <section className="bg-white py-20 sm:py-28">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <Reveal>
-              <SectionHeading index="02" eyebrow="Values" title="What we hold ourselves to." />
-            </Reveal>
-            <ol className="mt-12 grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+        <section className="bg-white py-24 sm:py-32">
+          <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+            <SectionHeading eyebrow="Values" title="What we hold ourselves to." />
+            <Stagger as="ol" className="mt-16 grid gap-x-12 gap-y-14 sm:grid-cols-2 lg:grid-cols-4">
               {values.map((item, i) => (
-                <li key={item.title} className="border-t border-ink/15 pt-5">
-                  <span className="font-mono text-xs text-brand-mintDark">{String(i + 1).padStart(2, "0")}</span>
-                  <h3 className="mt-3 font-display text-xl font-medium text-ink">{item.title}</h3>
-                  <p className="mt-2 leading-relaxed text-ink-soft">{item.description}</p>
-                </li>
+                <StaggerItem as="li" key={item.title}>
+                  <span className="font-display text-6xl font-semibold text-brand-mint">{i + 1}</span>
+                  <h3 className="mt-4 font-display text-2xl font-semibold text-ink">{item.title}</h3>
+                  <p className="mt-3 text-lg leading-relaxed text-ink-soft">{item.description}</p>
+                </StaggerItem>
               ))}
-            </ol>
+            </Stagger>
           </div>
         </section>
 
-        <section className="bg-paper py-20 sm:py-28">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <Reveal>
-              <SectionHeading
-                index="03"
-                eyebrow="Process"
-                title="A repair process with no surprises."
-                subtitle="From the moment you walk in to the moment you leave, here is what to expect."
-              />
-            </Reveal>
-            <ol className="mt-12 grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+        <section className="bg-ink py-24 text-white sm:py-32">
+          <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+            <SectionHeading
+              light
+              eyebrow="Process"
+              title="A repair process with no surprises."
+              subtitle="From the moment you walk in to the moment you leave, here is what to expect."
+            />
+            <Stagger as="ol" className="mt-16 grid gap-x-12 gap-y-14 sm:grid-cols-2 lg:grid-cols-4">
               {process.map((item) => (
-                <li key={item.step} className="border-t border-ink/15 pt-5">
-                  <span className="font-display text-4xl font-semibold text-ink/15">{item.step}</span>
-                  <h3 className="mt-3 font-display text-xl font-medium text-ink">{item.title}</h3>
-                  <p className="mt-2 leading-relaxed text-ink-soft">{item.description}</p>
-                </li>
+                <StaggerItem as="li" key={item.step}>
+                  <span className="font-display text-6xl font-semibold text-brand-mint">{Number(item.step)}</span>
+                  <h3 className="mt-4 font-display text-2xl font-semibold">{item.title}</h3>
+                  <p className="mt-3 text-lg leading-relaxed text-white/65">{item.description}</p>
+                </StaggerItem>
               ))}
-            </ol>
+            </Stagger>
           </div>
         </section>
 

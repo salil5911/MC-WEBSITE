@@ -5,10 +5,10 @@ import Image from "next/image"
 import { Nav } from "@/components/nav"
 import { Footer } from "@/components/footer"
 import { ButtonLink } from "@/components/button-link"
-import { PageHeader, Spec } from "@/components/page-header"
-import { Reveal } from "@/components/reveal"
+import { PageHeader, Fact } from "@/components/page-header"
 import { SectionHeading } from "@/components/section-heading"
 import { SeriesCard } from "@/components/series-card"
+import { FadeIn, Float, Stagger, StaggerItem } from "@/components/motion/primitives"
 import { preOwnedBrands, getPreOwnedBrand } from "@/lib/pre-owned"
 
 export function generateStaticParams() {
@@ -39,9 +39,10 @@ export default async function BrandPage({ params }: { params: Promise<{ brand: s
 
   return (
     <>
-      <Nav />
+      <Nav tone="light" />
       <main>
         <PageHeader
+          tone="light"
           breadcrumbs={[
             { name: "Pre-owned phones", path: "/pre-owned" },
             { name: brand.name, path: `/pre-owned/${brand.slug}` },
@@ -49,47 +50,56 @@ export default async function BrandPage({ params }: { params: Promise<{ brand: s
           eyebrow="Certified pre-owned"
           title={`Certified pre-owned ${brand.name}`}
           intro={brand.description}
-          actions={<ButtonLink href="/locations">Check stock at a store</ButtonLink>}
-          aside={
-            <div>
-              <div className="flex h-36 items-center justify-center rounded-md bg-white p-8">
+          actions={
+            <>
+              <ButtonLink href="#series" variant="dark">
+                See every series
+              </ButtonLink>
+              <ButtonLink href="/locations" variant="outline" arrow={false}>
+                Check stock at a store
+              </ButtonLink>
+            </>
+          }
+          media={
+            <div className="relative mx-auto aspect-square w-full max-w-xl">
+              <Float className="absolute inset-0">
                 <Image
-                  src={brand.logo || "/placeholder.svg"}
-                  alt={`${brand.name} logo`}
-                  width={240}
-                  height={120}
+                  src={`/pre-owned/${brand.slug}-device.webp`}
+                  alt={`Certified pre-owned ${brand.name}`}
+                  fill
                   priority
-                  className="h-full w-auto object-contain"
+                  sizes="(max-width: 1024px) 90vw, 45vw"
+                  className="object-contain feather"
                 />
-              </div>
-              <dl className="mt-6 grid grid-cols-3 gap-6">
-                <Spec label="Series" value={brand.series.length} />
-                <Spec label="Warranty" value="60 days" />
-                <Spec label="Carrier" value="Unlocked" />
-              </dl>
+              </Float>
+              <span className="absolute bottom-[8%] left-[6%] block h-12 w-32">
+                <Image src={brand.logo} alt={`${brand.name} logo`} fill sizes="128px" className="object-contain object-left" />
+              </span>
             </div>
           }
-        />
+        >
+          <Fact tone="light" label="Series in stock" value={brand.series.length} />
+          <Fact tone="light" label="Models to choose from" value={brand.series.reduce((n, s) => n + s.models.length, 0)} />
+          <Fact tone="light" label="Warranty" value="60 days" />
+          <Fact tone="light" label="Carrier" value="Unlocked" />
+        </PageHeader>
 
-        <section className="bg-paper py-20 sm:py-28">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <Reveal>
-              <SectionHeading
-                index="01"
-                eyebrow="Shop by series"
-                title={`Every ${brand.name} generation we carry.`}
-                subtitle={`Every ${brand.name} we sell is unlocked, inspected on a multi-point checklist, and covered by our 60-day warranty. Colors and storage vary by store, so call ahead or visit to see what is in stock.`}
-              />
-            </Reveal>
-            <ul className="mt-12 grid gap-px overflow-hidden rounded-md border border-ink/10 bg-ink/10 sm:grid-cols-2 lg:grid-cols-3">
+        <section id="series" className="scroll-mt-20 bg-white py-24 sm:py-32">
+          <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+            <SectionHeading
+              eyebrow="Shop by series"
+              title={`Every ${brand.name} generation we carry.`}
+              subtitle={`Every ${brand.name} we sell is unlocked, inspected on a multi-point checklist, and covered by our 60-day warranty. Colors and storage vary by store, so call ahead or visit to see what is in stock.`}
+            />
+            <Stagger as="ul" className="mt-16 grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
               {brand.series.map((series) => (
-                <li key={series.slug}>
+                <StaggerItem as="li" key={series.slug}>
                   <SeriesCard series={series} />
-                </li>
+                </StaggerItem>
               ))}
-            </ul>
+            </Stagger>
             {others.length > 0 && (
-              <p className="mt-10 text-ink-soft">
+              <FadeIn as="p" className="mt-16 text-lg text-ink-soft">
                 Also available:{" "}
                 {others.map((other, i) => (
                   <span key={other.slug}>
@@ -100,7 +110,7 @@ export default async function BrandPage({ params }: { params: Promise<{ brand: s
                   </span>
                 ))}
                 .
-              </p>
+              </FadeIn>
             )}
           </div>
         </section>

@@ -4,10 +4,10 @@ import Image from "next/image"
 import { Nav } from "@/components/nav"
 import { Footer } from "@/components/footer"
 import { ButtonLink } from "@/components/button-link"
-import { PageHeader, Spec } from "@/components/page-header"
-import { Reveal } from "@/components/reveal"
+import { PageHeader, Fact } from "@/components/page-header"
 import { SectionHeading } from "@/components/section-heading"
 import { ArrowRight } from "@/components/icons"
+import { FadeIn, Float, Stagger, StaggerItem, WordReveal } from "@/components/motion/primitives"
 import { preOwnedBrands } from "@/lib/pre-owned"
 
 export const metadata: Metadata = {
@@ -36,113 +36,143 @@ const guarantees = [
   },
 ]
 
+const DEVICE_SHOTS: Record<string, string> = {
+  apple: "/pre-owned/apple-device.webp",
+  samsung: "/pre-owned/samsung-device.webp",
+  google: "/pre-owned/google-device.webp",
+  motorola: "/pre-owned/motorola-device.webp",
+}
+
 export default function PreOwnedPage() {
   const seriesCount = preOwnedBrands.reduce((n, b) => n + b.series.length, 0)
   return (
     <>
-      <Nav />
+      <Nav tone="light" />
       <main>
         <PageHeader
+          tone="light"
           breadcrumbs={[{ name: "Pre-owned phones", path: "/pre-owned" }]}
           eyebrow="Certified pre-owned"
           title="Pre-owned phones, certified before they reach the shelf."
-          intro="Apple iPhone and Samsung Galaxy phones that are fully unlocked, never repaired, and backed by our 60-day warranty. Browse by brand and series, then see them in any store."
+          intro="Apple iPhone and Samsung Galaxy phones that are fully unlocked, never repaired, and backed by our 60-day warranty."
           actions={
             <>
-              <ButtonLink href="#brands">Shop by brand</ButtonLink>
-              <ButtonLink href="/locations" variant="outline-light" arrow={false}>
+              <ButtonLink href="#brands" variant="dark">
+                Shop by brand
+              </ButtonLink>
+              <ButtonLink href="/locations" variant="outline" arrow={false}>
                 Find a store
               </ButtonLink>
             </>
           }
-          aside={
-            <dl className="grid grid-cols-2 gap-x-8 gap-y-6">
-              <Spec label="Brands" value={preOwnedBrands.length} />
-              <Spec label="Series in stock" value={seriesCount} />
-              <Spec label="Warranty" value="60 days" />
-              <Spec label="Carrier" value="Unlocked" />
-            </dl>
+          media={
+            <div className="relative mx-auto flex aspect-square max-w-xl items-center justify-center">
+              <Float className="relative z-10 -mr-[18%] h-full w-[62%]">
+                <Image
+                  src="/pre-owned/apple-device.webp"
+                  alt="Certified pre-owned iPhone"
+                  fill
+                  priority
+                  sizes="(max-width: 1024px) 60vw, 30vw"
+                  className="object-contain feather"
+                />
+              </Float>
+              <Float className="relative h-full w-[62%]" delay={1.8}>
+                <Image
+                  src="/pre-owned/samsung-device.webp"
+                  alt="Certified pre-owned Samsung Galaxy"
+                  fill
+                  priority
+                  sizes="(max-width: 1024px) 60vw, 30vw"
+                  className="object-contain feather"
+                />
+              </Float>
+            </div>
           }
-        />
+        >
+          <Fact tone="light" label="Brands" value={preOwnedBrands.length} />
+          <Fact tone="light" label="Series in the lineup" value={seriesCount} />
+          <Fact tone="light" label="Warranty on every phone" value="60 days" />
+          <Fact tone="light" label="Works with any carrier" value="Unlocked" />
+        </PageHeader>
 
-        <section className="bg-white py-20 sm:py-28">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <Reveal>
-              <SectionHeading
-                index="01"
-                eyebrow="Our standard"
-                title="What certified means at Mobile Care."
-                subtitle="We don't just resell phones. Every one is checked against the same standard before it goes on sale."
-              />
-            </Reveal>
-            <ol className="mt-12 grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+        <section className="bg-white py-24 sm:py-32">
+          <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+            <SectionHeading
+              eyebrow="Our standard"
+              title="What certified means at Mobile Care."
+              subtitle="We don't just resell phones. Every one is checked against the same standard before it goes on sale."
+            />
+            <Stagger as="ol" className="mt-16 grid gap-x-12 gap-y-14 sm:grid-cols-2 lg:grid-cols-4">
               {guarantees.map((item, i) => (
-                <li key={item.title} className="border-t border-ink/15 pt-5">
-                  <span className="font-mono text-xs text-brand-mintDark">{String(i + 1).padStart(2, "0")}</span>
-                  <h3 className="mt-3 font-display text-xl font-medium text-ink">{item.title}</h3>
-                  <p className="mt-2 leading-relaxed text-ink-soft">{item.description}</p>
-                </li>
+                <StaggerItem as="li" key={item.title}>
+                  <span className="font-display text-6xl font-semibold text-brand-mint">{i + 1}</span>
+                  <h3 className="mt-4 font-display text-2xl font-semibold text-ink">{item.title}</h3>
+                  <p className="mt-3 text-lg leading-relaxed text-ink-soft">{item.description}</p>
+                </StaggerItem>
               ))}
-            </ol>
+            </Stagger>
           </div>
         </section>
 
-        <section id="brands" className="scroll-mt-20 bg-paper py-20 sm:py-28">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <Reveal>
-              <SectionHeading index="02" eyebrow="Shop by brand" title="Find your next phone." />
-            </Reveal>
-            <ul className="mt-12 grid gap-px overflow-hidden rounded-md border border-ink/10 bg-ink/10 sm:grid-cols-2">
-              {preOwnedBrands.map((brand) => (
-                <li key={brand.slug} className="bg-white">
+        <section id="brands" className="scroll-mt-20 bg-paper py-24 sm:py-32">
+          <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+            <SectionHeading eyebrow="Shop by brand" title="Find your next phone." />
+            <div className="mt-16 grid gap-6 lg:grid-cols-2">
+              {preOwnedBrands.map((brand, i) => (
+                <FadeIn key={brand.slug} delay={i * 0.12}>
                   <Link
                     href={`/pre-owned/${brand.slug}`}
-                    className="group flex h-full flex-col p-8 transition-colors hover:bg-paper sm:p-10"
+                    className="group relative flex h-full flex-col overflow-hidden rounded-[2rem] bg-[#f0eff2] p-8 sm:p-12"
                   >
-                    <div className="flex h-28 items-center">
+                    <span className="relative block h-10 w-36">
                       <Image
-                        src={brand.logo || "/placeholder.svg"}
+                        src={brand.logo}
                         alt={`${brand.name} logo`}
-                        width={240}
-                        height={120}
-                        className="h-20 w-auto object-contain"
+                        fill
+                        sizes="144px"
+                        className="object-contain object-left"
+                      />
+                    </span>
+                    <h3 className="mt-8 font-display text-4xl font-semibold tracking-[-0.02em] text-ink">{brand.name}</h3>
+                    <p className="mt-3 max-w-sm text-lg text-ink-soft">{brand.tagline}</p>
+                    <span className="mt-6 inline-flex items-center gap-2 font-medium text-ink">
+                      {brand.series.length} series in stock
+                      <ArrowRight className="h-5 w-5 transition-transform duration-500 group-hover:translate-x-1" />
+                    </span>
+                    <div className="relative mt-6 h-72 transition-transform duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-y-3 group-hover:scale-[1.04] sm:h-96">
+                      <Image
+                        src={DEVICE_SHOTS[brand.slug] ?? brand.series[0].image}
+                        alt={`Certified pre-owned ${brand.name}`}
+                        fill
+                        sizes="(max-width: 1024px) 100vw, 45vw"
+                        className="object-contain feather"
                       />
                     </div>
-                    <h3 className="mt-8 font-display text-2xl font-medium text-ink">{brand.name}</h3>
-                    <p className="mt-2 flex-1 leading-relaxed text-ink-soft">{brand.tagline}</p>
-                    <span className="mt-6 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.12em] text-ink">
-                      {brand.series.length} series
-                      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                    </span>
                   </Link>
-                </li>
+                </FadeIn>
               ))}
-            </ul>
+            </div>
           </div>
         </section>
 
-        <ClosingCtaPreOwned />
+        <section className="relative overflow-hidden bg-ink py-28 text-white sm:py-36">
+          <div className="hero-glow pointer-events-none absolute inset-0" aria-hidden="true" />
+          <div className="relative mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+            <h2 className="font-display text-5xl font-semibold leading-[1.02] tracking-[-0.03em] sm:text-7xl">
+              <WordReveal as="span" text="Hold it, test it," className="block" />
+              <WordReveal as="span" text="then take it home." delay={0.2} className="block text-brand-mint" />
+            </h2>
+            <FadeIn as="p" delay={0.3} className="mt-8 max-w-xl text-xl text-white/70">
+              Stock varies by store. Visit any Mobile Care location to see what is available today.
+            </FadeIn>
+            <FadeIn delay={0.4} className="mt-10">
+              <ButtonLink href="/locations">Find your nearest store</ButtonLink>
+            </FadeIn>
+          </div>
+        </section>
       </main>
       <Footer />
     </>
-  )
-}
-
-function ClosingCtaPreOwned() {
-  return (
-    <section className="relative overflow-hidden bg-ink py-20 text-white sm:py-24">
-      <div className="hero-grid pointer-events-none absolute inset-0" aria-hidden="true" />
-      <div className="relative mx-auto flex max-w-7xl flex-col items-start justify-between gap-8 px-4 sm:px-6 lg:flex-row lg:items-end lg:px-8">
-        <div>
-          <h2 className="max-w-2xl font-display text-4xl font-semibold leading-[1.05] tracking-[-0.03em] sm:text-5xl">
-            Hold it, test it, <span className="text-brand-mint">then take it home.</span>
-          </h2>
-          <p className="mt-4 max-w-xl text-white/70">
-            Stock varies by store. Visit any Mobile Care location to see what is available today.
-          </p>
-        </div>
-        <ButtonLink href="/locations">Find your nearest store</ButtonLink>
-      </div>
-    </section>
   )
 }

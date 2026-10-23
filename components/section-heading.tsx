@@ -1,8 +1,8 @@
+import { WordReveal, FadeIn } from "@/components/motion/primitives"
+
 interface SectionHeadingProps {
-  /** Short mono label above the title, e.g. "Repairs". */
+  /** Short label above the title, e.g. "Repairs". */
   eyebrow?: string
-  /** Optional section number shown before the eyebrow, e.g. "02". */
-  index?: string
   title: string
   subtitle?: string
   light?: boolean
@@ -14,44 +14,44 @@ interface SectionHeadingProps {
 
 export function SectionHeading({
   eyebrow,
-  index,
   title,
   subtitle,
   light = false,
   align = "left",
-  as: Heading = "h2",
+  as = "h2",
   className = "",
 }: SectionHeadingProps) {
   const isCenter = align === "center"
-  const rule = light ? "border-white/15" : "border-ink/15"
-  const label = light ? "text-white/60" : "text-ink-faint"
   return (
-    <div className={`${isCenter ? "mx-auto max-w-2xl text-center" : "max-w-3xl"} ${className}`}>
-      {(eyebrow || index) && (
-        <p
-          className={`flex items-center gap-3 border-t pt-4 font-mono text-xs uppercase tracking-[0.14em] ${rule} ${label} ${
-            isCenter ? "justify-center" : ""
+    <div className={`${isCenter ? "mx-auto max-w-3xl text-center" : "max-w-3xl"} ${className}`}>
+      {eyebrow && (
+        <FadeIn
+          as="p"
+          className={`flex items-center gap-3 text-[0.95rem] font-medium ${isCenter ? "justify-center" : ""} ${
+            light ? "text-brand-mint" : "text-brand-mintDark"
           }`}
         >
-          {index && <span className={light ? "text-brand-mint" : "text-brand-mintDark"}>{index}</span>}
+          <span className="h-px w-8 bg-current" aria-hidden="true" />
           {eyebrow}
-        </p>
+        </FadeIn>
       )}
-      <Heading
-        className={`mt-5 font-display text-3xl font-semibold leading-[1.08] tracking-[-0.025em] sm:text-[2.6rem] text-balance ${
+      <WordReveal
+        as={as}
+        text={title}
+        className={`mt-4 font-display text-[2.4rem] font-semibold leading-[1.08] tracking-[-0.02em] sm:text-5xl lg:text-[3.6rem] ${
           light ? "text-white" : "text-ink"
         }`}
-      >
-        {title}
-      </Heading>
+      />
       {subtitle && (
-        <p
-          className={`mt-4 max-w-2xl text-[1.05rem] leading-relaxed text-pretty ${isCenter ? "mx-auto" : ""} ${
+        <FadeIn
+          as="p"
+          delay={0.15}
+          className={`mt-6 max-w-2xl text-lg leading-relaxed sm:text-xl ${isCenter ? "mx-auto" : ""} ${
             light ? "text-white/70" : "text-ink-soft"
           }`}
         >
           {subtitle}
-        </p>
+        </FadeIn>
       )}
     </div>
   )

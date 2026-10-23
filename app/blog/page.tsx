@@ -3,6 +3,7 @@ import Link from "next/link"
 import { Nav } from "@/components/nav"
 import { Footer } from "@/components/footer"
 import { PageHeader } from "@/components/page-header"
+import { HeaderPhoto } from "@/components/header-photo"
 import { ArrowRight } from "@/components/icons"
 import { getArticles, isBlogConfigured, formatDate } from "@/lib/babylovegrowth"
 
@@ -36,6 +37,7 @@ export default async function BlogPage() {
           eyebrow="The Mobile Care blog"
           title="Repair guides, device tips, and tech news."
           intro="Practical advice from our technicians to help you get more out of your phone, tablet, and laptop."
+          media={<HeaderPhoto src="/hero-repair.webp" alt="A Mobile Care technician at the repair bench" aspect="aspect-[4/3]" />}
         />
 
         <section className="bg-paper py-16 sm:py-24">
@@ -55,7 +57,7 @@ export default async function BlogPage() {
               <div className="space-y-16">
                 {featured && (
                   <Link href={`/blog/${featured.slug}`} className="group grid gap-8 lg:grid-cols-2 lg:gap-14">
-                    <div className="relative aspect-[16/10] overflow-hidden rounded-md bg-paper-deep">
+                    <div className="relative aspect-[16/10] overflow-hidden rounded-[1.75rem] bg-paper-deep">
                       {featured.hero_image_url && (
                         // eslint-disable-next-line @next/next/no-img-element
                         <img
@@ -67,8 +69,8 @@ export default async function BlogPage() {
                       )}
                     </div>
                     <div className="flex flex-col justify-center border-t border-ink/15 pt-6 lg:border-0 lg:pt-0">
-                      <p className="font-mono text-xs uppercase tracking-[0.14em] text-ink-faint">
-                        Latest <span className="text-brand-mintDark">/</span>{" "}
+                      <p className="text-[0.95rem] text-ink-soft">
+                        <span className="font-medium text-brand-mintDark">Latest</span> ·{" "}
                         <time dateTime={featured.created_at}>{formatDate(featured.created_at)}</time>
                       </p>
                       <h2 className="mt-4 font-display text-3xl font-semibold leading-tight tracking-tight text-ink text-balance group-hover:text-brand-mintDark sm:text-4xl">
@@ -90,7 +92,7 @@ export default async function BlogPage() {
                     {rest.map((article) => (
                       <li key={article.id}>
                         <Link href={`/blog/${article.slug}`} className="group flex h-full flex-col">
-                          <div className="relative aspect-[16/10] overflow-hidden rounded-md bg-paper-deep">
+                          <div className="relative aspect-[16/10] overflow-hidden rounded-[1.75rem] bg-paper-deep">
                             {article.hero_image_url && (
                               // eslint-disable-next-line @next/next/no-img-element
                               <img
@@ -101,7 +103,7 @@ export default async function BlogPage() {
                               />
                             )}
                           </div>
-                          <time dateTime={article.created_at} className="mt-5 font-mono text-xs uppercase tracking-[0.12em] text-ink-faint">
+                          <time dateTime={article.created_at} className="mt-5 text-[0.95rem] text-ink-faint">
                             {formatDate(article.created_at)}
                           </time>
                           <h3 className="mt-2 font-display text-xl font-medium leading-snug text-ink text-balance group-hover:text-brand-mintDark">

@@ -1,14 +1,15 @@
 import Image from "next/image"
 import Link from "next/link"
-import { ArrowRight, ArrowUpRight, Phone } from "@/components/icons"
+import { ArrowRight, ArrowUpRight } from "@/components/icons"
 import { ButtonLink } from "@/components/button-link"
 import { SectionHeading } from "@/components/section-heading"
-import { Reveal } from "@/components/reveal"
-import { BrandMarquee } from "@/components/brand-marquee"
+import { FadeIn, Float, Parallax, Stagger, StaggerItem, VelocityMarquee, WordReveal } from "@/components/motion/primitives"
 import { ReviewStack } from "@/components/home/review-stack"
+import { ServicesShowcase } from "@/components/home/services-showcase"
 import { services } from "@/lib/services"
 import { locations } from "@/lib/locations"
 import { preOwnedBrands } from "@/lib/pre-owned"
+import { accessoryBrands, monoLogo } from "@/lib/brands"
 import { getGoogleReviews } from "@/lib/google-reviews"
 
 const DEVICES = [
@@ -25,70 +26,48 @@ const DEVICES = [
 ]
 
 export function DeviceMarquee() {
-  const row = (hidden: boolean) => (
-    <ul className="flex shrink-0 items-center" aria-hidden={hidden || undefined}>
-      {DEVICES.map((device) => (
-        <li key={device} className="flex items-center">
-          <span className="px-6 font-display text-2xl font-medium tracking-tight text-ink sm:text-3xl">{device}</span>
-          <span className="h-1.5 w-1.5 rounded-full bg-brand-mint" aria-hidden="true" />
-        </li>
-      ))}
-    </ul>
-  )
   return (
-    <section aria-label="Devices we repair" className="overflow-hidden border-b border-ink/10 bg-paper py-6">
-      <div className="type-marquee-track">
-        {row(false)}
-        {row(true)}
-      </div>
+    <section aria-label="Devices we repair" className="bg-paper py-10 sm:py-14">
+      <VelocityMarquee baseVelocity={-1.5}>
+        {DEVICES.map((device) => (
+          <span key={device} className="flex items-center">
+            <span className="px-6 font-display text-4xl font-semibold tracking-[-0.02em] text-ink sm:px-10 sm:text-6xl">
+              {device}
+            </span>
+            <span className="h-3 w-3 rounded-full bg-brand-mint" aria-hidden="true" />
+          </span>
+        ))}
+      </VelocityMarquee>
     </section>
   )
 }
 
-export function ServicesIndex() {
+export function ServicesSection() {
   return (
-    <section className="bg-paper py-20 sm:py-28">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid gap-8 lg:grid-cols-[1fr_2fr] lg:gap-16">
-          <Reveal>
-            <SectionHeading
-              index="01"
-              eyebrow="Repairs"
-              title="The six repairs we do every day."
-              subtitle="Each one starts with a free diagnostic and a fixed quote. You approve the price before we open the device."
-            />
-            <ButtonLink href="/services" variant="outline" className="mt-8">
+    <section className="bg-paper pb-24 pt-8 sm:pb-32">
+      <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+        <div className="mb-14 flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
+          <SectionHeading
+            eyebrow="Repairs"
+            title="The six repairs we do every day."
+            subtitle="Each one starts with a free diagnostic and a fixed quote. You approve the price before we open the device."
+          />
+          <FadeIn>
+            <ButtonLink href="/services" variant="dark">
               All repair services
             </ButtonLink>
-          </Reveal>
-
-          <ol className="border-t border-ink/15">
-            {services.map((service, i) => (
-              <li key={service.slug} className="border-b border-ink/15">
-                <Link
-                  href={`/services/${service.slug}`}
-                  className="group grid grid-cols-[2.5rem_1fr_auto] items-center gap-4 py-5 transition-colors sm:grid-cols-[3rem_1fr_9rem_6rem_1.5rem] sm:py-6"
-                >
-                  <span className="font-mono text-xs text-ink-faint">{String(i + 1).padStart(2, "0")}</span>
-                  <span>
-                    <span className="block font-display text-xl font-medium tracking-tight text-ink transition-colors group-hover:text-brand-mintDark sm:text-2xl">
-                      {service.name}
-                    </span>
-                    <span className="mt-1 block text-sm text-ink-soft">{service.tagline}</span>
-                  </span>
-                  <span className="hidden font-mono text-xs uppercase tracking-[0.1em] text-ink-soft sm:block">
-                    {service.turnaround.replace("–", "-")}
-                  </span>
-                  <span className="text-right font-mono text-sm text-ink sm:text-left">
-                    <span className="block text-[0.65rem] uppercase tracking-[0.12em] text-ink-faint">From</span>
-                    {service.priceFrom}
-                  </span>
-                  <ArrowRight className="hidden h-5 w-5 text-ink-faint transition-transform group-hover:translate-x-1 group-hover:text-ink sm:block" />
-                </Link>
-              </li>
-            ))}
-          </ol>
+          </FadeIn>
         </div>
+        <ServicesShowcase
+          services={services.map(({ slug, name, tagline, image, priceFrom, turnaround }) => ({
+            slug,
+            name,
+            tagline,
+            image,
+            priceFrom,
+            turnaround,
+          }))}
+        />
       </div>
     </section>
   )
@@ -101,107 +80,106 @@ const STATE_NAMES: Record<string, string> = {
   MI: "Michigan",
 }
 
-export function StoresDirectory() {
-  const states = ["GA", "VA", "NC", "MI"]
+export function StoresSection() {
   return (
-    <section className="bg-white py-20 sm:py-28">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid gap-12 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
-          <Reveal className="lg:sticky lg:top-24 lg:self-start">
-            <SectionHeading
-              index="02"
-              eyebrow="Stores"
-              title="Eight stores inside the malls you already visit."
-              subtitle="Drop your device off, finish your shopping, and pick it up repaired. Every store has the same technicians, parts, and warranty."
+    <section className="bg-white">
+      {/* full-bleed photo band */}
+      <div className="relative h-[70vh] min-h-[28rem] overflow-hidden">
+        <Parallax strength={10}>
+          <Image
+            src="/store-interior.webp"
+            alt="Customers at the counter inside a Mobile Care USA store"
+            fill
+            sizes="100vw"
+            className="object-cover"
+          />
+        </Parallax>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-black/10" />
+        <div className="absolute inset-x-0 bottom-0">
+          <div className="mx-auto max-w-7xl px-5 pb-14 sm:px-6 lg:px-8">
+            <FadeIn as="p" className="flex items-center gap-3 text-[0.95rem] font-medium text-brand-mint">
+              <span className="h-px w-8 bg-current" aria-hidden="true" />
+              Stores
+            </FadeIn>
+            <WordReveal
+              text="Eight stores inside the malls you already visit."
+              className="mt-4 max-w-3xl font-display text-[2.6rem] font-semibold leading-[1.05] tracking-[-0.02em] text-white sm:text-6xl"
             />
-            <div className="relative mt-10 aspect-[4/3] overflow-hidden rounded-md">
-              <Image
-                src="/store-interior.webp"
-                alt="Customers at the counter inside a Mobile Care USA store"
-                fill
-                sizes="(max-width: 1024px) 100vw, 40vw"
-                className="object-cover"
-              />
-            </div>
-          </Reveal>
-
-          <div className="space-y-10">
-            {states.map((state) => (
-              <div key={state}>
-                <h3 className="flex items-baseline justify-between border-b border-ink/15 pb-3 font-mono text-xs uppercase tracking-[0.14em] text-ink-faint">
-                  {STATE_NAMES[state]}
-                  <span>
-                    {locations.filter((l) => l.state === state).length}{" "}
-                    {locations.filter((l) => l.state === state).length === 1 ? "store" : "stores"}
-                  </span>
-                </h3>
-                <ul>
-                  {locations
-                    .filter((l) => l.state === state)
-                    .map((store) => (
-                      <li
-                        key={store.slug}
-                        className="grid grid-cols-1 gap-1 border-b border-ink/10 py-4 sm:grid-cols-[1.2fr_1fr_auto] sm:items-center sm:gap-6"
-                      >
-                        <Link href={`/locations/${store.slug}`} className="group">
-                          <span className="block font-display text-lg font-medium text-ink group-hover:text-brand-mintDark">
-                            {store.name}
-                          </span>
-                          <span className="block text-sm text-ink-soft">
-                            {store.address}, {store.city}
-                          </span>
-                        </Link>
-                        <span className="font-mono text-xs text-ink-soft">
-                          {store.hours[0] ? `${store.hours[0].day}: ${store.hours[0].time}` : ""}
-                        </span>
-                        <a
-                          href={`tel:${store.phone.replace(/\s+/g, "")}`}
-                          className="inline-flex items-center gap-2 text-sm font-medium text-ink hover:text-brand-mintDark"
-                        >
-                          <Phone className="h-4 w-4" />
-                          {store.phone.replace("+1 ", "")}
-                        </a>
-                      </li>
-                    ))}
-                </ul>
-              </div>
-            ))}
           </div>
         </div>
+      </div>
+
+      <div className="mx-auto max-w-7xl px-5 py-20 sm:px-6 sm:py-28 lg:px-8">
+        <FadeIn as="p" className="max-w-2xl text-lg leading-relaxed text-ink-soft sm:text-xl">
+          Drop your device off, finish your shopping, and pick it up repaired. Every store has the same technicians,
+          parts, and 30-day warranty.
+        </FadeIn>
+
+        <Stagger as="ul" className="mt-14 grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
+          {locations.map((store) => (
+            <StaggerItem as="li" key={store.slug}>
+              <Link href={`/locations/${store.slug}`} className="group block">
+                <div className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-paper-deep">
+                  <Image
+                    src={store.image}
+                    alt={`Mobile Care USA store at ${store.name}`}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    className="object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
+                  />
+                  <span className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-sm font-medium text-ink backdrop-blur">
+                    {STATE_NAMES[store.state]}
+                  </span>
+                </div>
+                <h3 className="mt-5 flex items-center justify-between font-display text-xl font-semibold text-ink">
+                  {store.name}
+                  <ArrowRight className="h-5 w-5 -translate-x-2 opacity-0 transition-all duration-500 group-hover:translate-x-0 group-hover:opacity-100" />
+                </h3>
+                <p className="mt-1 text-ink-soft">
+                  {store.city}, {store.state}
+                </p>
+                {store.hours[0] && (
+                  <p className="mt-1 text-[0.95rem] text-ink-faint">
+                    {store.hours[0].day}, {store.hours[0].time}
+                  </p>
+                )}
+              </Link>
+            </StaggerItem>
+          ))}
+        </Stagger>
       </div>
     </section>
   )
 }
 
-export async function ReviewsSection({ index = "03" }: { index?: string }) {
+export async function ReviewsSection() {
   const data = await getGoogleReviews()
   const reviews = data?.reviews ?? []
   const topStores = data ? [...data.stores].sort((a, b) => b.reviewCount - a.reviewCount).slice(0, 4) : []
 
   return (
-    <section className="overflow-hidden bg-ink py-20 text-white sm:py-28">
-      <div className="mx-auto grid max-w-7xl gap-14 px-4 sm:px-6 lg:grid-cols-[1fr_1.3fr] lg:gap-20 lg:px-8">
-        <div>
+    <section className="bg-ink py-24 text-white sm:py-32">
+      <div className="mx-auto grid max-w-7xl gap-14 px-5 sm:px-6 lg:grid-cols-[1fr_1.35fr] lg:gap-20 lg:px-8">
+        <div className="lg:sticky lg:top-28 lg:self-start">
           <SectionHeading
             light
-            index={index}
             eyebrow="Reviews"
             title="What customers say after the repair."
             subtitle="Every review here comes straight from our Google Business Profiles, updated twice a day."
           />
           {data && data.totalReviews > 0 && (
-            <div className="mt-10 border-t border-white/15 pt-6">
-              <p className="font-display text-6xl font-semibold tracking-tight">
+            <FadeIn className="mt-12">
+              <p className="font-display text-7xl font-semibold tracking-tight">
                 {data.averageRating.toFixed(1)}
-                <span className="ml-2 align-middle font-mono text-sm font-normal text-white/50">/ 5</span>
+                <span className="ml-3 align-middle text-xl font-normal tracking-normal text-white/50">out of 5</span>
               </p>
-              <p className="mt-2 font-mono text-xs uppercase tracking-[0.14em] text-white/50">
+              <p className="mt-2 text-white/60">
                 From {data.totalReviews.toLocaleString("en-US")} Google reviews across {data.stores.length} stores
               </p>
-              <ul className="mt-8 divide-y divide-white/10 border-y border-white/10">
+              <ul className="mt-8 space-y-3">
                 {topStores.map((store) => (
-                  <li key={store.storeSlug} className="flex items-center justify-between py-3 text-sm">
-                    <Link href={`/locations/${store.storeSlug}`} className="text-white/80 hover:text-white">
+                  <li key={store.storeSlug} className="flex items-center justify-between gap-4">
+                    <Link href={`/locations/${store.storeSlug}`} className="text-white/85 hover:text-white">
                       {store.storeName}
                     </Link>
                     {store.mapsUrl ? (
@@ -209,28 +187,28 @@ export async function ReviewsSection({ index = "03" }: { index?: string }) {
                         href={store.mapsUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 font-mono text-xs text-white/60 hover:text-brand-mint"
+                        className="inline-flex items-center gap-1 text-white/55 hover:text-brand-mint"
                       >
-                        {store.rating.toFixed(1)} · {store.reviewCount} reviews
-                        <ArrowUpRight className="h-3.5 w-3.5" />
+                        {store.rating.toFixed(1)} from {store.reviewCount}
+                        <ArrowUpRight className="h-4 w-4" />
                       </a>
                     ) : (
-                      <span className="font-mono text-xs text-white/60">
-                        {store.rating.toFixed(1)} · {store.reviewCount} reviews
+                      <span className="text-white/55">
+                        {store.rating.toFixed(1)} from {store.reviewCount}
                       </span>
                     )}
                   </li>
                 ))}
               </ul>
-            </div>
+            </FadeIn>
           )}
         </div>
 
         {reviews.length > 0 ? (
-          <ReviewStack reviews={reviews.slice(0, 12)} />
+          <ReviewStack reviews={reviews.slice(0, 6)} />
         ) : (
-          <div className="flex flex-col justify-center border-t border-white/15 pt-8">
-            <p className="text-lg text-white/70">Read what customers say about every Mobile Care store on Google.</p>
+          <FadeIn className="flex flex-col justify-center">
+            <p className="text-xl text-white/75">Read what customers say about every Mobile Care store on Google.</p>
             <a
               href="https://www.google.com/maps/search/Mobile+Care+USA"
               target="_blank"
@@ -240,88 +218,118 @@ export async function ReviewsSection({ index = "03" }: { index?: string }) {
               Read our Google reviews
               <ArrowUpRight className="h-4 w-4" />
             </a>
-          </div>
+          </FadeIn>
         )}
       </div>
     </section>
   )
 }
 
-export function ShopSplit() {
+export function ShopSection() {
   return (
-    <section className="bg-paper py-20 sm:py-28">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <Reveal>
-          <SectionHeading
-            index="04"
-            eyebrow="Shop in store"
-            title="Pre-owned phones and the accessories to protect them."
-          />
-        </Reveal>
+    <section className="bg-paper py-24 sm:py-32">
+      <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+        <SectionHeading eyebrow="Shop in store" title="Pre-owned phones and the accessories to protect them." />
 
-        <div className="mt-12 grid gap-px overflow-hidden rounded-md border border-ink/10 bg-ink/10 lg:grid-cols-2">
-          <div className="flex flex-col bg-white p-8 sm:p-10">
-            <p className="font-mono text-xs uppercase tracking-[0.14em] text-ink-faint">Certified pre-owned</p>
-            <p className="mt-4 max-w-md text-lg leading-relaxed text-ink-soft">
-              Unlocked iPhone and Samsung Galaxy phones that have never been repaired, each inspected and covered by
-              a 60-day warranty.
-            </p>
-            <ul className="mt-8 grid flex-1 grid-cols-2 gap-px overflow-hidden rounded border border-ink/10 bg-ink/10">
-              {preOwnedBrands.map((brand) => (
-                <li key={brand.slug} className="bg-white">
+        <div className="mt-14 grid gap-6 lg:grid-cols-2">
+          {/* pre-owned: product shots floating on the studio grey they were shot on */}
+          <FadeIn className="relative overflow-hidden rounded-[2rem] bg-[#f0eff2]">
+            <div className="p-8 sm:p-12">
+              <p className="text-[0.95rem] font-medium text-brand-mintDark">Certified pre-owned</p>
+              <h3 className="mt-3 max-w-sm font-display text-3xl font-semibold leading-tight tracking-[-0.02em] text-ink sm:text-4xl">
+                Unlocked. Never repaired. 60-day warranty.
+              </h3>
+              <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2">
+                {preOwnedBrands.map((brand) => (
                   <Link
+                    key={brand.slug}
                     href={`/pre-owned/${brand.slug}`}
-                    className="group flex h-full flex-col items-center justify-center gap-4 p-6 transition-colors hover:bg-paper"
+                    className="group inline-flex items-center gap-1.5 font-medium text-ink"
                   >
-                    <Image
-                      src={brand.logo}
-                      alt={`${brand.name} logo`}
-                      width={160}
-                      height={80}
-                      className="h-12 w-auto object-contain"
-                    />
-                    <span className="inline-flex items-center gap-1.5 text-sm font-medium text-ink">
-                      {brand.name}
-                      <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-                    </span>
+                    Shop {brand.name}
+                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="flex flex-col bg-white p-8 sm:p-10">
-            <p className="font-mono text-xs uppercase tracking-[0.14em] text-ink-faint">Accessories</p>
-            <p className="mt-4 max-w-md text-lg leading-relaxed text-ink-soft">
-              Cases, screen protectors, chargers, and audio from the brands we trust on our own phones, fitted in store.
-            </p>
-            <div className="mt-8 flex flex-1 items-center">
-              <BrandMarquee />
+                ))}
+              </div>
             </div>
-            <ButtonLink href="/accessories" variant="text" className="mt-6 self-start">
-              Browse accessories
-            </ButtonLink>
-          </div>
+            <div className="relative -mt-4 flex h-72 items-end justify-center sm:h-80">
+              <Float className="relative h-full w-1/2">
+                <Image
+                  src="/pre-owned/apple-device.webp"
+                  alt="Certified pre-owned iPhone"
+                  fill
+                  sizes="(max-width: 1024px) 50vw, 25vw"
+                  className="object-contain feather"
+                />
+              </Float>
+              <Float className="relative -ml-10 h-full w-1/2" delay={1.5}>
+                <Image
+                  src="/pre-owned/samsung-device.webp"
+                  alt="Certified pre-owned Samsung Galaxy"
+                  fill
+                  sizes="(max-width: 1024px) 50vw, 25vw"
+                  className="object-contain feather"
+                />
+              </Float>
+            </div>
+          </FadeIn>
+
+          {/* accessories: brand logos gliding past on dark */}
+          <FadeIn delay={0.12} className="relative flex flex-col overflow-hidden rounded-[2rem] bg-ink text-white">
+            <div className="hero-glow pointer-events-none absolute inset-0" aria-hidden="true" />
+            <div className="relative p-8 sm:p-12">
+              <p className="text-[0.95rem] font-medium text-brand-mint">Accessories</p>
+              <h3 className="mt-3 max-w-sm font-display text-3xl font-semibold leading-tight tracking-[-0.02em] sm:text-4xl">
+                Cases, chargers, and audio from brands we trust.
+              </h3>
+              <Link href="/accessories" className="group mt-6 inline-flex items-center gap-1.5 font-medium text-white">
+                Browse accessories
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </Link>
+            </div>
+            <div className="relative mt-auto space-y-6 pb-12">
+              <VelocityMarquee baseVelocity={-2}>
+                {accessoryBrands.slice(0, 7).map((brand) => (
+                  <BrandMark key={brand.name} name={brand.name} logo={brand.logo} />
+                ))}
+              </VelocityMarquee>
+              <VelocityMarquee baseVelocity={2}>
+                {accessoryBrands.slice(7).map((brand) => (
+                  <BrandMark key={brand.name} name={brand.name} logo={brand.logo} />
+                ))}
+              </VelocityMarquee>
+            </div>
+          </FadeIn>
         </div>
       </div>
     </section>
   )
 }
 
+/** A brand logo knocked out to white, for dark backgrounds. */
+export function BrandMark({ name, logo }: { name: string; logo: string }) {
+  return (
+    <span className="relative mx-6 block h-12 w-28 shrink-0 sm:mx-8 sm:w-32">
+      <Image src={monoLogo(logo)} alt={`${name} logo`} fill sizes="128px" className="object-contain opacity-75" />
+    </span>
+  )
+}
+
 export function ClosingCta() {
   return (
-    <section className="relative overflow-hidden bg-ink py-20 text-white sm:py-24">
-      <div className="hero-grid pointer-events-none absolute inset-0" aria-hidden="true" />
-      <div className="relative mx-auto flex max-w-7xl flex-col items-start justify-between gap-8 px-4 sm:px-6 lg:flex-row lg:items-end lg:px-8">
-        <h2 className="max-w-2xl font-display text-4xl font-semibold leading-[1.05] tracking-[-0.03em] sm:text-5xl">
-          Broken this morning. <span className="text-brand-mint">Fixed this afternoon.</span>
+    <section className="relative overflow-hidden bg-ink py-28 text-white sm:py-36">
+      <div className="hero-glow pointer-events-none absolute inset-0" aria-hidden="true" />
+      <div className="relative mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+        <h2 className="font-display text-5xl font-semibold leading-[1.02] tracking-[-0.03em] sm:text-7xl lg:text-8xl">
+          <WordReveal as="span" text="Broken this morning." className="block" />
+          <WordReveal as="span" text="Fixed this afternoon." delay={0.25} className="block text-brand-mint" />
         </h2>
-        <div className="flex flex-wrap gap-3">
+        <FadeIn delay={0.4} className="mt-12 flex flex-wrap gap-3">
           <ButtonLink href="/locations">Find your nearest store</ButtonLink>
           <ButtonLink href="/services" variant="outline-light" arrow={false}>
             See repair prices
           </ButtonLink>
-        </div>
+        </FadeIn>
       </div>
     </section>
   )

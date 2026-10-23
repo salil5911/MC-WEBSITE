@@ -117,8 +117,8 @@ export function RepairSearch({ entries }: { entries: SearchEntry[] }) {
       <label htmlFor={`${listId}-input`} className="sr-only">
         What needs fixing? Search repairs or stores
       </label>
-      <div className="search-glow relative flex items-center rounded-lg border border-white/15 bg-white/[0.06] backdrop-blur-sm transition-colors focus-within:border-brand-mint/70 focus-within:bg-white/[0.09]">
-        <Search className="ml-4 h-5 w-5 shrink-0 text-white/60" />
+      <div className="search-glow relative flex items-center rounded-full border border-white/15 bg-white/[0.06] transition-colors focus-within:border-brand-mint/70 focus-within:bg-white/[0.09]">
+        <Search className="ml-6 h-5 w-5 shrink-0 text-white/60" />
         <input
           ref={inputRef}
           id={`${listId}-input`}
@@ -147,12 +147,12 @@ export function RepairSearch({ entries }: { entries: SearchEntry[] }) {
               setQuery("")
             }
           }}
-          className="h-14 w-full bg-transparent px-3 text-base text-white outline-none placeholder:text-white/45"
+          className="h-16 w-full bg-transparent px-3 text-lg text-white outline-none placeholder:text-white/45"
         />
         <button
           type="submit"
           aria-label="Find a fix"
-          className="mr-2 inline-flex h-10 shrink-0 items-center gap-2 whitespace-nowrap rounded-md bg-brand-mint px-4 text-sm font-medium text-ink transition-colors hover:bg-brand-mintLight"
+          className="mr-2 inline-flex h-12 shrink-0 items-center gap-2 whitespace-nowrap rounded-full bg-brand-mint px-5 text-[0.95rem] font-medium text-ink transition-colors hover:bg-brand-mintLight"
         >
           <span className="hidden sm:inline">Find a fix</span>
           <ArrowRight className="h-4 w-4" />
@@ -163,7 +163,7 @@ export function RepairSearch({ entries }: { entries: SearchEntry[] }) {
         <ul
           id={`${listId}-list`}
           role="listbox"
-          className="absolute inset-x-0 top-full z-20 mt-2 overflow-hidden rounded-lg border border-ink/10 bg-white text-ink shadow-xl shadow-black/20"
+          className="absolute inset-x-0 top-full z-20 mt-3 overflow-hidden rounded-2xl border border-ink/10 bg-white text-ink shadow-xl shadow-black/20"
         >
           {results.length === 0 ? (
             <li className="px-4 py-3 text-sm text-ink-soft">
@@ -185,7 +185,7 @@ export function RepairSearch({ entries }: { entries: SearchEntry[] }) {
                   i === activeIndex ? "bg-paper" : ""
                 }`}
               >
-                <span className="w-14 shrink-0 font-mono text-[0.65rem] uppercase tracking-[0.12em] text-ink-faint">
+                <span className="w-14 shrink-0 text-xs font-semibold text-brand-mintDark">
                   {entry.kind === "repair" ? "Repair" : "Store"}
                 </span>
                 <span className="min-w-0 flex-1">

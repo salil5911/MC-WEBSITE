@@ -34,12 +34,12 @@ export function StoreFinder({ stores }: { stores: FinderStore[] }) {
           e.preventDefault()
           setSubmitted(true)
         }}
-        className="flex max-w-xl items-center rounded-lg border border-white/15 bg-white/[0.06] focus-within:border-brand-mint/70"
+        className="flex max-w-xl items-center rounded-full border border-white/15 bg-white/[0.06] focus-within:border-brand-mint/70"
       >
         <label htmlFor="zip" className="sr-only">
           ZIP code
         </label>
-        <Search className="ml-4 h-5 w-5 shrink-0 text-white/60" />
+        <Search className="ml-6 h-5 w-5 shrink-0 text-white/60" />
         <input
           id="zip"
           inputMode="numeric"
@@ -50,11 +50,11 @@ export function StoreFinder({ stores }: { stores: FinderStore[] }) {
             setZip(e.target.value.replace(/\D/g, "").slice(0, 5))
             setSubmitted(false)
           }}
-          className="h-14 w-full bg-transparent px-3 text-base text-white outline-none placeholder:text-white/45"
+          className="h-16 w-full bg-transparent px-3 text-lg text-white outline-none placeholder:text-white/45"
         />
         <button
           type="submit"
-          className="mr-2 inline-flex h-10 shrink-0 items-center gap-2 whitespace-nowrap rounded-md bg-brand-mint px-4 text-sm font-medium text-ink hover:bg-brand-mintLight"
+          className="mr-2 inline-flex h-12 shrink-0 items-center gap-2 whitespace-nowrap rounded-full bg-brand-mint px-5 text-[0.95rem] font-medium text-ink hover:bg-brand-mintLight"
         >
           Find nearest
         </button>
@@ -63,10 +63,10 @@ export function StoreFinder({ stores }: { stores: FinderStore[] }) {
         {nearest && (
           <Link
             href={`/locations/${nearest.slug}`}
-            className="group inline-flex items-center gap-4 rounded-md border border-brand-mint/40 bg-brand-mint/10 px-4 py-3"
+            className="group inline-flex items-center gap-4 rounded-full border border-brand-mint/40 bg-brand-mint/10 py-3 pl-6 pr-5"
           >
             <span>
-              <span className="block font-mono text-[0.65rem] uppercase tracking-[0.14em] text-brand-mint">Closest store</span>
+              <span className="block text-sm font-medium text-brand-mint">Closest store</span>
               <span className="block font-medium text-white">
                 {nearest.name}, {nearest.city} {nearest.state}
               </span>

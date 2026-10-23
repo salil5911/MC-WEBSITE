@@ -9,9 +9,11 @@ import { SITE_URL, faqPageSchema } from "@/lib/seo"
 import { locations } from "@/lib/locations"
 import { Footer } from "@/components/footer"
 import { ButtonLink } from "@/components/button-link"
-import { PageHeader, Spec } from "@/components/page-header"
-import { Reveal } from "@/components/reveal"
+import { PageHeader, Fact } from "@/components/page-header"
+import { HeaderPhoto } from "@/components/header-photo"
 import { SectionHeading } from "@/components/section-heading"
+import { FadeIn, Stagger, StaggerItem } from "@/components/motion/primitives"
+import { Accordion } from "@/components/motion/accordion"
 import { ClosingCta } from "@/components/home/sections"
 import { services, getService } from "@/lib/services"
 
@@ -91,159 +93,154 @@ export default async function ServiceDetailPage({
           ]}
           eyebrow="Repair service"
           title={service.name}
-          intro={service.tagline}
-          actions={<ButtonLink href="/locations">Find a store</ButtonLink>}
-          aside={
-            <div>
-              <div className="relative aspect-[4/3] overflow-hidden rounded-md ring-1 ring-white/10">
-                <Image
-                  src={service.image}
-                  alt={`${service.name} being done by a Mobile Care technician`}
-                  fill
-                  priority
-                  sizes="(max-width: 1024px) 100vw, 40vw"
-                  className="object-cover"
-                />
-              </div>
-              <dl className="mt-6 grid grid-cols-3 gap-6">
-                <Spec label="From" value={service.priceFrom} />
-                <Spec label="Time" value={service.turnaround.replace("–", "-")} />
-                <Spec label="Warranty" value="30 days" />
-              </dl>
-            </div>
+          intro={service.summary}
+          actions={
+            <>
+              <ButtonLink href="/locations">Find a store</ButtonLink>
+              <ButtonLink href="#process" variant="outline-light" arrow={false}>
+                How it works
+              </ButtonLink>
+            </>
           }
-        />
+          media={<HeaderPhoto src={service.image} alt={`${service.name} being done by a Mobile Care technician`} />}
+        >
+          <Fact label="Starting price" value={service.priceFrom} />
+          <Fact label="Typical time" value={service.turnaround} />
+          <Fact label="Parts and labor warranty" value="30 days" />
+          <Fact label="Diagnostic" value="Free" />
+        </PageHeader>
 
-        <section className="bg-paper py-20 sm:py-28">
-          <div className="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-[1.4fr_1fr] lg:gap-20 lg:px-8">
-            <Reveal>
-              <SectionHeading index="01" eyebrow="Overview" title={`How we handle ${service.name.toLowerCase()}.`} />
-              <p className="mt-6 text-lg leading-relaxed text-ink-soft">{service.overview}</p>
-            </Reveal>
-            <div className="lg:pt-24">
-              <h3 className="border-t border-ink/15 pt-4 font-mono text-xs uppercase tracking-[0.14em] text-ink-faint">
-                What&apos;s included
-              </h3>
-              <ul className="mt-2">
+        <section className="bg-paper py-24 sm:py-32">
+          <div className="mx-auto grid max-w-7xl gap-14 px-5 sm:px-6 lg:grid-cols-[1.3fr_1fr] lg:gap-24 lg:px-8">
+            <div>
+              <SectionHeading eyebrow="Overview" title={`How we handle ${service.name.toLowerCase()}.`} />
+              <FadeIn as="p" className="mt-8 text-xl leading-relaxed text-ink-soft">
+                {service.overview}
+              </FadeIn>
+            </div>
+            <FadeIn className="lg:pt-20">
+              <h3 className="font-display text-2xl font-semibold text-ink">What&apos;s included</h3>
+              <ul className="mt-6 space-y-4">
                 {service.includes.map((item) => (
-                  <li key={item} className="flex items-start gap-3 border-b border-ink/10 py-3 text-ink">
-                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-brand-mintDark" />
+                  <li key={item} className="flex items-start gap-4 text-lg text-ink">
+                    <span className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-mint text-ink">
+                      <Check className="h-3.5 w-3.5" />
+                    </span>
                     {item}
                   </li>
                 ))}
               </ul>
-            </div>
+            </FadeIn>
           </div>
         </section>
 
-        <section className="bg-white py-20 sm:py-28">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <Reveal>
-              <SectionHeading
-                index="02"
-                eyebrow="Process"
-                title="How the repair works."
-                subtitle="No appointment needed. Here is what happens after you walk in."
-              />
-            </Reveal>
-            <ol className="mt-12 grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+        <section id="process" className="scroll-mt-20 bg-ink py-24 text-white sm:py-32">
+          <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+            <SectionHeading
+              light
+              eyebrow="Process"
+              title="How the repair works."
+              subtitle="No appointment needed. Here is what happens after you walk in."
+            />
+            <Stagger as="ol" className="mt-16 grid gap-x-12 gap-y-14 sm:grid-cols-2 lg:grid-cols-4">
               {service.process.map((step, index) => (
-                <li key={step.title} className="border-t border-ink/15 pt-5">
-                  <span className="font-mono text-xs text-brand-mintDark">Step {String(index + 1).padStart(2, "0")}</span>
-                  <h3 className="mt-3 font-display text-xl font-medium text-ink">{step.title}</h3>
-                  <p className="mt-2 leading-relaxed text-ink-soft">{step.description}</p>
-                </li>
+                <StaggerItem as="li" key={step.title}>
+                  <span className="font-display text-6xl font-semibold text-brand-mint">{index + 1}</span>
+                  <h3 className="mt-4 font-display text-2xl font-semibold">{step.title}</h3>
+                  <p className="mt-3 text-lg leading-relaxed text-white/65">{step.description}</p>
+                </StaggerItem>
               ))}
-            </ol>
+            </Stagger>
           </div>
         </section>
 
-        <section className="bg-paper py-20 sm:py-28">
-          <div className="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:gap-20 lg:px-8">
+        <section className="bg-paper py-24 sm:py-32">
+          <div className="mx-auto grid max-w-7xl gap-16 px-5 sm:px-6 lg:grid-cols-2 lg:gap-24 lg:px-8">
             <div>
-              <SectionHeading index="03" eyebrow="When to visit" title={`Signs you need a ${service.shortName.toLowerCase()}.`} />
-              <ul className="mt-8 border-t border-ink/15">
+              <SectionHeading eyebrow="When to visit" title={`Signs you need a ${service.shortName.toLowerCase()}.`} />
+              <ul className="mt-10 space-y-4">
                 {service.signs.map((sign) => (
-                  <li key={sign} className="flex items-start gap-3 border-b border-ink/10 py-3 text-ink">
-                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-brand-mintDark" />
+                  <FadeIn as="li" key={sign} className="flex items-start gap-4 text-lg text-ink">
+                    <span className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-mint text-ink">
+                      <Check className="h-3.5 w-3.5" />
+                    </span>
                     {sign}
-                  </li>
+                  </FadeIn>
                 ))}
               </ul>
             </div>
             <div>
-              <SectionHeading index="04" eyebrow="Terms" title="What our technicians mean." as="h2" />
-              <dl className="mt-8 border-t border-ink/15">
+              <SectionHeading eyebrow="Terms" title="What our technicians mean." />
+              <dl className="mt-10 space-y-8">
                 {service.glossary.map((item) => (
-                  <div key={item.term} className="border-b border-ink/10 py-4">
-                    <dt className="font-display text-lg font-medium text-ink">{item.term}</dt>
-                    <dd className="mt-1 leading-relaxed text-ink-soft">{item.definition}</dd>
-                  </div>
+                  <FadeIn key={item.term}>
+                    <dt className="font-display text-xl font-semibold text-ink">{item.term}</dt>
+                    <dd className="mt-2 text-lg leading-relaxed text-ink-soft">{item.definition}</dd>
+                  </FadeIn>
                 ))}
               </dl>
             </div>
           </div>
         </section>
 
-        <section className="bg-white py-20 sm:py-28">
-          <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[1fr_1.6fr] lg:gap-16 lg:px-8">
-            <SectionHeading
-              index="05"
-              eyebrow="Questions"
-              title={`${service.shortName} FAQs.`}
-              subtitle="Still unsure? Call your nearest store and a technician will help."
-            />
-            <div className="border-t border-ink/15">
-              {service.faqs.map((faq) => (
-                <details key={faq.question} className="group border-b border-ink/15">
-                  <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-5 font-display text-lg font-medium text-ink [&::-webkit-details-marker]:hidden">
-                    {faq.question}
-                    <ArrowRight className="h-4 w-4 shrink-0 rotate-90 text-ink-faint transition-transform group-open:-rotate-90" />
-                  </summary>
-                  <p className="max-w-2xl pb-6 leading-relaxed text-ink-soft">{faq.answer}</p>
-                </details>
-              ))}
+        <section className="bg-white py-24 sm:py-32">
+          <div className="mx-auto grid max-w-7xl gap-12 px-5 sm:px-6 lg:grid-cols-[1fr_1.5fr] lg:gap-20 lg:px-8">
+            <div className="lg:sticky lg:top-28 lg:self-start">
+              <SectionHeading
+                eyebrow="Questions"
+                title={`${service.shortName} questions.`}
+                subtitle="Still unsure? Call your nearest store and a technician will help."
+              />
             </div>
+            <Accordion items={service.faqs} />
           </div>
         </section>
 
-        <section className="bg-paper py-20 sm:py-28">
-          <div className="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:gap-20 lg:px-8">
+        <section className="bg-paper py-24 sm:py-32">
+          <div className="mx-auto grid max-w-7xl gap-16 px-5 sm:px-6 lg:grid-cols-2 lg:gap-24 lg:px-8">
             <div>
-              <SectionHeading index="06" eyebrow="Where" title={`Get ${service.name.toLowerCase()} near you.`} />
-              <ul className="mt-8 grid gap-x-8 border-t border-ink/15 sm:grid-cols-2">
+              <SectionHeading eyebrow="Where" title={`Get ${service.name.toLowerCase()} near you.`} />
+              <Stagger as="ul" className="mt-10 grid gap-x-8 sm:grid-cols-2">
                 {locations.map((location) => (
-                  <li key={location.slug} className="border-b border-ink/10">
+                  <StaggerItem as="li" key={location.slug}>
                     <Link href={`/locations/${location.slug}`} className="group flex items-center justify-between py-3">
                       <span>
-                        <span className="block font-medium text-ink group-hover:text-brand-mintDark">{location.name}</span>
-                        <span className="block text-sm text-ink-soft">
+                        <span className="block text-lg font-medium text-ink group-hover:text-brand-mintDark">
+                          {location.name}
+                        </span>
+                        <span className="block text-ink-soft">
                           {location.city}, {location.state}
                         </span>
                       </span>
-                      <ArrowRight className="h-4 w-4 text-ink-faint transition-transform group-hover:translate-x-0.5" />
+                      <ArrowRight className="h-5 w-5 text-ink-faint transition-transform group-hover:translate-x-1" />
                     </Link>
-                  </li>
+                  </StaggerItem>
                 ))}
-              </ul>
+              </Stagger>
             </div>
             <div>
-              <SectionHeading index="07" eyebrow="Related" title="Other repairs we do." />
-              <ul className="mt-8 border-t border-ink/15">
+              <SectionHeading eyebrow="Related" title="Other repairs we do." />
+              <Stagger as="ul" className="mt-10 space-y-3">
                 {related.map((item) => (
-                  <li key={item.slug} className="border-b border-ink/10">
-                    <Link href={`/services/${item.slug}`} className="group flex items-center justify-between gap-6 py-4">
-                      <span>
-                        <span className="block font-display text-lg font-medium text-ink group-hover:text-brand-mintDark">
+                  <StaggerItem as="li" key={item.slug}>
+                    <Link
+                      href={`/services/${item.slug}`}
+                      className="group flex items-center gap-5 rounded-[1.5rem] p-2 transition-colors hover:bg-white"
+                    >
+                      <span className="relative h-20 w-24 shrink-0 overflow-hidden rounded-2xl">
+                        <Image src={item.image} alt={`${item.name} at Mobile Care USA`} fill sizes="96px" className="object-cover" />
+                      </span>
+                      <span className="flex-1">
+                        <span className="block font-display text-xl font-semibold text-ink group-hover:text-brand-mintDark">
                           {item.name}
                         </span>
-                        <span className="block text-sm text-ink-soft">{item.tagline}</span>
+                        <span className="block text-ink-soft">from {item.priceFrom}</span>
                       </span>
-                      <span className="shrink-0 font-mono text-sm text-ink">from {item.priceFrom}</span>
+                      <ArrowRight className="mr-3 h-5 w-5 text-ink-faint transition-transform group-hover:translate-x-1" />
                     </Link>
-                  </li>
+                  </StaggerItem>
                 ))}
-              </ul>
+              </Stagger>
             </div>
           </div>
         </section>

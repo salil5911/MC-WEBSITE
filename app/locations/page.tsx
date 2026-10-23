@@ -3,8 +3,10 @@ import Link from "next/link"
 import { ArrowRight, ArrowUpRight, Phone } from "@/components/icons"
 import { Nav } from "@/components/nav"
 import { Footer } from "@/components/footer"
-import { PageHeader } from "@/components/page-header"
+import { PageHeader, Fact } from "@/components/page-header"
+import { HeaderPhoto } from "@/components/header-photo"
 import { StoreFinder } from "@/components/locations/store-finder"
+import { Stagger, StaggerItem, WordReveal } from "@/components/motion/primitives"
 import { locations } from "@/lib/locations"
 
 const REGIONS = [
@@ -24,93 +26,92 @@ export default function LocationsPage() {
           eyebrow={`${locations.length} stores in 4 states`}
           title="Find a Mobile Care store near you."
           intro="Every store offers the same repairs, technicians, and 30-day warranty. No appointment needed."
+          actions={
+            <div className="w-full">
+              <StoreFinder
+                stores={locations.map(({ slug, name, city, state, zip, address }) => ({ slug, name, city, state, zip, address }))}
+              />
+            </div>
+          }
+          media={<HeaderPhoto src="/store-interior.webp" alt="Inside a Mobile Care USA mall store" />}
         >
-          <div className="mt-10">
-            <StoreFinder
-              stores={locations.map(({ slug, name, city, state, zip, address }) => ({ slug, name, city, state, zip, address }))}
-            />
-          </div>
+          <Fact label="Stores" value={locations.length} />
+          <Fact label="States" value="4" />
+          <Fact label="Appointment needed" value="None" />
+          <Fact label="Warranty at every store" value="30 days" />
         </PageHeader>
 
-        <section className="bg-paper py-20 sm:py-28">
-          <div className="mx-auto max-w-7xl space-y-20 px-4 sm:px-6 lg:px-8">
+        <section className="bg-white py-24 sm:py-32">
+          <div className="mx-auto max-w-7xl space-y-24 px-5 sm:px-6 lg:px-8">
             {REGIONS.map((region) => {
               const stores = locations.filter((l) => l.state === region.state)
               if (stores.length === 0) return null
               return (
                 <div key={region.state}>
-                  <h2 className="flex items-baseline justify-between border-t border-ink/15 pt-4">
-                    <span className="font-display text-3xl font-semibold tracking-tight text-ink">{region.name}</span>
-                    <span className="font-mono text-xs uppercase tracking-[0.14em] text-ink-faint">
+                  <div className="flex items-baseline justify-between gap-6">
+                    <WordReveal
+                      text={region.name}
+                      className="font-display text-4xl font-semibold tracking-[-0.02em] text-ink sm:text-5xl"
+                    />
+                    <span className="text-lg text-ink-soft">
                       {stores.length} {stores.length === 1 ? "store" : "stores"}
                     </span>
-                  </h2>
-                  <ul className="mt-8 grid gap-px overflow-hidden rounded-md border border-ink/10 bg-ink/10 md:grid-cols-2">
+                  </div>
+                  <Stagger as="ul" className="mt-10 grid gap-x-6 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
                     {stores.map((store) => (
-                      <li key={store.slug} className="flex flex-col bg-white sm:flex-row">
-                        <Link
-                          href={`/locations/${store.slug}`}
-                          className="relative aspect-[4/3] shrink-0 overflow-hidden sm:aspect-auto sm:w-44"
-                        >
-                          <Image
-                            src={store.image || "/placeholder.svg"}
-                            alt={`Mobile Care USA store at ${store.name}`}
-                            fill
-                            sizes="(max-width: 640px) 100vw, 176px"
-                            className="object-cover"
-                          />
-                        </Link>
-                        <div className="flex flex-1 flex-col p-6">
-                          <Link href={`/locations/${store.slug}`} className="group">
-                            <h3 className="font-display text-xl font-medium text-ink group-hover:text-brand-mintDark">
-                              {store.name}
-                            </h3>
-                          </Link>
-                          {store.badge && (
-                            <p className="mt-1 font-mono text-[0.68rem] uppercase tracking-[0.12em] text-brand-mintDark">
-                              {store.badge}
-                            </p>
-                          )}
-                          <address className="mt-2 text-sm not-italic leading-relaxed text-ink-soft">
-                            {store.address}, {store.city}, {store.state} {store.zip}
-                          </address>
-                          <dl className="mt-3 space-y-0.5 font-mono text-xs text-ink-soft">
-                            {store.hours.map((h) => (
-                              <div key={h.day} className="flex gap-2">
-                                <dt>{h.day}:</dt>
-                                <dd>{h.time}</dd>
-                              </div>
-                            ))}
-                          </dl>
-                          <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-ink/10 pt-4 text-sm">
-                            <a
-                              href={`tel:${store.phone.replace(/\s+/g, "")}`}
-                              className="inline-flex items-center gap-1.5 font-medium text-ink hover:text-brand-mintDark"
-                            >
-                              <Phone className="h-4 w-4" />
-                              {store.phone.replace("+1 ", "")}
-                            </a>
-                            <a
-                              href={store.directionsUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="inline-flex items-center gap-1 text-ink-soft hover:text-ink"
-                            >
-                              Directions
-                              <ArrowUpRight className="h-3.5 w-3.5" />
-                            </a>
-                            <Link
-                              href={`/locations/${store.slug}`}
-                              className="ml-auto inline-flex items-center gap-1 font-medium text-ink hover:text-brand-mintDark"
-                            >
-                              Store details
-                              <ArrowRight className="h-4 w-4" />
-                            </Link>
+                      <StaggerItem as="li" key={store.slug}>
+                        <Link href={`/locations/${store.slug}`} className="group block">
+                          <div className="relative aspect-[4/3] overflow-hidden rounded-[1.75rem] bg-paper-deep">
+                            <Image
+                              src={store.image || "/placeholder.svg"}
+                              alt={`Mobile Care USA store at ${store.name}`}
+                              fill
+                              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                              className="object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
+                            />
+                            {store.badge && (
+                              <span className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-sm font-medium text-ink backdrop-blur">
+                                {store.badge}
+                              </span>
+                            )}
                           </div>
+                          <h3 className="mt-6 flex items-center justify-between font-display text-2xl font-semibold text-ink">
+                            {store.name}
+                            <ArrowRight className="h-5 w-5 -translate-x-2 opacity-0 transition-all duration-500 group-hover:translate-x-0 group-hover:opacity-100" />
+                          </h3>
+                        </Link>
+                        <address className="mt-2 text-lg not-italic leading-relaxed text-ink-soft">
+                          {store.address}, {store.city}, {store.state} {store.zip}
+                        </address>
+                        <dl className="mt-3 space-y-0.5 text-ink-soft">
+                          {store.hours.map((h) => (
+                            <div key={h.day} className="flex gap-2">
+                              <dt className="font-medium text-ink">{h.day}</dt>
+                              <dd>{h.time}</dd>
+                            </div>
+                          ))}
+                        </dl>
+                        <div className="mt-5 flex flex-wrap gap-x-6 gap-y-2">
+                          <a
+                            href={`tel:${store.phone.replace(/\s+/g, "")}`}
+                            className="inline-flex items-center gap-2 font-medium text-ink hover:text-brand-mintDark"
+                          >
+                            <Phone className="h-4 w-4" />
+                            {store.phone.replace("+1 ", "")}
+                          </a>
+                          <a
+                            href={store.directionsUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1 text-ink-soft hover:text-ink"
+                          >
+                            Directions
+                            <ArrowUpRight className="h-4 w-4" />
+                          </a>
                         </div>
-                      </li>
+                      </StaggerItem>
                     ))}
-                  </ul>
+                  </Stagger>
                 </div>
               )
             })}

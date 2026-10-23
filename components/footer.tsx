@@ -13,8 +13,8 @@ const companyLinks = [
   { href: "/blog", label: "Blog" },
 ]
 
-const heading = "border-t border-white/15 pt-4 font-mono text-[0.68rem] uppercase tracking-[0.14em] text-white/50"
-const link = "text-sm text-white/75 transition-colors hover:text-white"
+const heading = "text-sm font-semibold text-brand-mint"
+const link = "text-[0.98rem] text-white/75 transition-colors hover:text-white"
 
 export function Footer() {
   return (
@@ -22,7 +22,7 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-4 pb-10 pt-16 sm:px-6 lg:px-8">
         <div className="grid gap-12 lg:grid-cols-[1.2fr_1fr_1fr_2fr]">
           <div>
-            <p className="font-display text-2xl font-semibold tracking-tight">
+            <p className="font-display text-3xl font-semibold tracking-tight">
               Mobile Care <span className="text-brand-mint">USA</span>
             </p>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-white/60">
@@ -98,7 +98,7 @@ export function Footer() {
           </nav>
         </div>
 
-        <div className="mt-14 flex flex-col justify-between gap-2 border-t border-white/10 pt-6 font-mono text-xs text-white/45 sm:flex-row">
+        <div className="mt-14 flex flex-col justify-between gap-2 border-t border-white/10 pt-6 text-sm text-white/45 sm:flex-row">
           <p>
             &copy; <span suppressHydrationWarning>{new Date().getFullYear()}</span> Mobile Care USA. All rights
             reserved.

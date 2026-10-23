@@ -3,10 +3,12 @@ import Image from "next/image"
 import { Nav } from "@/components/nav"
 import { Footer } from "@/components/footer"
 import { ButtonLink } from "@/components/button-link"
-import { PageHeader } from "@/components/page-header"
-import { Reveal } from "@/components/reveal"
+import { PageHeader, Fact } from "@/components/page-header"
+import { HeaderPhoto } from "@/components/header-photo"
 import { SectionHeading } from "@/components/section-heading"
-import { accessoryBrands } from "@/lib/brands"
+import { Stagger, StaggerItem, VelocityMarquee } from "@/components/motion/primitives"
+import { BrandMark, ClosingCta } from "@/components/home/sections"
+import { accessoryBrands, monoLogo } from "@/lib/brands"
 
 export const metadata: Metadata = {
   title: "Device Accessories | Mobile Care USA",
@@ -45,45 +47,65 @@ export default function AccessoriesPage() {
           title="Accessories from the brands we trust."
           intro="Cases, chargers, audio, and screen protection from the names that lead the industry. Stop by any store and we will help you pick the right fit for your device."
           actions={<ButtonLink href="/locations">Find a store</ButtonLink>}
-        />
+          media={<HeaderPhoto src="/store-interior.webp" alt="Accessory walls inside a Mobile Care USA store" />}
+        >
+          <Fact label="Brands in store" value={accessoryBrands.length} />
+          <Fact label="Categories" value={categories.length} />
+          <Fact label="Fitted in store" value="Yes" />
+          <Fact label="Stores stocking them" value="8" />
+        </PageHeader>
 
-        <section className="bg-white py-20 sm:py-28" aria-labelledby="brands-heading">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <Reveal>
-              <SectionHeading index="01" eyebrow="Brands" title={`${accessoryBrands.length} brands, all in one place.`} />
-            </Reveal>
-            <ul className="mt-12 grid grid-cols-2 gap-px overflow-hidden rounded-md border border-ink/10 bg-ink/10 sm:grid-cols-3 lg:grid-cols-5">
+        <section aria-label="Brands we carry" className="space-y-8 bg-ink py-14">
+          <VelocityMarquee baseVelocity={-2}>
+            {accessoryBrands.map((brand) => (
+              <BrandMark key={brand.name} name={brand.name} logo={brand.logo} />
+            ))}
+          </VelocityMarquee>
+          <VelocityMarquee baseVelocity={2}>
+            {[...accessoryBrands].reverse().map((brand) => (
+              <BrandMark key={brand.name} name={brand.name} logo={brand.logo} />
+            ))}
+          </VelocityMarquee>
+        </section>
+
+        <section className="bg-white py-24 sm:py-32" aria-labelledby="brands-heading">
+          <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+            <SectionHeading eyebrow="Brands" title={`${accessoryBrands.length} brands, all in one place.`} />
+            <Stagger as="ul" gap={0.05} className="mt-16 grid grid-cols-2 gap-x-10 gap-y-14 sm:grid-cols-3 lg:grid-cols-5">
               {accessoryBrands.map((brand) => (
-                <li key={brand.name} className={`flex h-32 items-center justify-center p-6 ${brand.dark ? "bg-ink" : "bg-white"}`}>
-                  <Image
-                    src={brand.logo}
-                    alt={`${brand.name} logo`}
-                    width={180}
-                    height={80}
-                    className={`max-h-14 w-auto object-contain ${brand.dark ? "" : "mix-blend-multiply"}`}
-                  />
-                </li>
+                <StaggerItem as="li" key={brand.name} className="group flex flex-col items-center">
+                  <span className="relative block h-16 w-full transition-transform duration-500 group-hover:-translate-y-1">
+                    <Image
+                      src={monoLogo(brand.logo)}
+                      alt={`${brand.name} logo`}
+                      fill
+                      sizes="(max-width: 640px) 45vw, 18vw"
+                      className="object-contain opacity-75 brightness-0 transition-opacity duration-500 group-hover:opacity-100"
+                    />
+                  </span>
+                  <span className="mt-4 text-[0.95rem] text-ink-soft">{brand.name}</span>
+                </StaggerItem>
               ))}
-            </ul>
+            </Stagger>
           </div>
         </section>
 
-        <section className="bg-paper py-20 sm:py-28">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <Reveal>
-              <SectionHeading index="02" eyebrow="What we carry" title="Everything your device needs." />
-            </Reveal>
-            <ol className="mt-12 grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+        <section className="bg-paper py-24 sm:py-32">
+          <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+            <SectionHeading eyebrow="What we carry" title="Everything your device needs." />
+            <Stagger as="ol" className="mt-16 grid gap-x-12 gap-y-14 sm:grid-cols-2 lg:grid-cols-4">
               {categories.map((item, i) => (
-                <li key={item.title} className="border-t border-ink/15 pt-5">
-                  <span className="font-mono text-xs text-brand-mintDark">{String(i + 1).padStart(2, "0")}</span>
-                  <h3 className="mt-3 font-display text-xl font-medium text-ink">{item.title}</h3>
-                  <p className="mt-2 leading-relaxed text-ink-soft">{item.description}</p>
-                </li>
+                <StaggerItem as="li" key={item.title}>
+                  <span className="font-display text-6xl font-semibold text-brand-mint">{i + 1}</span>
+                  <h3 className="mt-4 font-display text-2xl font-semibold text-ink">{item.title}</h3>
+                  <p className="mt-3 text-lg leading-relaxed text-ink-soft">{item.description}</p>
+                </StaggerItem>
               ))}
-            </ol>
+            </Stagger>
           </div>
         </section>
+
+        <ClosingCta />
       </main>
       <Footer />
     </>

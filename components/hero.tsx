@@ -2,6 +2,8 @@ import Link from "next/link"
 import { Star } from "@/components/icons"
 import { RepairSearch, type SearchEntry } from "@/components/home/repair-search"
 import { RepairOrbit } from "@/components/home/repair-orbit"
+import { CountUp, VelocityMarquee } from "@/components/motion/primitives"
+import { RiseText } from "@/components/motion/rise-text"
 import { services } from "@/lib/services"
 import { locations } from "@/lib/locations"
 import { getGoogleReviews } from "@/lib/google-reviews"
@@ -49,46 +51,42 @@ function searchEntries(): SearchEntry[] {
 
 export async function Hero({ className = "" }: { className?: string }) {
   const reviews = await getGoogleReviews()
-  const rating = reviews && reviews.averageRating > 0 ? reviews.averageRating.toFixed(1) : "4.9"
+  const rating = reviews && reviews.averageRating > 0 ? Number(reviews.averageRating.toFixed(1)) : 4.9
   const reviewCount = reviews?.totalReviews
 
   return (
     <section className={`relative overflow-hidden bg-ink text-white ${className}`}>
-      <div className="hero-grid pointer-events-none absolute inset-0" aria-hidden="true" />
+      <div className="hero-glow pointer-events-none absolute inset-0" aria-hidden="true" />
 
-      <div className="relative mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 px-4 pb-16 pt-28 sm:px-6 lg:grid-cols-[1.1fr_1fr] lg:gap-6 lg:px-8 lg:pb-24 lg:pt-36">
+      <div className="relative mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-5 pb-12 pt-32 sm:px-6 lg:grid-cols-[1.15fr_1fr] lg:gap-8 lg:px-8 lg:pb-20 lg:pt-40">
         <div>
-          <p className="font-mono text-xs uppercase tracking-[0.16em] text-white/55">
-            Phone, tablet &amp; laptop repair <span className="text-brand-mint">/</span> 8 stores in GA, VA, NC &amp; MI
+          <p className="soft-in flex items-center gap-3 text-[0.95rem] font-medium text-brand-mint">
+            <span className="h-px w-8 bg-current" aria-hidden="true" />8 stores in Georgia, Virginia, North Carolina &amp; Michigan
           </p>
 
-          <h1 className="mt-6 font-display text-[2.6rem] font-semibold leading-[1.02] tracking-[-0.035em] sm:text-6xl lg:text-[4.4rem]">
-            Same-day phone repair,
-            <br />
-            <span className="text-brand-mint">done properly.</span>
+          <h1 className="mt-6 font-display text-[2.9rem] font-semibold leading-[1.04] tracking-[-0.03em] sm:text-7xl lg:text-[5.2rem]">
+            <RiseText text="Same-day phone repair," start={0.05} />
+            <RiseText text="done properly." start={0.3} className="text-brand-mint" />
           </h1>
 
-          <p className="mt-6 max-w-lg text-lg leading-relaxed text-white/70">
+          <p className="soft-in mt-7 max-w-xl text-lg leading-relaxed text-white/70 sm:text-xl" style={{ animationDelay: "0.45s" }}>
             Walk into any Mobile Care store with a cracked screen, a tired battery, or a port that stopped charging.
             Most repairs are finished while you shop, with a 30-day warranty on parts and labor.
           </p>
 
-          <div className="mt-9">
+          <div className="soft-in mt-10" style={{ animationDelay: "0.6s" }}>
             <RepairSearch entries={searchEntries()} />
-            <p className="mt-3 text-sm text-white/50">
+            <p className="mt-4 text-[0.95rem] text-white/50">
               Popular:{" "}
-              <Link href="/services/screen-replacement" className="text-white/80 underline-offset-4 hover:underline">
+              <Link href="/services/screen-replacement" className="text-white/85 underline-offset-4 hover:underline">
                 Screen
               </Link>
               ,{" "}
-              <Link href="/services/battery-replacement" className="text-white/80 underline-offset-4 hover:underline">
+              <Link href="/services/battery-replacement" className="text-white/85 underline-offset-4 hover:underline">
                 Battery
               </Link>
               ,{" "}
-              <Link
-                href="/services/charging-port-replacement"
-                className="text-white/80 underline-offset-4 hover:underline"
-              >
+              <Link href="/services/charging-port-replacement" className="text-white/85 underline-offset-4 hover:underline">
                 Charging port
               </Link>
             </p>
@@ -100,38 +98,33 @@ export async function Hero({ className = "" }: { className?: string }) {
         </div>
       </div>
 
-      {/* Phones: the orbit is too cramped, so the same cards scroll by in a row. */}
-      <div className="relative -mt-4 mb-10 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)] sm:hidden">
-        <div className="type-marquee-track gap-3">
-          {[...services, ...services].map((service, i) => (
-            <Link
-              key={`${service.slug}-${i}`}
-              href={`/services/${service.slug}`}
-              aria-hidden={i >= services.length || undefined}
-              tabIndex={i >= services.length ? -1 : undefined}
-              className="shrink-0 rounded-md border border-white/15 bg-white/[0.04] px-3 py-2"
-            >
-              <span className="block text-sm font-medium text-white">{service.shortName}</span>
-              <span className="mt-0.5 block font-mono text-[0.6rem] uppercase tracking-[0.1em] text-white/55">
-                {service.turnaround} · from {service.priceFrom}
-              </span>
-            </Link>
-          ))}
-        </div>
-      </div>
+      {/* Phones: the orbit is too cramped, so the same repairs glide by in a row. */}
+      <VelocityMarquee className="relative mb-10 sm:hidden" baseVelocity={-3}>
+        {services.map((service) => (
+          <Link
+            key={service.slug}
+            href={`/services/${service.slug}`}
+            className="mr-3 flex shrink-0 items-center gap-2.5 rounded-full border border-white/10 bg-white/[0.06] px-4 py-2.5"
+          >
+            <span className="h-1.5 w-1.5 rounded-full bg-brand-mint" aria-hidden="true" />
+            <span className="text-sm font-medium text-white">{service.shortName}</span>
+            <span className="text-sm text-white/50">from {service.priceFrom}</span>
+          </Link>
+        ))}
+      </VelocityMarquee>
 
-      <dl className="relative mx-auto grid max-w-7xl grid-cols-2 border-t border-white/10 px-4 sm:px-6 lg:grid-cols-4 lg:px-8">
-        <Stat label="Devices repaired" value="1M+" />
+      <dl className="relative mx-auto grid max-w-7xl grid-cols-2 gap-y-8 border-t border-white/10 px-5 py-10 sm:px-6 lg:grid-cols-4 lg:px-8">
+        <Stat label="Devices repaired" value={<CountUp value={1} suffix="M+" />} />
         <Stat
-          label={reviewCount ? `Google rating, ${reviewCount.toLocaleString("en-US")} reviews` : "Average Google rating"}
+          label={reviewCount ? `Google rating from ${reviewCount.toLocaleString("en-US")} reviews` : "Average Google rating"}
           value={
             <span className="inline-flex items-center gap-2">
-              {rating}
-              <Star className="h-6 w-6 text-brand-mint" />
+              <CountUp value={rating} decimals={1} />
+              <Star className="h-7 w-7 text-brand-mint" />
             </span>
           }
         />
-        <Stat label="Repair warranty, parts and labor" value="30 days" />
+        <Stat label="Warranty on parts and labor" value={<CountUp value={30} suffix=" days" />} />
         <Stat label="Diagnostics, no appointment" value="Free" />
       </dl>
     </section>
@@ -140,9 +133,9 @@ export async function Hero({ className = "" }: { className?: string }) {
 
 function Stat({ label, value }: { label: string; value: React.ReactNode }) {
   return (
-    <div className="flex flex-col border-white/10 py-7 pr-4 [&:not(:first-child)]:lg:border-l [&:not(:first-child)]:lg:pl-8 even:border-l even:pl-6 lg:even:pl-8">
-      <dt className="order-2 mt-2 font-mono text-[0.68rem] uppercase tracking-[0.14em] text-white/50">{label}</dt>
-      <dd className="order-1 font-display text-3xl font-semibold tracking-tight sm:text-4xl">{value}</dd>
+    <div className="flex flex-col">
+      <dd className="font-display text-4xl font-semibold tracking-tight sm:text-5xl">{value}</dd>
+      <dt className="mt-2 text-[0.95rem] text-white/55">{label}</dt>
     </div>
   )
 }

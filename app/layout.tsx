@@ -1,7 +1,9 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter, Inter_Tight, JetBrains_Mono } from 'next/font/google';
+import { Inter, Poppins } from 'next/font/google';
 import Script from 'next/script';
 import { JsonLd } from '@/components/json-ld';
+import { SmoothScroll } from '@/components/motion/smooth-scroll';
+import { RevealObserver } from '@/components/motion/reveal-observer';
 import { DEFAULT_OG_IMAGE, SITE_NAME, SITE_URL, organizationSchema } from '@/lib/seo';
 import './globals.css';
 
@@ -11,17 +13,10 @@ const inter = Inter({
   display: 'swap',
 });
 
-const interTight = Inter_Tight({
+const poppins = Poppins({
   subsets: ['latin'],
-  weight: ['500', '600', '700'],
+  weight: ['400', '500', '600', '700'],
   variable: '--font-display',
-  display: 'swap',
-});
-
-const mono = JetBrains_Mono({
-  subsets: ['latin'],
-  weight: ['400', '500'],
-  variable: '--font-mono',
   display: 'swap',
 });
 
@@ -79,14 +74,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${interTight.variable} ${mono.variable} bg-background`}>
+    <html lang="en" className={`${inter.variable} ${poppins.variable} bg-background`} suppressHydrationWarning>
       <head>
         {/* Structured Data (Schema.org) */}
         <JsonLd data={organizationSchema()} />
+        {/* Turn on scroll reveals before first paint, only if motion is welcome. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('motion-ok')}catch(e){}`,
+          }}
+        />
 
       </head>
-      <body className="bg-paper font-sans text-ink antialiased">
-        {children}
+      <body className="bg-paper font-sans text-[1.0625rem] text-ink antialiased">
+        <SmoothScroll>{children}</SmoothScroll>
+        <RevealObserver />
         {/* Google Tag (gtag.js), loaded after the page is interactive so it doesn't compete with first paint */}
         <Script src="https://www.googletagmanager.com/gtag/js?id=G-P17FFSKJVN" strategy="afterInteractive" />
         <Script id="gtag-init" strategy="afterInteractive">

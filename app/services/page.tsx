@@ -5,9 +5,10 @@ import { ArrowRight } from "@/components/icons"
 import { Nav } from "@/components/nav"
 import { Footer } from "@/components/footer"
 import { ButtonLink } from "@/components/button-link"
-import { PageHeader, Spec } from "@/components/page-header"
-import { Reveal } from "@/components/reveal"
+import { PageHeader, Fact } from "@/components/page-header"
+import { HeaderPhoto } from "@/components/header-photo"
 import { SectionHeading } from "@/components/section-heading"
+import { FadeIn, Stagger, StaggerItem } from "@/components/motion/primitives"
 import { ReviewsSection, ClosingCta } from "@/components/home/sections"
 import { services } from "@/lib/services"
 
@@ -47,7 +48,9 @@ const commitments = [
 ]
 
 export default function ServicesPage() {
-  const cheapest = services.reduce((min, s) => (Number(s.priceFrom.replace(/\D/g, "")) < Number(min.priceFrom.replace(/\D/g, "")) ? s : min))
+  const cheapest = services.reduce((min, s) =>
+    Number(s.priceFrom.replace(/\D/g, "")) < Number(min.priceFrom.replace(/\D/g, "")) ? s : min,
+  )
 
   return (
     <>
@@ -57,7 +60,7 @@ export default function ServicesPage() {
           breadcrumbs={[{ name: "Repairs", path: "/services" }]}
           eyebrow="Repair services"
           title="Fast, honest repairs for the devices you rely on."
-          intro="From cracked screens to failing batteries, our technicians repair every major brand. Most repairs take less than an hour and every one is backed by a 30-day warranty."
+          intro="From cracked screens to failing batteries, our technicians repair every major brand. Most repairs take less than an hour, and every one is backed by a 30-day warranty."
           actions={
             <>
               <ButtonLink href="/locations">Find a store</ButtonLink>
@@ -66,85 +69,89 @@ export default function ServicesPage() {
               </ButtonLink>
             </>
           }
-          aside={
-            <dl className="grid grid-cols-2 gap-x-8 gap-y-6">
-              <Spec label="Repairs from" value={cheapest.priceFrom} />
-              <Spec label="Typical time" value="30-60 min" />
-              <Spec label="Warranty" value="30 days" />
-              <Spec label="Diagnostics" value="Free" />
-            </dl>
+          media={
+            <HeaderPhoto
+              src="/hero-repair.webp"
+              alt="A Mobile Care technician repairing a smartphone"
+              caption={
+                <span className="flex items-center justify-between gap-4">
+                  <span className="font-medium">Screen, battery, port, camera, glass, water</span>
+                  <span className="text-white/70">from {cheapest.priceFrom}</span>
+                </span>
+              }
+            />
           }
-        />
+        >
+          <Fact label="Repairs start at" value={cheapest.priceFrom} />
+          <Fact label="Typical repair time" value="30-60 min" />
+          <Fact label="Warranty on every repair" value="30 days" />
+          <Fact label="Diagnostics" value="Free" />
+        </PageHeader>
 
-        <section id="repairs" className="scroll-mt-20 bg-paper py-20 sm:py-28">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <Reveal>
-              <SectionHeading
-                index="01"
-                eyebrow="What we fix"
-                title="Six repairs, each with a clear process and price."
-                subtitle="Open any repair to see what is included, how we do it, and what it costs."
-              />
-            </Reveal>
-            <ol className="mt-14 border-t border-ink/15">
+        <section id="repairs" className="scroll-mt-20 bg-paper py-24 sm:py-32">
+          <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+            <SectionHeading
+              eyebrow="What we fix"
+              title="Six repairs, each with a clear process and price."
+              subtitle="Open any repair to see what is included, how we do it, and what it costs."
+            />
+            <ol className="mt-16 space-y-6">
               {services.map((service, i) => (
-                <li key={service.slug} className="border-b border-ink/15">
+                <FadeIn as="li" key={service.slug}>
                   <Link
                     href={`/services/${service.slug}`}
-                    className="group grid gap-6 py-8 sm:grid-cols-[12rem_1fr] lg:grid-cols-[3rem_14rem_1fr_10rem_1.5rem] lg:items-center"
+                    className="group grid items-center gap-8 rounded-[2rem] p-3 transition-colors duration-500 hover:bg-white sm:grid-cols-[18rem_1fr] lg:grid-cols-[22rem_1fr_auto] lg:gap-12 lg:pr-10"
                   >
-                    <span className="hidden font-mono text-xs text-ink-faint lg:block">{String(i + 1).padStart(2, "0")}</span>
-                    <span className="relative block aspect-[4/3] overflow-hidden rounded-md bg-paper-deep">
+                    <span className="relative block aspect-[4/3] overflow-hidden rounded-[1.5rem] bg-paper-deep">
                       <Image
                         src={service.image}
                         alt={`${service.name} at Mobile Care USA`}
                         fill
-                        sizes="(max-width: 640px) 100vw, 14rem"
-                        className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                        sizes="(max-width: 640px) 100vw, 22rem"
+                        className="object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
                       />
                     </span>
-                    <span>
-                      <span className="block font-display text-2xl font-medium tracking-tight text-ink transition-colors group-hover:text-brand-mintDark">
+                    <span className="block px-2 sm:px-0">
+                      <span className="text-[0.95rem] font-medium text-brand-mintDark">
+                        Repair {i + 1} of {services.length}
+                      </span>
+                      <span className="mt-2 block font-display text-3xl font-semibold tracking-[-0.02em] text-ink sm:text-4xl">
                         {service.name}
                       </span>
-                      <span className="mt-2 block max-w-xl leading-relaxed text-ink-soft">{service.summary}</span>
-                    </span>
-                    <span className="flex gap-8 font-mono text-sm text-ink sm:col-start-2 lg:col-start-auto lg:block lg:space-y-3">
-                      <span className="block">
-                        <span className="block text-[0.65rem] uppercase tracking-[0.12em] text-ink-faint">From</span>
-                        {service.priceFrom}
-                      </span>
-                      <span className="block">
-                        <span className="block text-[0.65rem] uppercase tracking-[0.12em] text-ink-faint">Time</span>
-                        {service.turnaround.replace("–", "-")}
+                      <span className="mt-3 block max-w-xl text-lg leading-relaxed text-ink-soft">{service.summary}</span>
+                      <span className="mt-5 flex gap-8 text-ink-soft">
+                        <span>
+                          From <span className="font-semibold text-ink">{service.priceFrom}</span>
+                        </span>
+                        <span>{service.turnaround}</span>
                       </span>
                     </span>
-                    <ArrowRight className="hidden h-5 w-5 text-ink-faint transition-transform group-hover:translate-x-1 group-hover:text-ink lg:block" />
+                    <span className="hidden h-14 w-14 items-center justify-center rounded-full border border-ink/15 text-ink transition-all duration-500 group-hover:border-ink group-hover:bg-ink group-hover:text-white lg:flex">
+                      <ArrowRight className="h-5 w-5 transition-transform duration-500 group-hover:-rotate-45" />
+                    </span>
                   </Link>
-                </li>
+                </FadeIn>
               ))}
             </ol>
           </div>
         </section>
 
-        <section className="bg-white py-20 sm:py-28">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <Reveal>
-              <SectionHeading index="02" eyebrow="Our standard" title="What every repair includes." />
-            </Reveal>
-            <ol className="mt-12 grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+        <section className="bg-white py-24 sm:py-32">
+          <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+            <SectionHeading eyebrow="Our standard" title="What every repair includes." />
+            <Stagger as="ol" className="mt-16 grid gap-x-12 gap-y-14 sm:grid-cols-2 lg:grid-cols-4">
               {commitments.map((item, i) => (
-                <li key={item.title} className="border-t border-ink/15 pt-5">
-                  <span className="font-mono text-xs text-brand-mintDark">{String(i + 1).padStart(2, "0")}</span>
-                  <h3 className="mt-3 font-display text-xl font-medium text-ink">{item.title}</h3>
-                  <p className="mt-2 leading-relaxed text-ink-soft">{item.description}</p>
-                </li>
+                <StaggerItem as="li" key={item.title}>
+                  <span className="font-display text-6xl font-semibold text-brand-mint">{i + 1}</span>
+                  <h3 className="mt-4 font-display text-2xl font-semibold text-ink">{item.title}</h3>
+                  <p className="mt-3 text-lg leading-relaxed text-ink-soft">{item.description}</p>
+                </StaggerItem>
               ))}
-            </ol>
+            </Stagger>
           </div>
         </section>
 
-        <ReviewsSection index="03" />
+        <ReviewsSection />
         <ClosingCta />
       </main>
       <Footer />

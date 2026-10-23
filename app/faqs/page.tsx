@@ -5,7 +5,9 @@ import { faqPageSchema } from "@/lib/seo"
 import { Footer } from "@/components/footer"
 import { ButtonLink } from "@/components/button-link"
 import { PageHeader } from "@/components/page-header"
-import { ChevronDown } from "@/components/icons"
+import { HeaderPhoto } from "@/components/header-photo"
+import { Accordion } from "@/components/motion/accordion"
+import { FadeIn, WordReveal } from "@/components/motion/primitives"
 
 export const metadata: Metadata = {
   title: "Frequently Asked Questions | Mobile Care USA",
@@ -87,6 +89,7 @@ function slugify(text: string) {
 }
 
 export default function FaqsPage() {
+  const total = faqCategories.reduce((n, c) => n + c.faqs.length, 0)
   return (
     <>
       <Nav />
@@ -95,20 +98,30 @@ export default function FaqsPage() {
         <PageHeader
           breadcrumbs={[{ name: "FAQs", path: "/faqs" }]}
           eyebrow="Help center"
-          title="Frequently asked questions"
-          intro="Repairs, warranty, pricing, and what to expect when you visit. Can't find your answer? Call your nearest store."
+          title="Answers before you walk in."
+          intro={`${total} answers about repairs, warranty, pricing, and what to expect when you visit. Can't find yours? Call your nearest store.`}
+          actions={
+            <>
+              <ButtonLink href="#repairs-and-turnaround">Start reading</ButtonLink>
+              <ButtonLink href="/locations" variant="outline-light" arrow={false}>
+                Call a store
+              </ButtonLink>
+            </>
+          }
+          media={<HeaderPhoto src="/store-interior.webp" alt="The counter inside a Mobile Care USA store" />}
         />
 
-        <section className="bg-paper py-20 sm:py-28">
-          <div className="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-[16rem_1fr] lg:gap-20 lg:px-8">
-            <nav aria-label="FAQ topics" className="lg:sticky lg:top-24 lg:self-start">
-              <p className="border-t border-ink/15 pt-4 font-mono text-xs uppercase tracking-[0.14em] text-ink-faint">
-                Topics
-              </p>
-              <ul className="mt-4 space-y-2">
+        <section className="bg-paper py-24 sm:py-32">
+          <div className="mx-auto grid max-w-7xl gap-14 px-5 sm:px-6 lg:grid-cols-[17rem_1fr] lg:gap-24 lg:px-8">
+            <nav aria-label="FAQ topics" className="lg:sticky lg:top-28 lg:self-start">
+              <p className="text-sm font-semibold text-brand-mintDark">Topics</p>
+              <ul className="mt-4 space-y-3">
                 {faqCategories.map((category) => (
                   <li key={category.category}>
-                    <a href={`#${slugify(category.category)}`} className="text-ink-soft hover:text-ink">
+                    <a
+                      href={`#${slugify(category.category)}`}
+                      className="text-lg text-ink-soft transition-colors hover:text-ink"
+                    >
                       {category.category}
                     </a>
                   </li>
@@ -116,41 +129,29 @@ export default function FaqsPage() {
               </ul>
             </nav>
 
-            <div className="space-y-16">
-              {faqCategories.map((category, i) => (
-                <div key={category.category} id={slugify(category.category)} className="scroll-mt-24">
-                  <h2 className="flex items-baseline gap-3 font-display text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
-                    <span className="font-mono text-xs font-normal text-brand-mintDark">{String(i + 1).padStart(2, "0")}</span>
-                    {category.category}
-                  </h2>
-                  <div className="mt-6 border-t border-ink/15">
-                    {category.faqs.map((faq) => (
-                      <details key={faq.question} className="group border-b border-ink/15">
-                        <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-5 font-display text-lg font-medium text-ink [&::-webkit-details-marker]:hidden">
-                          {faq.question}
-                          <ChevronDown className="h-5 w-5 shrink-0 text-ink-faint transition-transform group-open:rotate-180" />
-                        </summary>
-                        <p className="max-w-3xl pb-6 leading-relaxed text-ink-soft">{faq.answer}</p>
-                      </details>
-                    ))}
-                  </div>
+            <div className="space-y-20">
+              {faqCategories.map((category) => (
+                <div key={category.category} id={slugify(category.category)} className="scroll-mt-28">
+                  <WordReveal
+                    text={category.category}
+                    className="mb-8 font-display text-3xl font-semibold tracking-[-0.02em] text-ink sm:text-4xl"
+                  />
+                  <Accordion items={category.faqs} />
                 </div>
               ))}
 
-              <div className="border-t border-ink/15 pt-8">
-                <h2 className="font-display text-2xl font-semibold tracking-tight text-ink">Still have a question?</h2>
-                <p className="mt-2 max-w-xl text-ink-soft">
+              <FadeIn className="rounded-[2rem] bg-ink p-10 text-white sm:p-14">
+                <h2 className="font-display text-3xl font-semibold tracking-[-0.02em] sm:text-4xl">Still have a question?</h2>
+                <p className="mt-3 max-w-xl text-lg text-white/70">
                   Call your nearest Mobile Care store or stop by. No appointment needed.
                 </p>
-                <div className="mt-6 flex flex-wrap gap-3">
-                  <ButtonLink href="/locations" variant="dark">
-                    Find a store
-                  </ButtonLink>
-                  <ButtonLink href="/services" variant="outline" arrow={false}>
+                <div className="mt-8 flex flex-wrap gap-3">
+                  <ButtonLink href="/locations">Find a store</ButtonLink>
+                  <ButtonLink href="/services" variant="outline-light" arrow={false}>
                     See repair prices
                   </ButtonLink>
                 </div>
-              </div>
+              </FadeIn>
             </div>
           </div>
         </section>

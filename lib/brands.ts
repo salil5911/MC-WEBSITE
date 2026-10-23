@@ -1,8 +1,6 @@
 export type Brand = {
   name: string
   logo: string
-  /** Render on a dark tile when the logo artwork is light-on-dark */
-  dark?: boolean
 }
 
 export const accessoryBrands: Brand[] = [
@@ -15,8 +13,17 @@ export const accessoryBrands: Brand[] = [
   { name: "OtterBox", logo: "/brands/otterbox.webp" },
   { name: "mophie", logo: "/brands/mophie.webp" },
   { name: "Prodigee", logo: "/brands/prodigee.avif" },
-  { name: "Pelican", logo: "/brands/pelican.webp", dark: true },
+  { name: "Pelican", logo: "/brands/pelican.webp" },
   { name: "Speck", logo: "/brands/speck.webp" },
   { name: "Spigen", logo: "/brands/spigen.webp" },
   { name: "ZAGG", logo: "/brands/zagg.avif" },
 ]
+
+/**
+ * White, transparent version of a logo for dark backgrounds, generated from
+ * the original artwork into a sibling "mono" folder (same name, .webp).
+ */
+export function monoLogo(logo: string) {
+  const slash = logo.lastIndexOf("/")
+  return `${logo.slice(0, slash)}/mono/${logo.slice(slash + 1).replace(/\.\w+$/, ".webp")}`
+}
