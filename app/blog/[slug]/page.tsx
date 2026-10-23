@@ -65,18 +65,8 @@ export default async function BlogPostPage({
           ])}
         />
         {/* JSON-LD structured data from BabyLoveGrowth for SEO */}
-        {article.jsonLd && (
-          <script
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(article.jsonLd) }}
-          />
-        )}
-        {article.faqJsonLd && (
-          <script
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(article.faqJsonLd) }}
-          />
-        )}
+        {article.jsonLd && <JsonLd data={article.jsonLd} />}
+        {article.faqJsonLd && <JsonLd data={article.faqJsonLd} />}
 
         <article className="mx-auto max-w-3xl px-4 py-12 sm:px-6 lg:px-8">
           <Link

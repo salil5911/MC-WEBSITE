@@ -214,7 +214,6 @@ export function organizationSchema() {
       name: SITE_NAME,
       url: SITE_URL,
       logo: `${SITE_URL}/favicon.png`,
-      aggregateRating: { "@type": "AggregateRating", ratingValue: "4.9", bestRating: "5" },
       department: locations.map((location) => ({ "@id": `${SITE_URL}/locations/${location.slug}#store` })),
     },
     {

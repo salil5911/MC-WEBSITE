@@ -1,6 +1,5 @@
 import type { Metadata } from "next"
-import { JsonLd } from "@/components/json-ld"
-import { DEFAULT_OG_IMAGE, breadcrumbSchema } from "@/lib/seo"
+import { DEFAULT_OG_IMAGE } from "@/lib/seo"
 
 export const metadata: Metadata = {
   title: "Phone Repair Store Locations in GA, VA, NC & MI | Mobile Care USA",
@@ -17,15 +16,5 @@ export const metadata: Metadata = {
 }
 
 export default function LocationsLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <>
-      <JsonLd
-        data={breadcrumbSchema([
-          { name: "Home", path: "/" },
-          { name: "Locations", path: "/locations" },
-        ])}
-      />
-      {children}
-    </>
-  )
+  return <>{children}</>
 }

@@ -2,8 +2,8 @@ import type { MetadataRoute } from "next"
 import { getArticles } from "@/lib/babylovegrowth"
 import { preOwnedBrands } from "@/lib/pre-owned"
 import { locations } from "@/lib/locations"
-
-const SITE_URL = "https://mobilecareusa.com"
+import { services } from "@/lib/services"
+import { SITE_URL } from "@/lib/seo"
 
 // Regenerate the sitemap on the same cadence as the blog cache so newly
 // published BabyLoveGrowth articles are included automatically.
@@ -22,6 +22,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${SITE_URL}/about`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
     { url: `${SITE_URL}/faqs`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
   ]
+
+  const serviceRoutes: MetadataRoute.Sitemap = services.map((service) => ({
+    url: `${SITE_URL}/services/${service.slug}`,
+    lastModified: now,
+    changeFrequency: "monthly",
+    priority: 0.8,
+  }))
 
   const preOwnedRoutes: MetadataRoute.Sitemap = preOwnedBrands.map((brand) => ({
     url: `${SITE_URL}/pre-owned/${brand.slug}`,
@@ -45,5 +52,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.8,
   }))
 
-  return [...staticRoutes, ...preOwnedRoutes, ...locationRoutes, ...blogRoutes]
+  return [...staticRoutes, ...serviceRoutes, ...preOwnedRoutes, ...locationRoutes, ...blogRoutes]
 }
