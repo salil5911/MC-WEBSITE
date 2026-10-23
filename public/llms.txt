@@ -1,0 +1,55 @@
+# Mobile Care USA
+
+> Mobile Care USA is a walk-in phone repair and mobile retail company with 8 mall-based stores across Georgia, Virginia, North Carolina, and Michigan. Certified technicians handle smartphone, tablet, and laptop repairs, most done the same day, with a 30-day parts and labor warranty. The stores also sell certified pre-owned iPhones and Samsung Galaxy phones and a range of phone accessories. Customers rate Mobile Care 4.9 on Google, and the technicians have repaired more than 1 million devices.
+
+Key facts:
+- No appointment needed. Customers walk in and get a free diagnostic and a clear quote before any work starts.
+- Most repairs are finished the same day, often while the customer waits.
+- Repairs use quality-tested parts and come with a 30-day parts and labor warranty.
+- Pre-owned phones are fully unlocked, inspected, and warranty-backed.
+- A trade-in program lets customers put their current device toward an upgrade.
+
+## Core Pages
+
+- [Home](https://mobilecareusa.com/): Overview of repair services, pre-owned phones, store locations, customer reviews, and why customers choose Mobile Care.
+- [Repair Services](https://mobilecareusa.com/services): The full list of repair services, each described step by step with what is included.
+- [Certified Pre-Owned Phones](https://mobilecareusa.com/pre-owned): Unlocked pre-owned smartphones you can browse by brand and series.
+- [Accessories](https://mobilecareusa.com/accessories): Cases, screen protectors, chargers, cables, and audio accessories sold in store.
+- [Store Locations](https://mobilecareusa.com/locations): All Mobile Care USA stores with addresses, phone numbers, and hours.
+- [About Us](https://mobilecareusa.com/about): Company background, key numbers, and the company's approach to customer service.
+- [FAQs](https://mobilecareusa.com/faqs): Answers to common questions about repair times, warranties, supported devices, trade-ins, and appointments.
+
+## Repair Services
+
+- Screen Replacement: Cracked or unresponsive displays are replaced, then color and touch are calibrated.
+- Back Glass Repair: Shattered rear glass is replaced with a color-matched panel, and wireless charging is verified afterward.
+- Charging Port Replacement: Charging ports are cleaned, repaired, or replaced, and charging and data transfer are tested.
+- Battery Replacement: Worn batteries are replaced with high-capacity cells, then calibrated so battery health reads accurately.
+- Camera Replacement: Front and rear camera modules and lenses are repaired or replaced.
+- Water Damage Repair: Liquid-damaged devices are cleaned, dried, and diagnosed to recover function and data.
+
+Supported brands include Apple iPhone, Samsung Galaxy, Google Pixel, and other Android phones, plus iPads, tablets, and laptops such as MacBooks.
+
+## Certified Pre-Owned Phones
+
+- [Apple iPhone](https://mobilecareusa.com/pre-owned/apple): iPhone 11 through iPhone 18 series.
+- [Samsung Galaxy](https://mobilecareusa.com/pre-owned/samsung): Galaxy Z (Fold and Flip) series and Galaxy S21 through S26 series.
+
+## Store Locations
+
+- [Cumberland Mall](https://mobilecareusa.com/locations/cumberland-mall): 2860 Cumberland Mall SE #208, Atlanta, GA. Phone +1 404 271 6281.
+- [Perimeter Mall](https://mobilecareusa.com/locations/perimeter-mall): 4400 Ashford Dunwoody Road #2085, Dunwoody, GA. Phone +1 470 983 1595.
+- [Southlake Mall](https://mobilecareusa.com/locations/southlake-mall): 1000 Southlake Circle #1123, Morrow, GA. Phone +1 470 546 9171.
+- [Augusta Mall](https://mobilecareusa.com/locations/augusta-mall): 3450 Wrightsboro Rd #1125, Augusta, GA. Phone +1 762 444 9461.
+- [Lynnhaven Mall](https://mobilecareusa.com/locations/lynnhaven-mall): 701 Lynnhaven Pkwy #B11A, Virginia Beach, VA. Phone +1 757 692 1915.
+- [Carolina Place Mall](https://mobilecareusa.com/locations/carolina-place-mall): 11025 Carolina Pl Pkwy Suite #A04, Pineville, NC. Phone +1 704 670 8479.
+- [Twelve Oaks Mall](https://mobilecareusa.com/locations/twelve-oaks-mall): 27500 Novi Rd STE A-109, Novi, MI. Phone +1 248 216 2374.
+- [Great Lakes Crossing](https://mobilecareusa.com/locations/great-lakes-crossing): 4000 Baldwin Rd, Auburn Hills, MI. Phone +1 248 520 4170.
+
+## Resources
+
+- [Blog](https://mobilecareusa.com/blog): Tech tips and guides on device care, battery life, screen protection, troubleshooting, and repair.
+
+## Optional
+
+- [Sitemap](https://mobilecareusa.com/sitemap.xml): A complete, auto-updated list of every page, including all blog articles.

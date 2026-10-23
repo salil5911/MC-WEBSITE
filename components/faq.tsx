@@ -1,7 +1,6 @@
-"use client"
-
-import { Disclosure } from "@headlessui/react"
 import { ChevronDown } from "lucide-react"
+import { SectionHeading } from "@/components/section-heading"
+import { Reveal } from "@/components/reveal"
 
 const faqs = [
   {
@@ -27,28 +26,34 @@ const faqs = [
   {
     question: "Do I need an appointment for a repair?",
     answer:
-      "While walk-ins are welcome, we recommend booking an appointment to minimize your wait time. You can easily schedule a repair online or by calling your nearest Mobile Care location.",
+      "No appointment needed—walk-ins are always welcome at any Mobile Care location. If you'd like to check part availability or minimize your wait, feel free to call your nearest store ahead of your visit.",
   },
 ]
 
 export function FAQ({ className = "" }: { className?: string }) {
   return (
-    <section className={`py-16 bg-white ${className}`}>
+    <section className={`bg-gray-50 ${className}`}>
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl font-bold text-center text-brand-dark mb-8">Frequently Asked Questions</h2>
+        <Reveal>
+          <SectionHeading
+            eyebrow="FAQ"
+            title="Frequently asked questions"
+            subtitle="Everything you need to know before you visit. Can't find an answer? Give your nearest location a call."
+            className="mb-12"
+          />
+        </Reveal>
         <div className="space-y-4">
-          {faqs.map((faq, index) => (
-            <Disclosure key={index}>
-              {({ open }) => (
-                <>
-                  <Disclosure.Button className="flex justify-between w-full px-4 py-2 text-lg font-medium text-left text-brand-dark bg-brand-mint/10 rounded-lg hover:bg-brand-mint/20 focus:outline-none focus-visible:ring focus-visible:ring-brand-mint focus-visible:ring-opacity-75">
-                    <span>{faq.question}</span>
-                    <ChevronDown className={`${open ? "transform rotate-180" : ""} w-5 h-5 text-brand-mint`} />
-                  </Disclosure.Button>
-                  <Disclosure.Panel className="px-4 pt-4 pb-2 text-gray-600">{faq.answer}</Disclosure.Panel>
-                </>
-              )}
-            </Disclosure>
+          {faqs.map((faq) => (
+            <details
+              key={faq.question}
+              className="group overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm"
+            >
+              <summary className="flex w-full cursor-pointer list-none justify-between px-5 py-4 text-left text-lg font-medium text-brand-dark hover:bg-brand-mint/5 focus:outline-none focus-visible:ring focus-visible:ring-brand-mint focus-visible:ring-opacity-75 [&::-webkit-details-marker]:hidden">
+                <span>{faq.question}</span>
+                <ChevronDown className="ml-4 h-5 w-5 shrink-0 text-brand-mintDark transition-transform group-open:rotate-180" />
+              </summary>
+              <div className="px-5 pb-5 pt-0 leading-relaxed text-gray-600">{faq.answer}</div>
+            </details>
           ))}
         </div>
       </div>

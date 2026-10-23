@@ -1,27 +1,67 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
+import { Inter, Poppins } from 'next/font/google';
+import Script from 'next/script';
+import { JsonLd } from '@/components/json-ld';
+import { DEFAULT_OG_IMAGE, SITE_NAME, SITE_URL, organizationSchema } from '@/lib/seo';
 import './globals.css';
 
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+  display: 'swap',
+});
+
+const poppins = Poppins({
+  subsets: ['latin'],
+  weight: ['500', '600', '700', '800'],
+  variable: '--font-poppins',
+  display: 'swap',
+});
+
+export const viewport: Viewport = {
+  themeColor: '#ffffff',
+  width: 'device-width',
+  initialScale: 1,
+};
+
 export const metadata: Metadata = {
-  title: 'Mobile Phone Repair in Atlanta, Georgia, Laptop & Tablet Repair Service in Augusta Mall | Mobile Care USA',
-  description: 'Get fast, reliable mobile phone repair in atlanta, Georgia with Mobile Care USA. We also specialize in expert laptop and tablet repair services at Augusta Mall, offering screen replacements, battery upgrades, and full diagnostics for iPhone, Samsung, MacBook, and more. Trusted technicians, affordable pricing, and same-day service to keep you connected.',
+  metadataBase: new URL(SITE_URL),
+  applicationName: SITE_NAME,
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1, 'max-video-preview': -1 },
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [DEFAULT_OG_IMAGE.url],
+  },
+  formatDetection: { telephone: true, address: true },
+  title: 'Same-Day Phone Repair in GA, VA, NC & MI | Mobile Care USA',
+  description: 'Walk-in iPhone, Samsung, iPad & laptop repair at 8 mall stores in Georgia, Virginia, North Carolina & Michigan. Most repairs done same day, 30-day warranty.',
+  keywords: [
+    'Mobile Phone Repair in Atlanta, Georgia',
+    'iPhone repair service in Atlanta, Georgia',
+    'Android phone repair in Atlanta, Georgia',
+    'phone repair shop in Augusta Mall',
+    'phone repair shop in Perimeter Mall',
+    'phone repair shop in Cumberland Mall',
+    'phone repair shop in Southlake Mall',
+    'phone repair shop in Lynnhaven Mall',
+    'phone repair shop in Carolina Place Mall',
+  ],
   icons: {
     icon: '/favicon.ico',
     shortcut: '/favicon.ico',
     apple: '/favicon.png',
   },
   openGraph: {
-    title: 'Mobile Phone Repair in Atlanta, Georgia, Laptop & Tablet Repair Service in Augusta Mall | Mobile Care USA',
-    description: 'Mobile Phone Repair in Atlanta, Georgia, iPhone repair service in Atlanta, Georgia, Android phone repair in Atlanta, Georgia, phone repair shop in Augusta Mall, phone repair shop in Perimeter Mall, phone repair shop in Cumberland Mall, phone repair shop in Southlake Mall, phone repair shop in Lynnhaven Mall, phone repair shop in Carolina Place Mall',
-    url: 'https://mobilecareusa.com',
-    siteName: 'Mobile Care',
-    images: [
-      {
-        url: '/og-image.png',
-        width: 1200,
-        height: 630,
-        alt: 'Mobile Care',
-      },
-    ],
+    title: 'Same-Day Phone Repair in GA, VA, NC & MI | Mobile Care USA',
+    description: 'Walk-in iPhone, Samsung, iPad & laptop repair at 8 mall stores in Georgia, Virginia, North Carolina & Michigan. Most repairs done same day, 30-day warranty.',
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    locale: 'en_US',
+    images: [DEFAULT_OG_IMAGE],
     type: 'website',
   },
 };
@@ -32,53 +72,25 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${inter.variable} ${poppins.variable} bg-background`}>
       <head>
-        {/* Google Tag (gtag.js) */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-P17FFSKJVN"></script>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-P17FFSKJVN');
-            `,
-          }}
-        />
-
         {/* Structured Data (Schema.org) */}
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "LocalBusiness",
-          "name": "Best Phone Repair Shop in Georgia",
-          "address": {
-            "@type": "PostalAddress",
-            "addressLocality": "Atlanta",
-            "addressRegion": "GA",
-            "addressCountry": "USA"
-          },
-          "service": [
-            "Phone screen repair Atlanta",
-            "iPhone repair near me",
-            "Samsung screen repair Atlanta",
-            "Fast phone repair in Atlanta",
-            "Cell phone battery replacement Atlanta",
-            "Best phone repair shop in Georgia"
-          ],
-          "url": "https://mobilecareusa.com"
-        })}} />
+        <JsonLd data={organizationSchema()} />
 
-        {/* Open Graph Meta Tags */}
-        <meta property="og:title" content="Mobile Care - Expert Phone Repairs" />
-        <meta property="og:description" content="Professional phone repair services you can trust. We repair and upgrade all major brands from iPhones to Androids." />
-        <meta property="og:url" content="https://mobilecareusa.com" />
-        <meta property="og:image" content="/og-image.png" />
-        <meta property="og:type" content="website" />
-
-        <title>Mobile Phone Repair in Atlanta, Georgia, Laptop & Tablet Repair Service in Augusta Mall | Mobile Care USA</title>
       </head>
-      <body>{children}</body>
+      <body className="font-sans antialiased">
+        {children}
+        {/* Google Tag (gtag.js), loaded after the page is interactive so it doesn't compete with first paint */}
+        <Script src="https://www.googletagmanager.com/gtag/js?id=G-P17FFSKJVN" strategy="afterInteractive" />
+        <Script id="gtag-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-P17FFSKJVN');
+          `}
+        </Script>
+      </body>
     </html>
   );
 }

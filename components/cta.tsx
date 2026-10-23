@@ -28,8 +28,8 @@ export function CTA() {
                   <Shield className="h-6 w-6 text-brand-mint" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold text-white">Lifetime Warranty</h3>
-                  <p className="mt-2 text-gray-400">All our repairs come with a lifetime warranty</p>
+                  <h3 className="text-lg font-semibold text-white">30-Day Warranty</h3>
+                  <p className="mt-2 text-gray-400">Every repair is backed by a 30-day parts &amp; labor warranty</p>
                 </div>
               </div>
               <div className="flex items-start gap-4">
@@ -42,9 +42,9 @@ export function CTA() {
                 </div>
               </div>
             </div>
-            <Link href="/schedule-appointment">
+            <Link href="/locations">
               <Button className="bg-brand-mint text-brand-dark hover:bg-brand-mint/90 text-lg px-8 py-6">
-                Schedule a Repair
+                Find a Location
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
@@ -57,7 +57,7 @@ export function CTA() {
                   <div className="relative h-full w-full rounded-3xl bg-white/10 border border-white/20 backdrop-blur-sm p-8">
                     <div className="h-full w-full rounded-2xl bg-brand-dark/40 shadow-2xl flex items-center justify-center">
                       <div className="text-center">
-                        <p className="text-4xl font-bold text-white mb-2">100,000+</p>
+                        <p className="text-4xl font-bold text-white mb-2">1M+</p>
                         <p className="text-xl text-brand-mint">Devices Repaired</p>
                       </div>
                     </div>
