@@ -1,103 +1,148 @@
-"use client";
+import Link from "next/link"
+import { Star } from "@/components/icons"
+import { RepairSearch, type SearchEntry } from "@/components/home/repair-search"
+import { RepairOrbit } from "@/components/home/repair-orbit"
+import { services } from "@/lib/services"
+import { locations } from "@/lib/locations"
+import { getGoogleReviews } from "@/lib/google-reviews"
 
-import { useState, useEffect } from "react";
-import Image from "next/image";
-import Link from "next/link";
-import { Smartphone, Shield, MapPin } from "lucide-react";
-import { Button } from "@/components/ui/button";
+// Extra words people actually type, mapped to the service that fixes them.
+const SERVICE_TERMS: Record<string, string[]> = {
+  "screen-replacement": ["screen", "display", "cracked", "crack", "shattered", "touch", "lcd", "oled", "lines", "black"],
+  "back-glass-repair": ["back", "rear", "glass", "housing"],
+  "charging-port-replacement": ["charge", "charging", "charger", "port", "plug", "usb", "lightning", "won't", "wont"],
+  "battery-replacement": ["battery", "drain", "drains", "dies", "swollen", "power", "shuts", "health"],
+  "camera-replacement": ["camera", "lens", "blurry", "photo", "photos", "focus"],
+  "water-damage-repair": ["water", "liquid", "wet", "spill", "spilled", "pool", "toilet", "dropped"],
+}
 
-export function Hero() {
-  const [currentSlide, setCurrentSlide] = useState(0);
+const DEVICE_TERMS = ["iphone", "galaxy", "samsung", "pixel", "google", "ipad", "tablet", "phone", "android", "motorola"]
 
-  const locations = [
-    {
-      name: "Augusta Mall",
-      image:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/augusta.jpg-gb2Jb2dWAyZ9gJLMnMpk4uaTKs47yb.jpeg",
-      description:
-        "Our flagship store featuring expert staff and comprehensive repair services",
-    },
-    {
-      name: "Perimeter Mall",
-      image:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/perimeter.jpg-YiRrKjRiy7javUPwJzOjcD82ezca7f.jpeg",
-      description: "Modern location with state-of-the-art repair facilities",
-    },
-  ];
+function searchEntries(): SearchEntry[] {
+  const repairs: SearchEntry[] = services.map((service) => ({
+    kind: "repair",
+    label: service.name,
+    detail: `${service.turnaround.replace("–", " to ")}, from ${service.priceFrom}`,
+    href: `/services/${service.slug}`,
+    terms: [...service.name.toLowerCase().split(" "), ...(SERVICE_TERMS[service.slug] ?? []), ...DEVICE_TERMS],
+  }))
+  const stores: SearchEntry[] = locations.map((store) => ({
+    kind: "store",
+    label: `${store.name}`,
+    detail: `${store.city}, ${store.state} ${store.zip}`,
+    href: `/locations/${store.slug}`,
+    terms: [
+      ...store.name.toLowerCase().split(" "),
+      store.city.toLowerCase(),
+      ...store.city.toLowerCase().split(" "),
+      store.state.toLowerCase(),
+      store.zip,
+      "store",
+      "stores",
+      "near",
+      "location",
+      ...store.nearby.flatMap((n) => n.toLowerCase().split(" ")),
+    ],
+  }))
+  return [...repairs, ...stores]
+}
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % locations.length);
-    }, 5000);
-    return () => clearInterval(timer);
-  }, []);
-  
+export async function Hero({ className = "" }: { className?: string }) {
+  const reviews = await getGoogleReviews()
+  const rating = reviews && reviews.averageRating > 0 ? reviews.averageRating.toFixed(1) : "4.9"
+  const reviewCount = reviews?.totalReviews
+
   return (
-    <div className="relative bg-brand-dark pt-24">
-      <div className="absolute inset-0 bg-circuit-pattern opacity-20" />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-          <div>
-            <noscript>
-  Phone screen repair Atlanta, iPhone repair near me, Samsung screen repair Atlanta, 
-  Fast phone repair in Atlanta, Cell phone battery replacement Atlanta, 
-  Best phone repair shop in Georgia
-</noscript>
-            <h1 className="text-4xl sm:text-5xl font-bold text-white mb-6">
-              Fast & Affordable Phone Repair <span className="text-brand-mint">in Atlanta, Georgia</span>
-            </h1>
-            <p className="text-xl text-gray-300 mb-8">
-              Atlanta’s go-to phone repair experts! Whether it's a shattered screen or a weak battery, we’ll fix it fast. Affordable pricing & top-rated service!
-            </p>
-            <div className="grid grid-cols-2 gap-4 mb-8">
-              <div className="flex items-center space-x-2">
-                <Smartphone className="h-6 w-6 text-brand-mint" />
-                <span className="text-white">All major brands</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <MapPin className="h-6 w-6 text-brand-mint" />
-                <span className="text-white">Multiple locations</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Shield className="h-6 w-6 text-brand-mint" />
-                <span className="text-white">30-day warranty</span>
-              </div>
-            </div>
-            {/* ✅ Fixed button - Now fully clickable & properly styled */}
-            <div className="flex justify-start">
-              <Link href="/schedule-appointment" passHref>
-                <a className="relative z-10">
-                  <Button className="bg-brand-mint text-brand-dark hover:bg-brand-mintLight text-lg px-6 py-3 rounded-lg">
-                    Schedule Appointment
-                  </Button>
-                </a>
+    <section className={`relative overflow-hidden bg-ink text-white ${className}`}>
+      <div className="hero-grid pointer-events-none absolute inset-0" aria-hidden="true" />
+
+      <div className="relative mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 px-4 pb-16 pt-28 sm:px-6 lg:grid-cols-[1.1fr_1fr] lg:gap-6 lg:px-8 lg:pb-24 lg:pt-36">
+        <div>
+          <p className="font-mono text-xs uppercase tracking-[0.16em] text-white/55">
+            Phone, tablet &amp; laptop repair <span className="text-brand-mint">/</span> 8 stores in GA, VA, NC &amp; MI
+          </p>
+
+          <h1 className="mt-6 font-display text-[2.6rem] font-semibold leading-[1.02] tracking-[-0.035em] sm:text-6xl lg:text-[4.4rem]">
+            Same-day phone repair,
+            <br />
+            <span className="text-brand-mint">done properly.</span>
+          </h1>
+
+          <p className="mt-6 max-w-lg text-lg leading-relaxed text-white/70">
+            Walk into any Mobile Care store with a cracked screen, a tired battery, or a port that stopped charging.
+            Most repairs are finished while you shop, with a 30-day warranty on parts and labor.
+          </p>
+
+          <div className="mt-9">
+            <RepairSearch entries={searchEntries()} />
+            <p className="mt-3 text-sm text-white/50">
+              Popular:{" "}
+              <Link href="/services/screen-replacement" className="text-white/80 underline-offset-4 hover:underline">
+                Screen
               </Link>
-            </div>
-          </div>
-          <div className="relative h-[400px] w-full overflow-hidden rounded-lg">
-            {locations.map((location, index) => (
-              <div
-                key={location.name}
-                className={`absolute inset-0 transition-opacity duration-1000 ${
-                  index === currentSlide ? "opacity-100" : "opacity-0"
-                }`}
+              ,{" "}
+              <Link href="/services/battery-replacement" className="text-white/80 underline-offset-4 hover:underline">
+                Battery
+              </Link>
+              ,{" "}
+              <Link
+                href="/services/charging-port-replacement"
+                className="text-white/80 underline-offset-4 hover:underline"
               >
-                <Image
-                  src={location.image}
-                  alt={location.name}
-                  layout="fill"
-                  objectFit="cover"
-                  className="rounded-lg"
-                />
-                <div className="absolute bottom-0 left-0 w-full bg-black bg-opacity-50 p-4 text-white">
-                  <h2 className="text-lg font-semibold">{location.name}</h2>
-                  <p className="text-sm">{location.description}</p>
-                </div>
-              </div>
-            ))}
+                Charging port
+              </Link>
+            </p>
           </div>
         </div>
+
+        <div className="hidden sm:block">
+          <RepairOrbit />
+        </div>
       </div>
+
+      {/* Phones: the orbit is too cramped, so the same cards scroll by in a row. */}
+      <div className="relative -mt-4 mb-10 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)] sm:hidden">
+        <div className="type-marquee-track gap-3">
+          {[...services, ...services].map((service, i) => (
+            <Link
+              key={`${service.slug}-${i}`}
+              href={`/services/${service.slug}`}
+              aria-hidden={i >= services.length || undefined}
+              tabIndex={i >= services.length ? -1 : undefined}
+              className="shrink-0 rounded-md border border-white/15 bg-white/[0.04] px-3 py-2"
+            >
+              <span className="block text-sm font-medium text-white">{service.shortName}</span>
+              <span className="mt-0.5 block font-mono text-[0.6rem] uppercase tracking-[0.1em] text-white/55">
+                {service.turnaround} · from {service.priceFrom}
+              </span>
+            </Link>
+          ))}
+        </div>
+      </div>
+
+      <dl className="relative mx-auto grid max-w-7xl grid-cols-2 border-t border-white/10 px-4 sm:px-6 lg:grid-cols-4 lg:px-8">
+        <Stat label="Devices repaired" value="1M+" />
+        <Stat
+          label={reviewCount ? `Google rating, ${reviewCount.toLocaleString("en-US")} reviews` : "Average Google rating"}
+          value={
+            <span className="inline-flex items-center gap-2">
+              {rating}
+              <Star className="h-6 w-6 text-brand-mint" />
+            </span>
+          }
+        />
+        <Stat label="Repair warranty, parts and labor" value="30 days" />
+        <Stat label="Diagnostics, no appointment" value="Free" />
+      </dl>
+    </section>
+  )
+}
+
+function Stat({ label, value }: { label: string; value: React.ReactNode }) {
+  return (
+    <div className="flex flex-col border-white/10 py-7 pr-4 [&:not(:first-child)]:lg:border-l [&:not(:first-child)]:lg:pl-8 even:border-l even:pl-6 lg:even:pl-8">
+      <dt className="order-2 mt-2 font-mono text-[0.68rem] uppercase tracking-[0.14em] text-white/50">{label}</dt>
+      <dd className="order-1 font-display text-3xl font-semibold tracking-tight sm:text-4xl">{value}</dd>
     </div>
-  );
+  )
 }
