@@ -1,6 +1,8 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 import { Nav } from "@/components/nav"
+import { JsonLd } from "@/components/json-ld"
+import { breadcrumbSchema } from "@/lib/seo"
 import { Footer } from "@/components/footer"
 import { getArticles, isBlogConfigured, formatDate } from "@/lib/babylovegrowth"
 
@@ -29,6 +31,7 @@ export default async function BlogPage() {
     <div className="min-h-screen bg-white">
       <Nav />
       <main className="pt-24">
+        <JsonLd data={breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Blog", path: "/blog" }])} />
         {/* Header */}
         <section className="bg-brand-dark">
           <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">

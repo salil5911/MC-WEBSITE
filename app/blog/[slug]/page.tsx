@@ -3,6 +3,8 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import { ArrowLeft, MapPin } from "lucide-react"
 import { Nav } from "@/components/nav"
+import { JsonLd } from "@/components/json-ld"
+import { breadcrumbSchema } from "@/lib/seo"
 import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
 import { getArticles, getArticleBySlug, formatDate, stripLeadingTitleAndHero } from "@/lib/babylovegrowth"
@@ -55,6 +57,13 @@ export default async function BlogPostPage({
     <div className="min-h-screen bg-white">
       <Nav />
       <main className="pt-24">
+        <JsonLd
+          data={breadcrumbSchema([
+            { name: "Home", path: "/" },
+            { name: "Blog", path: "/blog" },
+            { name: article.title, path: `/blog/${article.slug}` },
+          ])}
+        />
         {/* JSON-LD structured data from BabyLoveGrowth for SEO */}
         {article.jsonLd && (
           <script
@@ -98,7 +107,10 @@ export default async function BlogPostPage({
               <img
                 src={article.hero_image_url || "/placeholder.svg"}
                 alt={article.title}
-                className="h-auto w-full object-cover"
+                width={1200}
+                height={630}
+                fetchPriority="high"
+                className="aspect-[1200/630] h-auto w-full object-cover"
               />
             </div>
           )}

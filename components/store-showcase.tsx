@@ -11,7 +11,7 @@ export function StoreShowcase({ className = "" }: { className?: string }) {
           <Reveal variant="fade-up">
             <div className="relative overflow-hidden rounded-2xl shadow-xl ring-1 ring-black/5">
               <Image
-                src="/store-interior.png"
+                src="/store-interior.webp"
                 alt="Inside a Mobile Care store — staff helping a customer at the service counter, surrounded by phones and accessories"
                 width={1536}
                 height={1024}

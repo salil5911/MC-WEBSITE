@@ -4,6 +4,8 @@ import Link from "next/link"
 import Image from "next/image"
 import { ArrowLeft, ArrowRight, Check, ShieldCheck, Unlock, BadgeCheck } from "lucide-react"
 import { Nav } from "@/components/nav"
+import { JsonLd } from "@/components/json-ld"
+import { breadcrumbSchema } from "@/lib/seo"
 import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
 import { Reveal } from "@/components/reveal"
@@ -43,6 +45,13 @@ export default async function BrandPage({ params }: { params: Promise<{ brand: s
 
   return (
     <main className="min-h-screen">
+      <JsonLd
+        data={breadcrumbSchema([
+          { name: "Home", path: "/" },
+          { name: "Pre-Owned Phones", path: "/pre-owned" },
+          { name: brand.name, path: `/pre-owned/${brand.slug}` },
+        ])}
+      />
       <Nav />
 
       {/* Hero */}
