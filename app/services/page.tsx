@@ -15,10 +15,17 @@ import { services } from "@/lib/services"
 export const revalidate = 43200
 
 export const metadata: Metadata = {
-  title: "Device Repair Services in Atlanta, GA | Mobile Care USA",
+  title: "Phone & Tablet Repair Services in GA, VA, NC & MI | Mobile Care USA",
   description:
-    "Expert phone and tablet repair services: screen replacement, back glass repair, charging port, battery, and camera replacement. Most repairs done in under an hour, backed by a 30-day warranty.",
+    "Screen, back glass, charging port, battery, camera, and water damage repair. Most repairs done in under an hour, backed by a 30-day warranty.",
   alternates: { canonical: "https://mobilecareusa.com/services" },
+  openGraph: {
+    title: "Phone & Tablet Repair Services | Mobile Care USA",
+    description:
+      "Screen, back glass, charging port, battery, camera, and water damage repair. Most repairs done in under an hour, backed by a 30-day warranty.",
+    url: "https://mobilecareusa.com/services",
+    type: "website",
+  },
 }
 
 const trustFactors = [

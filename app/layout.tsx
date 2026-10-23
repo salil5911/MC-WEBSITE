@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { Inter, Poppins } from 'next/font/google';
+import Script from 'next/script';
 import { JsonLd } from '@/components/json-ld';
 import { DEFAULT_OG_IMAGE, SITE_NAME, SITE_URL, organizationSchema } from '@/lib/seo';
 import './globals.css';
@@ -36,8 +37,8 @@ export const metadata: Metadata = {
     images: [DEFAULT_OG_IMAGE.url],
   },
   formatDetection: { telephone: true, address: true },
-  title: 'Mobile Phone Repair in Atlanta, Georgia, Laptop & Tablet Repair Service in Augusta Mall | Mobile Care USA',
-  description: 'Fast, reliable phone, tablet, and laptop repair at 8 Mobile Care USA mall stores across Georgia, Virginia, North Carolina, and Michigan. Screen and battery replacements, charging port repairs, and diagnostics for iPhone, Samsung, iPad, MacBook, and more. Same-day service with a 30-day warranty.',
+  title: 'Same-Day Phone Repair in GA, VA, NC & MI | Mobile Care USA',
+  description: 'Walk-in iPhone, Samsung, iPad & laptop repair at 8 mall stores in Georgia, Virginia, North Carolina & Michigan. Most repairs done same day, 30-day warranty.',
   keywords: [
     'Mobile Phone Repair in Atlanta, Georgia',
     'iPhone repair service in Atlanta, Georgia',
@@ -55,8 +56,8 @@ export const metadata: Metadata = {
     apple: '/favicon.png',
   },
   openGraph: {
-    title: 'Mobile Phone Repair in Atlanta, Georgia, Laptop & Tablet Repair Service in Augusta Mall | Mobile Care USA',
-    description: 'Fast, reliable phone, tablet, and laptop repair at 8 Mobile Care USA mall stores across Georgia, Virginia, North Carolina, and Michigan. Screen and battery replacements, charging port repairs, and diagnostics for iPhone, Samsung, iPad, MacBook, and more. Same-day service with a 30-day warranty.',
+    title: 'Same-Day Phone Repair in GA, VA, NC & MI | Mobile Care USA',
+    description: 'Walk-in iPhone, Samsung, iPad & laptop repair at 8 mall stores in Georgia, Virginia, North Carolina & Michigan. Most repairs done same day, 30-day warranty.',
     url: SITE_URL,
     siteName: SITE_NAME,
     locale: 'en_US',
@@ -73,24 +74,23 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${poppins.variable} bg-background`}>
       <head>
-        {/* Google Tag (gtag.js) */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-P17FFSKJVN"></script>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-P17FFSKJVN');
-            `,
-          }}
-        />
-
         {/* Structured Data (Schema.org) */}
         <JsonLd data={organizationSchema()} />
 
       </head>
-      <body className="font-sans antialiased">{children}</body>
+      <body className="font-sans antialiased">
+        {children}
+        {/* Google Tag (gtag.js), loaded after the page is interactive so it doesn't compete with first paint */}
+        <Script src="https://www.googletagmanager.com/gtag/js?id=G-P17FFSKJVN" strategy="afterInteractive" />
+        <Script id="gtag-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-P17FFSKJVN');
+          `}
+        </Script>
+      </body>
     </html>
   );
 }

@@ -5,7 +5,8 @@ import Link from "next/link"
 import { ArrowRight, ArrowLeft, Check, Clock, ShieldCheck, Tag } from "lucide-react"
 import { Nav } from "@/components/nav"
 import { JsonLd } from "@/components/json-ld"
-import { breadcrumbSchema } from "@/lib/seo"
+import { SITE_URL, breadcrumbSchema } from "@/lib/seo"
+import { locations } from "@/lib/locations"
 import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
 import { Reveal } from "@/components/reveal"
@@ -25,7 +26,7 @@ export async function generateMetadata({
   const service = getService(slug)
   if (!service) return { title: "Service Not Found | Mobile Care USA" }
 
-  const title = `${service.name} in Atlanta, GA | Mobile Care USA`
+  const title = `${service.name} in GA, VA, NC & MI | Mobile Care USA`
   const description = service.summary
   return {
     title,
@@ -58,13 +59,9 @@ export default async function ServiceDetailPage({
     "@type": "Service",
     name: service.name,
     description: service.summary,
-    provider: {
-      "@type": "LocalBusiness",
-      name: "Mobile Care USA",
-      address: { "@type": "PostalAddress", addressLocality: "Atlanta", addressRegion: "GA", addressCountry: "USA" },
-    },
-    areaServed: "Atlanta, GA",
-    url: `https://mobilecareusa.com/services/${service.slug}`,
+    provider: { "@id": `${SITE_URL}/#organization` },
+    areaServed: locations.map((location) => ({ "@type": "City", name: `${location.city}, ${location.state}` })),
+    url: `${SITE_URL}/services/${service.slug}`,
   }
 
   const faqJsonLd = {
@@ -87,8 +84,8 @@ export default async function ServiceDetailPage({
         ])}
       />
       <Nav />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
+      <JsonLd data={jsonLd} />
+      <JsonLd data={faqJsonLd} />
 
       {/* Hero */}
       <section className="relative overflow-hidden bg-brand-dark pt-24">

@@ -6,6 +6,8 @@ import Image from "next/image"
 import { Nav } from "@/components/nav"
 import { Footer } from "@/components/footer"
 import { Reveal } from "@/components/reveal"
+import { JsonLd } from "@/components/json-ld"
+import { breadcrumbSchema } from "@/lib/seo"
 import { locations, type StoreLocation } from "@/lib/locations"
 import { MapPin, Phone, Clock, Search, ArrowRight, ArrowUpRight } from "lucide-react"
 
@@ -177,6 +179,12 @@ export default function LocationsPage() {
 
   return (
     <main className="min-h-screen bg-gray-50">
+      <JsonLd
+        data={breadcrumbSchema([
+          { name: "Home", path: "/" },
+          { name: "Locations", path: "/locations" },
+        ])}
+      />
       <Nav />
 
       {/* Hero */}

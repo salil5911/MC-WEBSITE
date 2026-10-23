@@ -1,6 +1,3 @@
-"use client"
-
-import { Disclosure } from "@headlessui/react"
 import { ChevronDown } from "lucide-react"
 import { SectionHeading } from "@/components/section-heading"
 import { Reveal } from "@/components/reveal"
@@ -46,22 +43,17 @@ export function FAQ({ className = "" }: { className?: string }) {
           />
         </Reveal>
         <div className="space-y-4">
-          {faqs.map((faq, index) => (
-            <Disclosure key={index}>
-              {({ open }) => (
-                <div className="overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm">
-                  <Disclosure.Button className="flex justify-between w-full px-5 py-4 text-lg font-medium text-left text-brand-dark hover:bg-brand-mint/5 focus:outline-none focus-visible:ring focus-visible:ring-brand-mint focus-visible:ring-opacity-75">
-                    <span>{faq.question}</span>
-                    <ChevronDown
-                      className={`${open ? "rotate-180" : ""} ml-4 h-5 w-5 shrink-0 text-brand-mintDark transition-transform`}
-                    />
-                  </Disclosure.Button>
-                  <Disclosure.Panel className="px-5 pb-5 pt-0 leading-relaxed text-gray-600">
-                    {faq.answer}
-                  </Disclosure.Panel>
-                </div>
-              )}
-            </Disclosure>
+          {faqs.map((faq) => (
+            <details
+              key={faq.question}
+              className="group overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm"
+            >
+              <summary className="flex w-full cursor-pointer list-none justify-between px-5 py-4 text-left text-lg font-medium text-brand-dark hover:bg-brand-mint/5 focus:outline-none focus-visible:ring focus-visible:ring-brand-mint focus-visible:ring-opacity-75 [&::-webkit-details-marker]:hidden">
+                <span>{faq.question}</span>
+                <ChevronDown className="ml-4 h-5 w-5 shrink-0 text-brand-mintDark transition-transform group-open:rotate-180" />
+              </summary>
+              <div className="px-5 pb-5 pt-0 leading-relaxed text-gray-600">{faq.answer}</div>
+            </details>
           ))}
         </div>
       </div>
