@@ -196,11 +196,7 @@ export async function GoogleReviews() {
         </div>
       )}
 
-      <div className="mt-8 flex flex-col items-center justify-between gap-4 text-sm text-gray-500 sm:flex-row">
-        <p className="flex items-center gap-2">
-          <GoogleMark className="h-4 w-4" />
-          Reviews sourced from Google. Showing recent {MIN_RATING_LABEL} reviews.
-        </p>
+      <div className="mt-8 flex justify-center text-sm">
         <a
           href={GOOGLE_REVIEWS_URL}
           target="_blank"
@@ -214,5 +210,3 @@ export async function GoogleReviews() {
     </div>
   )
 }
-
-const MIN_RATING_LABEL = "4- and 5-star"
