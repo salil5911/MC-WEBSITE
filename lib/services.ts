@@ -1,13 +1,3 @@
-import {
-  Smartphone,
-  Layers,
-  Plug,
-  BatteryCharging,
-  Camera,
-  Droplets,
-  type LucideIcon,
-} from "lucide-react"
-
 export interface ServiceStep {
   title: string
   description: string
@@ -22,7 +12,6 @@ export interface Service {
   slug: string
   name: string
   shortName: string
-  icon: LucideIcon
   image: string
   tagline: string
   summary: string
@@ -41,15 +30,14 @@ export const services: Service[] = [
     slug: "screen-replacement",
     name: "Screen Replacement",
     shortName: "Screen Replacement",
-    icon: Smartphone,
     image: "/services/screen-replacement.webp",
     tagline: "Full display assembly replacement, calibrated to factory spec",
     summary:
       "Cracked glass, dead pixels, or a digitizer that won't register touch? We replace the complete display assembly with a premium OLED or LCD panel matched to your device's original color, brightness, and refresh rate.",
     priceFrom: "$59",
-    turnaround: "30–45 min",
+    turnaround: "30-45 min",
     overview:
-      "A modern phone screen is not just glass — it's a laminated display assembly made of the cover glass, the digitizer (the layer that senses your touch), and the OLED or LCD panel that produces the image. When any layer fails, we replace the full assembly with a quality-tested panel, re-seat every flex cable, and transfer the ambient light sensor data so features like True Tone keep working where supported. High-refresh displays (90Hz / 120Hz ProMotion) are matched to the correct spec, and the frame is resealed with fresh adhesive to restore a tight, dust-resistant fit.",
+      "A modern phone screen is not just glass. It's a laminated display assembly made of the cover glass, the digitizer (the layer that senses your touch), and the OLED or LCD panel that produces the image. When any layer fails, we replace the full assembly with a quality-tested panel, re-seat every flex cable, and transfer the ambient light sensor data so features like True Tone keep working where supported. High-refresh displays (90Hz / 120Hz ProMotion) are matched to the correct spec, and the frame is resealed with fresh adhesive to restore a tight, dust-resistant fit.",
     includes: [
       "Premium OLED or LCD display assembly",
       "Digitizer and multi-touch testing across the full panel",
@@ -116,7 +104,7 @@ export const services: Service[] = [
       {
         question: "How long does a screen replacement take?",
         answer:
-          "Most screen replacements are completed in 30–45 minutes while you wait. Foldables and some flagship models may take longer.",
+          "Most screen replacements are completed in 30 to 45 minutes while you wait. Foldables and some flagship models may take longer.",
       },
     ],
   },
@@ -124,13 +112,12 @@ export const services: Service[] = [
     slug: "back-glass-repair",
     name: "Back Glass Repair",
     shortName: "Back Glass Repair",
-    icon: Layers,
     image: "/services/back-glass-repair.webp",
     tagline: "Laser-separated rear glass, without a full housing swap",
     summary:
       "Shattered rear glass exposes internals to dust and moisture. Our laser-separation process replaces only the glass, keeping your original housing and wireless charging coil intact.",
     priceFrom: "$69",
-    turnaround: "45–90 min",
+    turnaround: "45-90 min",
     overview:
       "On most modern iPhones and Galaxy flagships, the back glass is bonded directly to the metal chassis with industrial adhesive, which is why manufacturers often quote a full housing replacement. We use a precision laser to break down that adhesive bond, so the cracked glass can be removed cleanly without removing the logic board. A color-matched OEM-grade panel is then bonded in place, with the camera lens ring and cutouts aligned exactly. The Qi / MagSafe wireless charging coil and NFC antenna underneath stay untouched and are tested before return.",
     includes: [
@@ -206,15 +193,14 @@ export const services: Service[] = [
     slug: "charging-port-replacement",
     name: "Charging Port Replacement",
     shortName: "Charging Port Repair",
-    icon: Plug,
     image: "/services/charging-port-replacement.webp",
     tagline: "Restore fast charging and data transfer, with a current-draw test",
     summary:
       "Charging only at an angle or not at all? We diagnose the port with a USB ammeter, then clean, micro-solder, or replace the charging port assembly to restore full fast-charge speeds.",
     priceFrom: "$49",
-    turnaround: "45–60 min",
+    turnaround: "45-60 min",
     overview:
-      "Your charging port handles power, data, and sometimes audio, and it collects lint, debris, and oxidation (corrosion from moisture) over time. Before replacing anything, we plug in a USB ammeter to measure how much current the phone actually draws — this tells us whether the port, the cable, or a deeper board-level fault is to blame. Depending on your model, the port sits on a replaceable charging flex or daughterboard, or is soldered directly to the logic board, where we use micro-soldering to replace it. Every repair is tested for USB Power Delivery (PD) fast charging and data sync.",
+      "Your charging port handles power, data, and sometimes audio, and it collects lint, debris, and oxidation (corrosion from moisture) over time. Before replacing anything, we plug in a USB ammeter to measure how much current the phone actually draws, which tells us whether the port, the cable, or a deeper board-level fault is to blame. Depending on your model, the port sits on a replaceable charging flex or daughterboard, or is soldered directly to the logic board, where we use micro-soldering to replace it. Every repair is tested for USB Power Delivery (PD) fast charging and data sync.",
     includes: [
       "USB ammeter current-draw diagnostic",
       "Deep cleaning of lint, debris, and oxidation",
@@ -288,15 +274,14 @@ export const services: Service[] = [
     slug: "battery-replacement",
     name: "Battery Replacement",
     shortName: "Battery Replacement",
-    icon: BatteryCharging,
     image: "/services/battery-replacement.webp",
     tagline: "High-capacity lithium-ion cells with full power diagnostics",
     summary:
       "Low maximum capacity, a high cycle count, or unexpected shutdowns? We replace worn lithium-ion batteries with high-capacity cells that meet or exceed OEM mAh ratings.",
     priceFrom: "$45",
-    turnaround: "30–45 min",
+    turnaround: "30-45 min",
     overview:
-      "Every lithium-ion battery chemically wears down with each charge cycle. Once maximum capacity drops below about 80%, the battery can't deliver the peak current your processor demands, which causes lag, throttled performance, and sudden shutdowns. We start with a full power diagnostic — reading cycle count, maximum capacity, and checking for abnormal current drain from the board — to confirm the battery is the real cause. The old cell is safely removed by releasing its stretch-release adhesive strips, and a new high-capacity cell is installed with fresh adhesive. Swollen batteries are handled with fire-safe procedures and responsibly recycled.",
+      "Every lithium-ion battery chemically wears down with each charge cycle. Once maximum capacity drops below about 80%, the battery can't deliver the peak current your processor demands, which causes lag, throttled performance, and sudden shutdowns. We start with a full power diagnostic to confirm the battery is the real cause: we read the cycle count and maximum capacity, and check for abnormal current drain from the board. The old cell is safely removed by releasing its stretch-release adhesive strips, and a new high-capacity cell is installed with fresh adhesive. Swollen batteries are handled with fire-safe procedures and responsibly recycled.",
     includes: [
       "High-capacity cell meeting or exceeding OEM mAh rating",
       "Cycle count and maximum capacity diagnostics",
@@ -371,15 +356,14 @@ export const services: Service[] = [
     slug: "camera-replacement",
     name: "Camera Replacement",
     shortName: "Camera Replacement",
-    icon: Camera,
     image: "/services/camera-replacement.webp",
     tagline: "Camera module and lens repair, with OIS and autofocus testing",
     summary:
-      "Blurry shots, a cracked lens cover, or a camera that buzzes or won't focus? We replace front and rear camera modules — wide, ultra-wide, and telephoto — and test autofocus and optical image stabilization.",
+      "Blurry shots, a cracked lens cover, or a camera that buzzes or won't focus? We replace front and rear camera modules (wide, ultra-wide, and telephoto) and test autofocus and optical image stabilization.",
     priceFrom: "$55",
-    turnaround: "45–60 min",
+    turnaround: "45-60 min",
     overview:
-      "Most phones now have several rear cameras — wide, ultra-wide, and telephoto — each with its own image sensor, lens stack, and tiny motors for autofocus and optical image stabilization (OIS). Camera problems usually come from one of three places: a cracked lens cover letting in dust and light flare, a failed OIS or autofocus actuator causing blur or a buzzing sound, or a damaged module showing a black screen. We isolate which lens and component is at fault, replace only what's needed, and verify focus, stabilization, flash, and video at every zoom level.",
+      "Most phones now have several rear cameras (wide, ultra-wide, and telephoto), each with its own image sensor, lens stack, and tiny motors for autofocus and optical image stabilization (OIS). Camera problems usually come from one of three places: a cracked lens cover letting in dust and light flare, a failed OIS or autofocus actuator causing blur or a buzzing sound, or a damaged module showing a black screen. We isolate which lens and component is at fault, replace only what's needed, and verify focus, stabilization, flash, and video at every zoom level.",
     includes: [
       "Wide, ultra-wide, telephoto, or front module replacement",
       "Lens cover glass replacement",
@@ -433,7 +417,7 @@ export const services: Service[] = [
     ],
     faqs: [
       {
-        question: "My lens cover is cracked but photos look fine — should I fix it?",
+        question: "My lens cover is cracked but photos look fine. Should I fix it?",
         answer:
           "Yes. A cracked lens cover lets in dust and moisture and causes flare in bright light. Replacing just the cover glass is quick and inexpensive.",
       },
@@ -453,15 +437,14 @@ export const services: Service[] = [
     slug: "water-damage-repair",
     name: "Water Damage Repair",
     shortName: "Water Damage Repair",
-    icon: Droplets,
     image: "/services/water-damage-repair.webp",
     tagline: "Board-level liquid damage repair and data recovery",
     summary:
       "Dropped your device in water? Corrosion starts within hours. Our ultrasonic cleaning and board-level diagnostics give your phone and your data the best chance of recovery.",
     priceFrom: "$79",
-    turnaround: "24–72 hrs",
+    turnaround: "24-72 hrs",
     overview:
-      "When liquid gets inside a phone, minerals and electricity react to cause corrosion and short circuits on the logic board (the phone's main circuit board). That's why rice doesn't work — it can't reach or remove corrosion. We disconnect the battery immediately, check the liquid contact indicators, and fully disassemble the device. The logic board goes through an ultrasonic bath with isopropyl alcohol to lift corrosion from under tiny components. We then use a DC power supply and thermal camera to find shorted parts, repair them with board-level micro-soldering, and attempt data recovery so your photos and contacts are protected.",
+      "When liquid gets inside a phone, minerals and electricity react to cause corrosion and short circuits on the logic board (the phone's main circuit board). That's why rice doesn't work: it can't reach or remove corrosion. We disconnect the battery immediately, check the liquid contact indicators, and fully disassemble the device. The logic board goes through an ultrasonic bath with isopropyl alcohol to lift corrosion from under tiny components. We then use a DC power supply and thermal camera to find shorted parts, repair them with board-level micro-soldering, and attempt data recovery so your photos and contacts are protected.",
     includes: [
       "Immediate battery disconnect and full teardown",
       "Liquid contact indicator (LCI) inspection",

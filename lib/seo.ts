@@ -3,6 +3,8 @@ import { getLocation, locations, type StoreLocation } from "@/lib/locations"
 
 export const SITE_URL = "https://mobilecareusa.com"
 export const SITE_NAME = "Mobile Care USA"
+export const LOGO_URL =
+  "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/MC%20LOGO-XowG6Q2hKUlDImWUZUx6UDaRQp4r2h.png"
 export const DEFAULT_OG_IMAGE = {
   url: "/store-interior.webp",
   width: 1536,
@@ -144,17 +146,29 @@ export function locationMetadata(slug: string): Metadata {
   }
 }
 
-export function locationSchema(location: StoreLocation) {
+export const SOCIAL_PROFILES = ["https://www.facebook.com/mobilecareaugusta/", "https://www.instagram.com/mobilecareusa/"]
+
+/** Absolute URL for a site-relative asset path. */
+function absolute(path: string) {
+  return path.startsWith("http") ? path : `${SITE_URL}${path}`
+}
+
+/**
+ * Store schema. `googleMapsUrl` is the store's Google Business Profile link
+ * (from the Places API) and ties this page to that profile for Google and AI
+ * assistants that cross-check business listings.
+ */
+export function locationSchema(location: StoreLocation, googleMapsUrl?: string) {
   const url = `${SITE_URL}/locations/${location.slug}`
   return [
     {
       "@context": "https://schema.org",
       "@type": "MobilePhoneStore",
       "@id": `${url}#store`,
-      name: `${SITE_NAME} – ${location.name}`,
+      name: `${SITE_NAME}, ${location.name}`,
       description: locationDescription(location),
       url,
-      image: location.image,
+      image: absolute(location.image),
       telephone: location.phone.replace(/\s+/g, ""),
       priceRange: "$$",
       geo: { "@type": "GeoCoordinates", latitude: location.geo.lat, longitude: location.geo.lng },
@@ -168,28 +182,29 @@ export function locationSchema(location: StoreLocation) {
         postalCode: location.zip,
         addressCountry: "US",
       },
-      hasMap: location.directionsUrl,
+      hasMap: googleMapsUrl ?? location.directionsUrl,
+      ...(googleMapsUrl ? { sameAs: [googleMapsUrl] } : {}),
+      brand: { "@id": `${SITE_URL}/#organization` },
       openingHoursSpecification: openingHours(location.hours),
       parentOrganization: { "@id": `${SITE_URL}/#organization` },
       makesOffer: ["Phone repair", "Tablet repair", "Laptop repair", "Smartwatch repair", "Pre-owned phones"].map(
         (name) => ({ "@type": "Offer", itemOffered: { "@type": "Service", name } }),
       ),
     },
-    breadcrumbSchema([
-      { name: "Home", path: "/" },
-      { name: "Locations", path: "/locations" },
-      { name: location.name, path: `/locations/${location.slug}` },
-    ]),
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      mainEntity: locationFaqs(location).map((faq) => ({
-        "@type": "Question",
-        name: faq.question,
-        acceptedAnswer: { "@type": "Answer", text: faq.answer },
-      })),
-    },
+    faqPageSchema(locationFaqs(location)),
   ]
+}
+
+export function faqPageSchema(faqs: { question: string; answer: string }[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: { "@type": "Answer", text: faq.answer },
+    })),
+  }
 }
 
 export function breadcrumbSchema(items: { name: string; path: string }[]) {
@@ -212,8 +227,33 @@ export function organizationSchema() {
       "@type": "Organization",
       "@id": `${SITE_URL}/#organization`,
       name: SITE_NAME,
+      alternateName: "Mobile Care",
       url: SITE_URL,
-      logo: `${SITE_URL}/favicon.png`,
+      logo: { "@type": "ImageObject", url: LOGO_URL },
+      image: absolute(DEFAULT_OG_IMAGE.url),
+      description:
+        "Mobile Care USA is a walk-in phone, tablet, and laptop repair company with 8 mall stores in Georgia, Virginia, North Carolina, and Michigan. Most repairs are done the same day with a 30-day parts and labor warranty. The stores also sell certified pre-owned iPhone and Samsung Galaxy phones and accessories.",
+      sameAs: SOCIAL_PROFILES,
+      areaServed: ["Georgia", "Virginia", "North Carolina", "Michigan"].map((name) => ({ "@type": "State", name })),
+      knowsAbout: [
+        "Smartphone repair",
+        "iPhone screen replacement",
+        "Samsung Galaxy repair",
+        "Battery replacement",
+        "Charging port repair",
+        "Water damage repair",
+        "Tablet repair",
+        "Laptop repair",
+        "Certified pre-owned phones",
+      ],
+      contactPoint: locations.map((location) => ({
+        "@type": "ContactPoint",
+        contactType: "customer service",
+        telephone: location.phone.replace(/\s+/g, ""),
+        areaServed: location.state,
+        availableLanguage: "English",
+        name: location.name,
+      })),
       department: locations.map((location) => ({ "@id": `${SITE_URL}/locations/${location.slug}#store` })),
     },
     {
@@ -222,6 +262,7 @@ export function organizationSchema() {
       "@id": `${SITE_URL}/#website`,
       name: SITE_NAME,
       url: SITE_URL,
+      inLanguage: "en-US",
       publisher: { "@id": `${SITE_URL}/#organization` },
     },
   ]

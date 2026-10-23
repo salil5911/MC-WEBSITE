@@ -28,8 +28,8 @@ export const locations: StoreLocation[] = [
     nearby: ["Smyrna", "Vinings", "Marietta", "Sandy Springs", "Mableton"],
     phone: "+1 404 271 6281",
     hours: [
-      { day: "Mon – Sat", time: "10:00 AM – 8:00 PM" },
-      { day: "Sunday", time: "12:00 PM – 6:00 PM" },
+      { day: "Mon - Sat", time: "10:00 AM - 8:00 PM" },
+      { day: "Sunday", time: "12:00 PM - 6:00 PM" },
     ],
     image:
       "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/cumberland.jpg-r6o3X74ufd6nWdNblq9vMz1Ig3D8XJ.jpeg",
@@ -48,8 +48,8 @@ export const locations: StoreLocation[] = [
     nearby: ["Sandy Springs", "Brookhaven", "Chamblee", "Doraville", "Roswell"],
     phone: "+1 470 983 1595",
     hours: [
-      { day: "Mon – Sat", time: "10:00 AM – 8:00 PM" },
-      { day: "Sunday", time: "12:00 PM – 6:00 PM" },
+      { day: "Mon - Sat", time: "10:00 AM - 8:00 PM" },
+      { day: "Sunday", time: "12:00 PM - 6:00 PM" },
     ],
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Perimeter-JGI7ZEPFHx0LZMPyqShJi1dsz4dByj.jpg",
     directionsUrl:
@@ -67,8 +67,8 @@ export const locations: StoreLocation[] = [
     nearby: ["Jonesboro", "Riverdale", "Stockbridge", "Forest Park", "Lake City"],
     phone: "+1 470 546 9171",
     hours: [
-      { day: "Mon – Sat", time: "10:00 AM – 8:00 PM" },
-      { day: "Sunday", time: "12:00 PM – 6:00 PM" },
+      { day: "Mon - Sat", time: "10:00 AM - 8:00 PM" },
+      { day: "Sunday", time: "12:00 PM - 6:00 PM" },
     ],
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/southlake.jpg-cyX67ok0kHYNaPXsFzRqmfNPsFWY33.jpeg",
     directionsUrl:
@@ -86,9 +86,9 @@ export const locations: StoreLocation[] = [
     nearby: ["Martinez", "Evans", "Grovetown", "North Augusta", "Hephzibah"],
     phone: "+1 762 444 9461",
     hours: [
-      { day: "Mon – Thu", time: "11:00 AM – 7:00 PM" },
-      { day: "Fri – Sat", time: "11:00 AM – 8:00 PM" },
-      { day: "Sunday", time: "12:00 PM – 6:00 PM" },
+      { day: "Mon - Thu", time: "11:00 AM - 7:00 PM" },
+      { day: "Fri - Sat", time: "11:00 AM - 8:00 PM" },
+      { day: "Sunday", time: "12:00 PM - 6:00 PM" },
     ],
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/1-1rthSq43p4kpNrDLcfH1wcDlEz8SpR.jpg",
     directionsUrl:
@@ -106,9 +106,9 @@ export const locations: StoreLocation[] = [
     nearby: ["Norfolk", "Chesapeake", "Hilltop", "Kempsville", "Oceanfront"],
     phone: "+1 757 692 1915",
     hours: [
-      { day: "Mon – Thu", time: "11:00 AM – 7:00 PM" },
-      { day: "Fri – Sat", time: "11:00 AM – 8:00 PM" },
-      { day: "Sunday", time: "12:00 PM – 6:00 PM" },
+      { day: "Mon - Thu", time: "11:00 AM - 7:00 PM" },
+      { day: "Fri - Sat", time: "11:00 AM - 8:00 PM" },
+      { day: "Sunday", time: "12:00 PM - 6:00 PM" },
     ],
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/lynnhaven.jpg-6s3aZDBwqPpwPuujrrkE9HTbvcZrJs.jpeg",
     badge: "2 kiosks and 1 store",
@@ -127,9 +127,9 @@ export const locations: StoreLocation[] = [
     nearby: ["Charlotte", "Ballantyne", "Matthews", "Fort Mill", "Indian Land"],
     phone: "+1 704 670 8479",
     hours: [
-      { day: "Mon – Thu", time: "11:00 AM – 7:00 PM" },
-      { day: "Fri – Sat", time: "11:00 AM – 8:00 PM" },
-      { day: "Sunday", time: "12:00 PM – 6:00 PM" },
+      { day: "Mon - Thu", time: "11:00 AM - 7:00 PM" },
+      { day: "Fri - Sat", time: "11:00 AM - 8:00 PM" },
+      { day: "Sunday", time: "12:00 PM - 6:00 PM" },
     ],
     image:
       "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/carolina%20place%20mall.jpg-LColFtaGmCqrSK6WTwRMvNbpLz887Y.jpeg",
@@ -148,9 +148,9 @@ export const locations: StoreLocation[] = [
     nearby: ["Northville", "Wixom", "Farmington Hills", "Commerce Township", "Walled Lake"],
     phone: "+1 248 216 2374",
     hours: [
-      { day: "Mon – Thu", time: "10:00 AM – 8:00 PM" },
-      { day: "Fri – Sat", time: "10:00 AM – 9:00 PM" },
-      { day: "Sunday", time: "11:00 AM – 6:00 PM" },
+      { day: "Mon - Thu", time: "10:00 AM - 8:00 PM" },
+      { day: "Fri - Sat", time: "10:00 AM - 9:00 PM" },
+      { day: "Sunday", time: "11:00 AM - 6:00 PM" },
     ],
     image:
       "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Twelve%20Oaks-YHgbCmCrgSTfTx83HNrhItKnR9TeKG.jpeg",
@@ -169,8 +169,8 @@ export const locations: StoreLocation[] = [
     nearby: ["Rochester Hills", "Lake Orion", "Pontiac", "Clarkston", "Troy"],
     phone: "+1 248 520 4170",
     hours: [
-      { day: "Mon – Sat", time: "10:00 AM – 9:00 PM" },
-      { day: "Sunday", time: "11:00 AM – 7:00 PM" },
+      { day: "Mon - Sat", time: "10:00 AM - 9:00 PM" },
+      { day: "Sunday", time: "11:00 AM - 7:00 PM" },
     ],
     image:
       "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Great%20lakes-xTbZkQdvDkcYpC3V4irVkwODaOrc2J.jpeg",

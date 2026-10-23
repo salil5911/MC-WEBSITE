@@ -76,7 +76,7 @@ export const preOwnedBrands: PreOwnedBrand[] = [
         name: "iPhone 13 Series",
         slug: "iphone-13",
         image: `${SERIES_BASE}/iphone-13.png`,
-        blurb: "Excellent battery life and a crisp display — a smart, affordable everyday phone.",
+        blurb: "Excellent battery life and a crisp display in a smart, affordable everyday phone.",
         models: ["iPhone 13 Pro Max", "iPhone 13 Pro", "iPhone 13", "iPhone 13 mini"],
       },
       {
@@ -107,7 +107,7 @@ export const preOwnedBrands: PreOwnedBrand[] = [
         name: "Galaxy Z Series",
         slug: "galaxy-z",
         image: `${SERIES_BASE}/galaxy-z.png`,
-        blurb: "Samsung's foldable lineup — the book-style Z Fold and the compact Z Flip.",
+        blurb: "Samsung's foldable lineup: the book-style Z Fold and the compact Z Flip.",
         models: ["Galaxy Z Fold", "Galaxy Z Flip"],
       },
       {

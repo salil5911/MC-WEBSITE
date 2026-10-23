@@ -3,9 +3,8 @@
 import { useState, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { Menu, ChevronDown, Phone } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { ChevronDown, Menu } from "@/components/icons"
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -33,6 +32,12 @@ const locationsByRegion = REGION_ORDER.map((state) => ({
   stores: storeLocations.filter((l) => l.state === state),
 })).filter((region) => region.stores.length > 0)
 
+const LOGO_SRC =
+  "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/MC%20LOGO-XowG6Q2hKUlDImWUZUx6UDaRQp4r2h.png"
+
+const menuItem = "w-full cursor-pointer rounded px-2 py-1.5 text-[0.92rem]"
+const menuLabel = "px-2 pb-1 pt-2 font-mono text-[0.68rem] uppercase tracking-[0.14em] text-ink-faint"
+
 export function Nav() {
   const [scrolled, setScrolled] = useState(false)
 
@@ -43,233 +48,186 @@ export function Nav() {
     return () => window.removeEventListener("scroll", onScroll)
   }, [])
 
-  const linkColor = scrolled
-    ? "text-brand-dark hover:text-brand-mintDark"
-    : "text-white/90 hover:text-white"
+  const linkColor = scrolled ? "text-ink hover:text-brand-mintDark" : "text-white/85 hover:text-white"
+  const navLink = `px-3 py-2 text-[0.92rem] font-medium transition-colors ${linkColor}`
 
   return (
     <nav
-      className={`fixed top-0 z-50 w-full transition-all duration-300 ${
-        scrolled
-          ? "border-b border-black/5 bg-white/90 shadow-sm backdrop-blur-xl"
-          : "border-b border-transparent bg-transparent"
+      aria-label="Main"
+      className={`fixed top-0 z-50 w-full transition-colors duration-300 ${
+        scrolled ? "border-b border-ink/10 bg-paper/90 backdrop-blur-md" : "border-b border-white/10 bg-transparent"
       }`}
     >
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div
-          className={`flex items-center justify-between transition-all duration-300 ${
-            scrolled ? "h-16" : "h-20"
-          }`}
-        >
-          <Link href="/" className="flex-shrink-0">
-            <Image
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/MC%20LOGO-XowG6Q2hKUlDImWUZUx6UDaRQp4r2h.png"
-              alt="Mobile Care Logo"
-              width={400}
-              height={133}
-              priority
-              className={`w-auto transition-all duration-300 ${
-                scrolled ? "h-11" : "h-14 brightness-0 invert"
-              }`}
-            />
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+        <Link href="/" className="flex-shrink-0" aria-label="Mobile Care USA home">
+          <Image
+            src={LOGO_SRC}
+            alt="Mobile Care USA"
+            width={400}
+            height={133}
+            priority
+            className={`h-10 w-auto transition-[filter] duration-300 ${scrolled ? "" : "brightness-0 invert"}`}
+          />
+        </Link>
+
+        <div className="hidden items-center md:flex">
+          <DropdownMenu>
+            <DropdownMenuTrigger className={`flex items-center gap-1 outline-none ${navLink}`}>
+              Repairs
+              <ChevronDown className="h-3.5 w-3.5 opacity-60" />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start" className="w-60 rounded-md border-ink/10 p-1.5">
+              <DropdownMenuItem asChild>
+                <Link href="/services" className={`${menuItem} font-semibold`}>
+                  All repair services
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              {services.map((service) => (
+                <DropdownMenuItem key={service.slug} asChild>
+                  <Link href={`/services/${service.slug}`} className={menuItem}>
+                    {service.name}
+                  </Link>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          <DropdownMenu>
+            <DropdownMenuTrigger className={`flex items-center gap-1 outline-none ${navLink}`}>
+              Locations
+              <ChevronDown className="h-3.5 w-3.5 opacity-60" />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start" className="w-64 rounded-md border-ink/10 p-1.5">
+              <DropdownMenuItem asChild>
+                <Link href="/locations" className={`${menuItem} font-semibold`}>
+                  All 8 stores
+                </Link>
+              </DropdownMenuItem>
+              {locationsByRegion.map((region) => (
+                <div key={region.state}>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuLabel className={menuLabel}>{region.name}</DropdownMenuLabel>
+                  {region.stores.map((store) => (
+                    <DropdownMenuItem key={store.slug} asChild>
+                      <Link href={`/locations/${store.slug}`} className={menuItem}>
+                        {store.name}
+                      </Link>
+                    </DropdownMenuItem>
+                  ))}
+                </div>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          <DropdownMenu>
+            <DropdownMenuTrigger className={`flex items-center gap-1 outline-none ${navLink}`}>
+              Pre-owned
+              <ChevronDown className="h-3.5 w-3.5 opacity-60" />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start" className="w-56 rounded-md border-ink/10 p-1.5">
+              <DropdownMenuItem asChild>
+                <Link href="/pre-owned" className={`${menuItem} font-semibold`}>
+                  All pre-owned phones
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              {preOwnedBrands.map((brand) => (
+                <DropdownMenuItem key={brand.slug} asChild>
+                  <Link href={`/pre-owned/${brand.slug}`} className={menuItem}>
+                    {brand.name}
+                  </Link>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          <Link href="/accessories" className={navLink}>
+            Accessories
+          </Link>
+          <Link href="/about" className={navLink}>
+            About
           </Link>
 
-          <div className="hidden items-center gap-1 md:flex">
-            <Link
-              href="/about"
-              className={`rounded-full px-4 text-[0.95rem] font-medium transition-colors ${linkColor}`}
-            >
-              About Us
-            </Link>
+          <Link
+            href="/locations"
+            className={`ml-4 rounded-md px-4 py-2 text-[0.92rem] font-medium transition-colors ${
+              scrolled ? "bg-ink text-white hover:bg-ink/85" : "bg-brand-mint text-ink hover:bg-brand-mintLight"
+            }`}
+          >
+            Find a store
+          </Link>
+        </div>
 
-            <Link
-              href="/accessories"
-              className={`rounded-full px-4 text-[0.95rem] font-medium transition-colors ${linkColor}`}
-            >
-              Accessories
-            </Link>
-
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="ghost"
-                  className={`flex items-center gap-1.5 rounded-full px-4 text-[0.95rem] font-medium transition-colors hover:bg-transparent ${linkColor}`}
-                >
-                  Pre-Owned
-                  <ChevronDown className="h-4 w-4 opacity-70" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="w-64 rounded-xl p-2">
-                <DropdownMenuItem asChild>
-                  <Link href="/pre-owned" className="w-full cursor-pointer rounded-lg font-semibold">
-                    All Pre-Owned Phones
-                  </Link>
-                </DropdownMenuItem>
-                {preOwnedBrands.map((brand) => (
-                  <DropdownMenuItem key={brand.slug} asChild>
-                    <Link href={`/pre-owned/${brand.slug}`} className="w-full cursor-pointer rounded-lg">
-                      {brand.name}
-                    </Link>
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
-
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="ghost"
-                  className={`flex items-center gap-1.5 rounded-full px-4 text-[0.95rem] font-medium transition-colors hover:bg-transparent ${linkColor}`}
-                >
-                  Services
-                  <ChevronDown className="h-4 w-4 opacity-70" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="w-64 rounded-xl p-2">
-                <DropdownMenuItem asChild>
-                  <Link href="/services" className="w-full cursor-pointer rounded-lg font-semibold">
-                    All Services
-                  </Link>
-                </DropdownMenuItem>
+        <Sheet>
+          <SheetTrigger
+            className={`-mr-2 p-2 md:hidden ${scrolled ? "text-ink" : "text-white"}`}
+            aria-label="Open menu"
+          >
+            <Menu className="h-6 w-6" />
+          </SheetTrigger>
+          <SheetContent className="overflow-y-auto bg-paper">
+            <SheetTitle className="sr-only">Menu</SheetTitle>
+            <div className="mt-8 flex flex-col gap-8">
+              <MobileGroup title="Repairs" href="/services" hrefLabel="All repair services">
                 {services.map((service) => (
-                  <DropdownMenuItem key={service.slug} asChild>
-                    <Link href={`/services/${service.slug}`} className="w-full cursor-pointer rounded-lg">
-                      {service.shortName}
-                    </Link>
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
-
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="ghost"
-                  className={`flex items-center gap-1.5 rounded-full px-4 text-[0.95rem] font-medium transition-colors hover:bg-transparent ${linkColor}`}
-                >
-                  Locations
-                  <ChevronDown className="h-4 w-4 opacity-70" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="w-64 rounded-xl p-2">
-                <DropdownMenuItem asChild>
-                  <Link href="/locations" className="w-full cursor-pointer rounded-lg font-semibold">
-                    All Locations
+                  <Link key={service.slug} href={`/services/${service.slug}`} className="block py-1 text-ink-soft">
+                    {service.name}
                   </Link>
-                </DropdownMenuItem>
-                {locationsByRegion.map((region) => (
-                  <div key={region.state}>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuLabel className="px-2 py-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                      {region.name}
-                    </DropdownMenuLabel>
-                    {region.stores.map((store) => (
-                      <DropdownMenuItem key={store.slug} asChild>
-                        <Link href={`/locations/${store.slug}`} className="w-full cursor-pointer rounded-lg">
-                          {store.name}
-                        </Link>
-                      </DropdownMenuItem>
-                    ))}
-                  </div>
                 ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
-
-            <Link href="/locations" className="ml-3">
-              <Button
-                className={`rounded-full px-5 font-semibold shadow-sm transition-colors ${
-                  scrolled
-                    ? "bg-brand-dark text-white hover:bg-brand-dark/90"
-                    : "bg-brand-mint text-brand-dark hover:bg-brand-mintLight"
-                }`}
-              >
-                Find a Location
-              </Button>
-            </Link>
-          </div>
-
-          <Sheet>
-            <SheetTrigger asChild>
-              <Button
-                variant="ghost"
-                size="icon"
-                className={`md:hidden ${scrolled ? "text-brand-dark" : "text-white hover:bg-white/10 hover:text-white"}`}
-              >
-                <Menu className="h-6 w-6" />
-                <span className="sr-only">Open menu</span>
-              </Button>
-            </SheetTrigger>
-            <SheetContent>
-              <div className="mt-8 flex flex-col space-y-4">
-                <Link href="/about" className="py-2 text-xl font-semibold">
-                  About Us
-                </Link>
-                <Link href="/accessories" className="py-2 text-xl font-semibold">
+              </MobileGroup>
+              <MobileGroup title="Locations" href="/locations" hrefLabel="All 8 stores">
+                {storeLocations.map((store) => (
+                  <Link key={store.slug} href={`/locations/${store.slug}`} className="block py-1 text-ink-soft">
+                    {store.name}, {store.state}
+                  </Link>
+                ))}
+              </MobileGroup>
+              <MobileGroup title="Shop" href="/pre-owned" hrefLabel="Pre-owned phones">
+                <Link href="/accessories" className="block py-1 text-ink-soft">
                   Accessories
                 </Link>
-                <div className="py-2">
-                  <Link href="/pre-owned" className="mb-2 block text-xl font-semibold">
-                    Pre-Owned
-                  </Link>
-                  <div className="space-y-2 pl-4">
-                    {preOwnedBrands.map((brand) => (
-                      <Link
-                        key={brand.slug}
-                        href={`/pre-owned/${brand.slug}`}
-                        className="block text-lg text-gray-600 hover:text-brand-mintDark"
-                      >
-                        {brand.name}
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-                <div className="py-2">
-                  <Link href="/services" className="mb-2 block text-xl font-semibold">
-                    Services
-                  </Link>
-                  <div className="space-y-2 pl-4">
-                    {services.map((service) => (
-                      <Link
-                        key={service.slug}
-                        href={`/services/${service.slug}`}
-                        className="block text-lg text-gray-600 hover:text-brand-mintDark"
-                      >
-                        {service.shortName}
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-                <div className="py-2">
-                  <Link href="/locations" className="mb-2 block text-xl font-semibold">
-                    Locations
-                  </Link>
-                  <div className="space-y-4 pl-4">
-                    {locationsByRegion.map((region) => (
-                      <div key={region.state} className="space-y-2">
-                        <p className="text-xs font-semibold uppercase tracking-wide text-gray-400">{region.name}</p>
-                        {region.stores.map((store) => (
-                          <Link
-                            key={store.slug}
-                            href={`/locations/${store.slug}`}
-                            className="block text-lg text-gray-600 hover:text-brand-mintDark"
-                          >
-                            {store.name}
-                          </Link>
-                        ))}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                <Link href="/locations" className="w-full pt-2">
-                  <Button className="w-full rounded-full bg-brand-mint font-semibold text-brand-dark hover:bg-brand-mintLight">
-                    Find a Location
-                  </Button>
+                <Link href="/about" className="block py-1 text-ink-soft">
+                  About Mobile Care
                 </Link>
-              </div>
-            </SheetContent>
-          </Sheet>
-        </div>
+                <Link href="/faqs" className="block py-1 text-ink-soft">
+                  FAQs
+                </Link>
+              </MobileGroup>
+              <Link
+                href="/locations"
+                className="rounded-md bg-ink px-4 py-3 text-center font-medium text-white hover:bg-ink/85"
+              >
+                Find a store
+              </Link>
+            </div>
+          </SheetContent>
+        </Sheet>
       </div>
     </nav>
+  )
+}
+
+function MobileGroup({
+  title,
+  href,
+  hrefLabel,
+  children,
+}: {
+  title: string
+  href: string
+  hrefLabel: string
+  children: React.ReactNode
+}) {
+  return (
+    <div>
+      <p className="border-t border-ink/15 pt-3 font-mono text-[0.68rem] uppercase tracking-[0.14em] text-ink-faint">
+        {title}
+      </p>
+      <Link href={href} className="mt-3 block py-1 text-lg font-semibold text-ink">
+        {hrefLabel}
+      </Link>
+      <div className="mt-1">{children}</div>
+    </div>
   )
 }
